@@ -7,32 +7,42 @@
 ## 基础知识
 
 Git 有三种状态，你的文件可能处于其中之一：已提交（committed）、已修改（modified）和已暂存（staged）。
+
 •已修改：表示修改了文件，但还没保存到数据库中。
+
 •已暂存：表示对一个已修改文件的当前版本做了标记，使之包含在下次提交的快照中。
+
 •已提交：表示数据已经安全地保存在本地数据库中。
 
 这会让我们的 Git 项目拥有三个阶段：工作区、暂存区以及 Git 目录。
+
 工作区是对项目的某个版本独立提取出来的内容。 这些从 Git 仓库的压缩数据库中提取出来的文件，放在磁盘上供你使用或修改。
+
 暂存区是一个文件，保存了下次将要提交的文件列表信息，一般在 Git 仓库目录中。 按照 Git 的术语叫做“索引”，不过一般说法还是叫“暂存区”。
+
 Git 仓库目录是 Git 用来保存项目的元数据和对象数据库的地方。 这是 Git 中最重要的部分，从其它计算机克隆仓库时，复制的就是这里的数据。
 
 基本的 Git 工作流程如下：
+
 1.在工作区中修改文件。
+
 2.将你想要下次提交的更改选择性地暂存，这样只会将更改的部分添加到暂存区。
+
 3.提交更新，找到暂存区的文件，将快照永久性存储到 Git 目录。
+
 如果 Git 目录中保存着特定版本的文件，就属于 已提交状态。 如果文件已修改并放入暂存区，就属于 已暂存状态。 如果自上次检出后，作了修改但还没有放到暂存区域，就是 已修改状态。
 
 ## Git安装
 
 ### Linux
 
-以 Fedora 为例，如果你在使用它（或与之紧密相关的基于 RPM 的发行版，如 RHEL 或 CentOS），你可以使用 dnf：
+以 Fedora 为例，如果你在使用它（或与之紧密相关的基于 RPM 的发行版，如 RHEL 或 CentOS），你可以使用 dnf ：
 
 ~~~bash
 $ sudo dnf install git-all
 ~~~
 
-如果你在基于 Debian 的发行版上，如 Ubuntu，请使用 apt：
+如果你在基于 Debian 的发行版上，如 Ubuntu，请使用 apt ：
 
 ~~~bash
 $ sudo apt install git-all
@@ -43,7 +53,7 @@ $ sudo apt install git-all
 
 ### macOS
 
-在 Mac 上安装 Git 有多种方式。 最简单的方法是安装 Xcode Command Line Tools。 Mavericks （10.9） 或更高版本的系统中，在 Terminal 里尝试首次运行 git命令即可。
+在 Mac 上安装 Git 有多种方式。 最简单的方法是安装 Xcode Command Line Tools 。 Mavericks （10.9） 或更高版本的系统中，在 Terminal 里尝试首次运行 git 命令即可。
 
 ~~~bash
 $ git --version
@@ -54,8 +64,10 @@ $ git --version
 
 ### Windows
 
-在 Windows 上安装 Git 也有几种安装方法。 官方版本可以在 Git 官方网站下载。 打开 [https://git-scm.com/download/win]，下载会自动开始。 要注意这是一个名为 Git for Windows 的项目（也叫做 msysGit），和 Git是分别独立的项目；更多信息请访问 [http://msysgit.github.io/]。
+在 Windows 上安装 Git 也有几种安装方法。 官方版本可以在 Git 官方网站下载。 打开 [https://git-scm.com/download/win] ，下载会自动开始。 要注意这是一个名为 Git for Windows 的项目（也叫做 msysGit），和 Git是分别独立的项目；更多信息请访问 [http://msysgit.github.io/] 。
+
 要进行自动安装，你可以使用 Git Chocolatey 包。 注意 Chocolatey 包是由社区维护的。
+
 另一个简单的方法是安装 GitHub Desktop 。 该安装程序包含图形化和命令行版本的 Git 。 它也能支持Powerbash，提供了稳定的凭证缓存和健全的换行设置。稍后我们会对这方面有更多了解，现在只要一句话就够了，这些都是你所需要的。 你可以在 GitHub for Windows 网站下载，网址为 GitHub Desktop 网站。
 
 ### 从源码安装
@@ -88,7 +100,7 @@ $ sudo apt-get install install-info
 $ sudo dnf install getopt
 ~~~
 
-此外，如果你使用 Fedora/RHEL/RHEL衍生版，那么你需要执行以下命令：
+此外，如果你使用 Fedora/RHEL/RHEL 衍生版，那么你需要执行以下命令：
 
 ~~~bash
 $ sudo ln -s /usr/bin/db2x_docbook2texi /usr/bin/docbook2x-texi
@@ -96,7 +108,7 @@ $ sudo ln -s /usr/bin/db2x_docbook2texi /usr/bin/docbook2x-texi
 
 以此来解决二进制文件名的不同。
 
-当你安装好所有的必要依赖，你可以继续从几个地方来取得最新发布版本的 tar 包。 你可以从 Kernel.org 网站获取，网址为 [https://www.kernel.org/pub/software/scm/git]， 或从 GitHub 网站上的镜像来获得，网址为[https://github.com/git/git/releases]。 通常在 GitHub 上的是最新版本，但 kernel.org 上包含有文件下载签名，如果你想验证下载正确性的话会用到。
+当你安装好所有的必要依赖，你可以继续从几个地方来取得最新发布版本的 tar 包。 你可以从 Kernel.org 网站获取，网址为 [https://www.kernel.org/pub/software/scm/git] ，或从 GitHub 网站上的镜像来获得，网址为[https://github.com/git/git/releases] 。 通常在 GitHub 上的是最新版本，但 kernel.org 上包含有文件下载签名，如果你想验证下载正确性的话会用到。
 
 编译并安装
 
@@ -118,12 +130,16 @@ $ git clone git://git.kernel.org/pub/scm/git/git.git
 ## 初次运行
 
 每台计算机上只需要配置一次，程序升级时会保留配置信息。 你可以在任何时候再次通过运行命令来修改它们。
-Git 自带一个 git config 的工具来帮助设置控制 Git 外观和行为的配置变量。这些变量存储在三个不同的位置：
-1./etc/gitconfig 文件: 包含系统上每一个用户及他们仓库的通用配置。如果在执行 git config 时带上 --system 选项，那么它就会读写该文件中的配置变量。（由于它是系统配置文件，因此你需要管理员或超级用户权限来修改它。）
-2.~/.gitconfig或 ~/.config/git/config 文件：只针对当前用户。 你可以传递 --global 选项让 Git读写此文件，这会对你系统上所有的仓库生效。
-3.当前使用仓库的 Git 目录中的 config文件（即 .git/config）：针对该仓库。 你可以传递 --local选项让 Git 强制读写此文件，默认情况下用的就是它。（需要进入某个 Git 仓库中才能让该选项生效。）每一个级别会覆盖上一级别的配置，所以 .git/config 的配置变量会覆盖 /etc/gitconfig 中的配置变量。
 
-在 Windows 系统中，Git 会查找 $HOME目录下（一般情况下是 C:\Users\$USER）的 .gitconfig文件。Git 同样也会寻找 /etc/gitconfig文件，但只限于 MSys 的根目录下，即安装 Git 时所选的目标位置。 如果你在 Windows 上使用 Git 2.x 以后的版本，那么还有一个系统级的配置文件，Windows XP 上在C:\Documents and Settings\All Users\Application Data\Git\config，Windows Vista 及更新的版本在 C:\ProgramData\Git\config。此文件只能以管理员权限通过 git config -f `<`file`>` 来修改。你可以通过以下命令查看所有的配置以及它们所在的文件：
+Git 自带一个 git config 的工具来帮助设置控制 Git 外观和行为的配置变量。这些变量存储在三个不同的位置：
+
+1./etc/gitconfig 文件: 包含系统上每一个用户及他们仓库的通用配置。如果在执行 git config 时带上 --system 选项，那么它就会读写该文件中的配置变量。（由于它是系统配置文件，因此你需要管理员或超级用户权限来修改它。）
+
+2.~/.gitconfig或 ~/.config/git/config 文件：只针对当前用户。 你可以传递 --global 选项让 Git读写此文件，这会对你系统上所有的仓库生效。
+
+3.当前使用仓库的 Git 目录中的 config 文件（即 .git/config ）：针对该仓库。 你可以传递 --local 选项让 Git 强制读写此文件，默认情况下用的就是它。（需要进入某个 Git 仓库中才能让该选项生效。）每一个级别会覆盖上一级别的配置，所以 .git/config 的配置变量会覆盖 /etc/gitconfig 中的配置变量。
+
+在 Windows 系统中，Git 会查找 $HOME目录下（一般情况下是 C:\Users\$USER）的 .gitconfig 文件。Git 同样也会寻找 /etc/gitconfig 文件，但只限于 MSys 的根目录下，即安装 Git 时所选的目标位置。 如果你在 Windows 上使用 Git 2.x 以后的版本，那么还有一个系统级的配置文件，Windows XP 上在 C:\Documents and Settings\All Users\Application Data\Git\config ，Windows Vista 及更新的版本在 C:\ProgramData\Git\config 。此文件只能以管理员权限通过 git config -f `<`file`>` 来修改。你可以通过以下命令查看所有的配置以及它们所在的文件：
 
 ~~~bash
 $ git config --list --show-origin
@@ -142,8 +158,11 @@ $ git config --global user.email johndoe@example.com
 
 ### 文本编辑器
 
-用户信息设置完毕，可以配置默认文本编辑器，当 Git 需要你输入信息时会调用它。 如果未配置，Git 会使用操作系统默认的文本编辑器。如果你想使用不同的文本编辑器，例如 Emacs，可以输入如下命令：
+用户信息设置完毕，可以配置默认文本编辑器，当 Git 需要你输入信息时会调用它。 如果未配置，Git 会使用操作系统默认的文本编辑器。如果你想使用不同的文本编辑器，例如 Emacs ，可以输入如下命令：
+
+~~~bash
 $ git config --global core.editor emacs
+~~~
 
 在 Windows 系统上，如果你想要使用别的文本编辑器，那么必须指定可执行文件的完整路径。 它可能随你的编辑器的打包方式而不同。
 
@@ -178,8 +197,11 @@ John Doe
 ~~~
 
 由于 Git 会从多个文件中读取同一配置变量的不同值，因此你可能会在其中看到意料之外的值而不知道为什么。 此时，你可以查询 Git 中该变量的 原始值，它会告诉你哪一个配置文件最后设置了该值：
+
+~~~bash
 $ git config --show-origin rerere.autoUpdate
 file:/home/johndoe/.gitconfig   false
+~~~
 
 ### 获取帮助
 
@@ -192,12 +214,18 @@ $ man git-<verb>
 ~~~
 
 例如，要想获得 git config命令的手册，执行
-$ git help config
 
-如果你觉得手册或者本书的内容还不够用，你可以尝试在 Freenode IRC 服务器 [https://freenode.net] 上的 #git或 #github频道寻求帮助。
+~~~bash
+$ git help config
+~~~
+
+如果你觉得手册或者本书的内容还不够用，你可以尝试在 Freenode IRC 服务器 [https://freenode.net] 上的 #git 或 #github 频道寻求帮助。
+
 如果你不需要全面的手册，只需要可用选项的快速参考，那么可以用 -h选项获得更简明的 “help” 输出：
 $ git add -h
-usage: git add [`<`options`>`] [--] `<`pathspec`>`...
+
+~~~markdown
+usage: git add [<options>] [--] <pathspec>...
 -n, --dry-run         dry run
 -v, --verbose         be verbose
 -i, --interactive     interactive picking
@@ -213,14 +241,18 @@ usage: git add [`<`options`>`] [--] `<`pathspec`>`...
 --ignore-errors       just skip files which cannot be added because oferrors
 --ignore-missing      check if - even missing - files are ignored indry run
 --chmod (+|-)x        override the executable bit of the listed files
+~~~
 
 ## Git基础
 
 ### 获取Git仓库
 
 通常有两种获取 Git 项目仓库的方式：
+
 1.将尚未进行版本控制的本地目录转换为 Git 仓库；
+
 2.从其它服务器 克隆一个已存在的 Git 仓库。
+
 两种方式都会在你的本地机器上得到一个工作就绪的 Git 仓库。
 
 #### 在已存在目录中初始化仓库
@@ -245,10 +277,14 @@ $ cd /c/user/my_project
 ~~~
 
 初始化Git仓库，执行：
-$ git init
-该命令将创建一个名为 .git的子目录，这个子目录含有你初始化的 Git 仓库中所有的必须文件，这些文件是Git 仓库的骨干。 但是，在这个时候，我们仅仅是做了一个初始化的操作，你的项目里的文件还没有被跟踪。
 
-如果在一个已存在文件的文件夹（而非空文件夹）中进行版本控制，你应该开始追踪这些文件并进行初始提交。可以通过 git add命令来指定所需的文件来进行追踪，然后执行 git commit：
+~~~bash
+$ git init
+~~~
+
+该命令将创建一个名为 .git 的子目录，这个子目录含有你初始化的 Git 仓库中所有的必须文件，这些文件是 Git 仓库的骨干。 但是，在这个时候，我们仅仅是做了一个初始化的操作，你的项目里的文件还没有被跟踪。
+
+如果在一个已存在文件的文件夹（而非空文件夹）中进行版本控制，你应该开始追踪这些文件并进行初始提交。可以通过 git add命令来指定所需的文件来进行追踪，然后执行 git commit ：
 
 ~~~bash
 $ git add *.c
@@ -258,15 +294,15 @@ $ git commit -m 'initial project version'
 
 ### 克隆现有的仓库
 
-如果你想获得一份已经存在了的 Git 仓库的拷贝，比如说，你想为某个开源项目贡献自己的一份力，这时就要用到 git clone命令。Git 克隆的是该 Git 仓库服务器上的几乎所有数据，而不是仅仅复制完成你的工作所需要文件。 当你执行 git clone命令的时候，默认配置下远程 Git 仓库中的每一个文件的每一个版本都将被拉取下来。
+如果你想获得一份已经存在了的 Git 仓库的拷贝，比如说，你想为某个开源项目贡献自己的一份力，这时就要用到 git clone 命令。 Git 克隆的是该 Git 仓库服务器上的几乎所有数据，而不是仅仅复制完成你的工作所需要文件。 当你执行 git clone 命令的时候，默认配置下远程 Git 仓库中的每一个文件的每一个版本都将被拉取下来。
 
-克隆仓库的命令是 git clone `<`url`>`。比如，要克隆 Git 的链接库 libgit2，可以用下面的命令：
+克隆仓库的命令是 git clone `<`url`>` 。比如，要克隆 Git 的链接库 libgit2 ，可以用下面的命令：
 
 ~~~bash
 $ git clone https://github.com/libgit2/libgit2
 ~~~
 
-这会在当前目录下创建一个名为 “libgit2” 的目录，并在这个目录下初始化一个 .git文件夹， 从远程仓库拉取下所有数据放入 .git文件夹，然后从中读取最新版本的文件的拷贝。
+这会在当前目录下创建一个名为 “libgit2” 的目录，并在这个目录下初始化一个 .git 文件夹， 从远程仓库拉取下所有数据放入 .git 文件夹，然后从中读取最新版本的文件的拷贝。
 
 如果你想在克隆远程仓库的时候，自定义本地仓库的名字，你可以通过额外的参数指定新的目录名：
 
@@ -274,46 +310,67 @@ $ git clone https://github.com/libgit2/libgit2
 $ git clone https://github.com/libgit2/libgit2 mylibgit
 ~~~
 
-这会执行与上一条命令相同的操作，但目标目录名变为了 mylibgit。
+这会执行与上一条命令相同的操作，但目标目录名变为了 mylibgit 。
 
-Git 支持多种数据传输协议。 上面的例子使用的是 https://协议，不过你也可以使用 git://协议或者使用SSH 传输协议，比如 user@server:path/to/repo.git。
+Git 支持多种数据传输协议。 上面的例子使用的是 https://协议 ，不过你也可以使用 git://协议或者使用SSH 传输协议，比如 user@server:path/to/repo.git 。
 
-工作目录下的每一个文件都不外乎这两种状态：已跟踪或 未跟踪。 已跟踪的文件是指那些被纳入了版本控制的文件，在上一次快照中有它们的记录，在工作一段时间后， 它们的状态可能是未修改，已修改或已放入暂存区。简而言之，已跟踪的文件就是 Git 已经知道的文件。
-工作目录中除已跟踪文件外的其它所有文件都属于未跟踪文件，它们既不存在于上次快照的记录中，也没有被放入暂存区。 初次克隆某个仓库的时候，工作目录中的所有文件都属于已跟踪文件，并处于未修改状态，因为 Git刚刚检出了它们， 而你尚未编辑过它们。
+工作目录下的每一个文件都不外乎这两种状态：已跟踪或 未跟踪。 已跟踪的文件是指那些被纳入了版本控制的文件，在上一次快照中有它们的记录，在工作一段时间后，它们的状态可能是未修改，已修改或已放入暂存区。 简而言之，已跟踪的文件就是 Git 已经知道的文件。
+
+工作目录中除已跟踪文件外的其它所有文件都属于未跟踪文件，它们既不存在于上次快照的记录中，也没有被放入暂存区。 初次克隆某个仓库的时候，工作目录中的所有文件都属于已跟踪文件，并处于未修改状态，因为 Git刚刚检出了它们，而你尚未编辑过它们。
 
 ### 检查当前文件状态
 
-用 git status命令查看哪些文件处于什么状态。如果在克隆仓库后立即使用此命令，会看到类似这样的输出：
+用 git status命令查看哪些文件处于什么状态。 如果在克隆仓库后立即使用此命令，会看到类似这样的输出：
+
+~~~bash
 $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
 nothing to commit, working directory clean
+~~~
 
 在项目下创建一个新的 README 文件
+
+~~~bash
 $ echo 'My Project' > README
-如果之前并不存在这个文件，使用 git status命令，你将看到一个新的未跟踪文件：
+~~~
+
+如果之前并不存在这个文件，使用 git status 命令，你将看到一个新的未跟踪文件：
+
+~~~bash
 $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
 Untracked files:  
 (use "git add '<'file'>'..." to include in what will be committed)
 READMEnothing added to commit but untracked files present (use "git add" totrack)
+~~~
 
 ### 跟踪新文件
 
-使用命令 git add开始跟踪一个文件。所以，要跟踪 README文件，运行：
+使用命令 git add 开始跟踪一个文件。所以，要跟踪 README 文件，运行：
+
+~~~bash
 $ git add README
-再运行 git status命令，会看到 README文件已被跟踪，并处于暂存状态：
+~~~
+
+再运行 git status 命令，会看到 README 文件已被跟踪，并处于暂存状态：
+
+~~~bash
 $ git statusOn branch master
 Your branch is up-to-date with 'origin/master'.
 Changes to be committed:  
 (use "git restore --staged '<'file'>'..." to unstage)
 new file:   README
-只要在 Changes to be committed这行下面的，就说明是已暂存状态。git add命令使用文件或目录的路径作为参数；如果参数是目录的路径，该命令将递归地跟踪该目录下的所有文件。
+~~~
+
+只要在 Changes to be committed 这行下面的，就说明是已暂存状态。git add 命令使用文件或目录的路径作为参数；如果参数是目录的路径，该命令将递归地跟踪该目录下的所有文件。
 
 ### 暂存已修改的文件
 
-如果你修改了一个名为 CONTRIBUTING.md的已被跟踪的文件，然后运行 git status命令，会看到下面内容：
+如果你修改了一个名为 CONTRIBUTING.md 的已被跟踪的文件，然后运行 git status 命令，会看到下面内容：
+
+~~~bash
 $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
@@ -324,37 +381,56 @@ Changes not staged for commit:
 (use "git add <file>..." to update what will be committed)  
 (use "git checkout -- <file>..." to discard changes in workingdirectory)
 modified:   CONTRIBUTING.md
-文件 CONTRIBUTING.md出现在 Changes not staged for commit这行下面，说明已跟踪文件的内容发生了变化，但还没有放到暂存区。要暂存这次更新，需要运行 git add命令。
-运行了 gitadd之后又作了修订的文件，需要重新运行 git add把最新版本重新暂存起来。
+~~~
+
+文件 CONTRIBUTING.md 出现在 Changes not staged for commit 这行下面，说明已跟踪文件的内容发生了变化，但还没有放到暂存区。要暂存这次更新，需要运行 git add 命令。
+
+运行了 git add 之后又作了修订的文件，需要重新运行 git add 把最新版本重新暂存起来。
 
 ### 状态简览
 
-git status命令的输出十分详细，但其用语有些繁琐。 Git 有一个选项可以缩短状态命令的输出，以简洁的方式查看更改。 使用 git status -s 命令或 git status --short 命令，将得到一种格式更为紧凑的输出。
+git status 命令的输出十分详细，但其用语有些繁琐。 Git 有一个选项可以缩短状态命令的输出，以简洁的方式查看更改。 使用 git status -s 命令或 git status --short 命令，将得到一种格式更为紧凑的输出。
+
+~~~bash
 $ git status -s
  M README
 MM Rakefile
 A  lib/git.rb
 M  lib/simplegit.rb
 ?? LICENSE.txt
-新添加的未跟踪文件前面有 ?? 标记，新添加到暂存区中的文件前面有 A 标记，修改过的文件前面有 M 标记。输出中有两栏，左栏指明了暂存区的状态，右栏指明了工作区的状态。例如，上面的状态报告显示： README文件在工作区已修改但尚未暂存，而 lib/simplegit.rb文件已修改且已暂存。 Rakefile文件已修，暂存后又作了修改，因此该文件的修改中既有已暂存的部分，又有未暂存的部分。
+~~~
+
+新添加的未跟踪文件前面有 ?? 标记，新添加到暂存区中的文件前面有 A 标记，修改过的文件前面有 M 标记。 输出中有两栏，左栏指明了暂存区的状态，右栏指明了工作区的状态。 例如，上面的状态报告显示： README 文件在工作区已修改但尚未暂存，而 lib/simplegit.rb 文件已修改且已暂存。 Rakefile 文件已修，暂存后又作了修改，因此该文件的修改中既有已暂存的部分，又有未暂存的部分。
 
 ### 忽略文件
 
-有些文件无需纳入 Git 的管理，也不希望它们总出现在未跟踪文件列表。 通常都是些自动生成的文件，比如日志文件，或者编译过程中创建的临时文件等。 在这种情况下，可以创建一个名为 .gitignore的文件，列出要忽略的文件的模式。 来看一个实际的 .gitignore例子：
+有些文件无需纳入 Git 的管理，也不希望它们总出现在未跟踪文件列表。 通常都是些自动生成的文件，比如日志文件，或者编译过程中创建的临时文件等。 在这种情况下，可以创建一个名为 .gitignore 的文件，列出要忽略的文件的模式。 来看一个实际的 .gitignore 例子：
+
+~~~bash
 $ cat .gitignore
 *.[oa]
 *~
+~~~
+
 第一行告诉 Git 忽略所有以 .o或 .a结尾的文件。
+
 第二行告诉 Git 忽略所有名字以波浪符（~）结尾的文件，许多文本编辑软件（比如 Emacs）都用这样的文件名保存副本。
 
 .gitignore 文件的格式规范如下：
+
 •所有空行或者以 # 开头的行都会被 Git 忽略。
+
 •可以使用标准的 glob 模式匹配，它会递归地应用在整个工作区中。
+
 •匹配模式可以以（/）开头防止递归。
+
 •匹配模式可以以（/）结尾指定目录。
+
 •要忽略指定模式以外的文件或目录，可以在模式前加上叹号（!）取反。
-所谓的 glob 模式是指 bash 所使用的简化了的正则表达式。 星号（*）匹配零个或多个任意字符；[abc]匹配任何一个列在方括号中的字符（这个例子要么匹配一个 a，要么匹配一个 b，要么匹配一个 c）； 问号（?）只匹配一个任意字符；如果在方括号中使用短划线分隔两个字符， 表示所有在这两个字符范围内的都可以匹配（比如 [0-9]表示匹配所有 0 到 9 的数字）。 使用两个星号（**）表示匹配任意中间目录，比如 a/**/z可以匹配 a/z、 a/b/z或 a/b/c/z等。
-我们再看一个 .gitignore文件的例子：
+
+所谓的 glob 模式是指 bash 所使用的简化了的正则表达式。 星号（*）匹配零个或多个任意字符；[abc]匹配任何一个列在方括号中的字符（这个例子要么匹配一个 a，要么匹配一个 b，要么匹配一个 c）； 问号（?）只匹配一个任意字符；如果在方括号中使用短划线分隔两个字符， 表示所有在这两个字符范围内的都可以匹配（比如 [0-9]表示匹配所有 0 到 9 的数字）。 使用两个星号（\*\*） 表示匹配任意中间目录，比如 a/\*\*/z可以匹配 a/z 、 a/b/z 或 a/b/c/z 等。
+
+我们再看一个 .gitignore 文件的例子：
 
 ~~~.gitignore
 # 忽略所有的 .a 文件
@@ -377,23 +453,40 @@ GitHub 有一个十分详细的针对数十种项目及语言的 .gitignore文�
 ### 查看已暂存和未暂存的修改
 
 如果 git status 命令的输出对于你来说过于简略，而你想知道具体修改了什么地方，可以用 git diff命令。
+
 此命令比较的是工作目录中当前文件和暂存区域快照之间的差异。也就是修改之后还没有暂存起来的变化内容。
-若要查看已暂存的将要添加到下次提交里的内容，可以用 git diff --staged命令。
+
+若要查看已暂存的将要添加到下次提交里的内容，可以用 git diff --staged 命令。
+
+~~~bash
 $ git diff --staged
+~~~
+
 使用 git diff 来分析文件差异,也可以使用图形化的工具或外部 diff 工具来比较差异。可以使用 git difftool 命令来调用 emerge 或 vimdiff 等软件（包括商业软件）输出 diff 的分析结果。 使用 git difftool --tool-help 命令来看你的系统支持哪些 Git Diff 插件。
+
+~~~bash
 $ git difftool --tool-help
+~~~
 
 ### 提交更新
 
 在提交之前，务必确认还有什么已修改或新建的文件还没有 git add 过， 否则提交的时候不会记录这些尚未暂存的变化。已修改但未暂存的文件只会保留在本地磁盘。所以，每次准备提交前，先用 git status 看下，你所需要的文件是不是都已暂存起来了，然后再运行提交命令git commit：
+
+~~~bash
 $ git commit
+~~~
+
 更详细的内容修改提示可以用 -v 选项查看，这会将你所作更改的 diff 输出呈现在编辑器中，以便让你知道本次提交具体作出哪些修改。
-另外，你也可以在 commit命令后添加 -m选项，将提交信息与命令放在同一行，如下所示：
+
+另外，你也可以在 commit 命令后添加 -m 选项，将提交信息与命令放在同一行，如下所示：
+
+~~~bash
 $ git commit -m "Story 182: Fix benchmarks for speed"
+~~~
 
 ### 跳过使用暂存区域
 
-Git 提供了一个跳过使用暂存区域的方式， 只要在提交的时候，给 git commit 加上 -a 选项，Git 就会自动把所有已经跟踪过的文件暂存起来一并提交，从而跳过 git add 步骤：
+Git 提供了一个跳过使用暂存区域的方式，只要在提交的时候，给 git commit 加上 -a 选项，Git 就会自动把所有已经跟踪过的文件暂存起来一并提交，从而跳过 git add 步骤：
 
 ~~~bash
 $ git status
@@ -413,22 +506,42 @@ $ git commit -a -m 'added new benchmarks'
 ### 移除文件
 
 要从 Git 中移除某个文件，就必须要从已跟踪文件清单中移除（确切地说，是从暂存区域移除），然后提交。可以用 git rm 命令完成此项工作，并连带从工作目录中删除指定的文件，这样以后就不会出现在未跟踪文件清单中了。
+
+~~~bash
 $ git rm PROJECTS.md
-如果要删除之前修改过或已经放到暂存区的文件，则必须使用强制删除选项 -f（译注：即 force 的首字母）。 这是一种安全特性，用于防止误删尚未添加到快照的数据，这样的数据不能被 Git 恢复。
+~~~
+
+如果要删除之前修改过或已经放到暂存区的文件，则必须使用强制删除选项 -f （译注：即 force 的首字母）。 这是一种安全特性，用于防止误删尚未添加到快照的数据，这样的数据不能被 Git 恢复。
 
 另外一种情况是，我们想把文件从 Git 仓库中删除（亦即从暂存区域移除），但仍然希望保留在当前工作目录中。换句话说，你想让文件保留在磁盘，但是并不想让 Git 继续跟踪。 为达到这一目的，使用 --cached 选项：
+
+~~~bash
 $ git rm --cached README
+~~~
+
 git rm命令后面可以列出文件或者目录的名字，也可以使用 glob 模式。比如：
+
+~~~bash
 $ git rm log/\*.log
-注意到星号 *之前的反斜杠 \ ， 因为 Git 有它自己的文件模式扩展匹配方式，所以我们不用 bash 来帮忙展开。此命令删除 log/目录下扩展名为 .log的所有文件。 类似的比如：
+~~~
+
+注意到星号 *之前的反斜杠 \ ， 因为 Git 有它自己的文件模式扩展匹配方式，所以我们不用 bash 来帮忙展开。 此命令删除 log/目录下扩展名为 .log 的所有文件。 类似的比如：
+
+~~~bash
 $ git rm \*~
+~~~
+
 该命令会删除所有名字以 ~ 结尾的文件。
 
 ### 移动文件
 
 要在 Git 中对文件改名，可以输入如下命令：
+
+~~~bash
 $ git mv file_from file_to
-其实，运行 git mv就相当于运行了下面三条命令：
+~~~
+
+其实，运行 git mv 就相当于运行了下面三条命令：
 
 ~~~bash
 $ mv README.md README
@@ -465,15 +578,34 @@ Date:   Sat Mar 15 10:31:28 2008 -0700
 ~~~
 
 不传入任何参数的默认情况下，git log 会按时间先后顺序列出所有的提交，最近的更新排在最上面。这个命令会列出每个提交的 SHA-1 校验和、作者的名字和电子邮件地址、提交时间以及提交说明。
-git log 比较有用的选项是 -p 或 --patch，它会显示每次提交所引入的差异（按补丁的格式输出）。你也可以限制显示的日志条目数量，例如使用 -2 选项来只显示最近的两次提交：
+
+git log 比较有用的选项是 -p 或 --patch ，它会显示每次提交所引入的差异（按补丁的格式输出）。你也可以限制显示的日志条目数量，例如使用 -2 选项来只显示最近的两次提交：
+
+~~~bash
 $ git log -p -2
-该选项除了显示基本信息之外，还附带了每次提交的变化。可以为 git log附带一系列的总结性选项。比如你想看到每次提交的简略统计信息，可以使用 --stat 选项：
+~~~
+
+该选项除了显示基本信息之外，还附带了每次提交的变化。可以为 git log 附带一系列的总结性选项。比如你想看到每次提交的简略统计信息，可以使用 --stat 选项：
+
+~~~bash
 $ git log --stat
+~~~
+
 --stat 选项在每次提交的下面列出所有被修改过的文件、有多少文件被修改了以及被修改过的文件的哪些行被移除或是添加了。 在每次提交的最后还有一个总结。
-另一个非常有用的选项是 --pretty 。 这个选项可以使用不同于默认格式的方式展示提交历史。这个选项有一些内建的子选项供你使用。比如 oneline 会将每个提交放在一行显示，在浏览大量的提交时非常有用。另外还有 short ，full 和 fuller 选项，它们展示信息的格式基本一致，但是详尽程度不一
+
+另一个非常有用的选项是 --pretty 。 这个选项可以使用不同于默认格式的方式展示提交历史。这个选项有一些内建的子选项供你使用。比如 oneline 会将每个提交放在一行显示，在浏览大量的提交时非常有用。另外还有 short ，full 和 fuller 选项，它们展示信息的格式基本一致，但是详尽程度不一。
+
+~~~bash
 $ git log --pretty=oneline
-最有意思的是 format，可以定制记录的显示格式。 这样的输出对后期提取分析格外有用——因为你知道输出的格式不会随着 Git 的更新而发生改变：
+~~~
+
+最有意思的是 format ，可以定制记录的显示格式。 这样的输出对后期提取分析格外有用——因为你知道输出的格式不会随着 Git 的更新而发生改变：
+
+~~~bash
 $ git log --pretty=format:"%h - %an, %ar : %s"
+~~~
+
+~~~makedown
 git log --pretty=format 常用的选项
 选项    说明
 %H      提交的完整哈希值
@@ -491,9 +623,17 @@ git log --pretty=format 常用的选项
 %cd     提交日期
 %cr     提交日期（距今多长时间）
 %s      提交说明
+~~~
+
 作者指的是实际作出修改的人，提交者指的是最后将此工作成果提交到仓库的人。
+
 当 oneline 或 format 与另一个 log 选项 --graph 结合使用时尤其有用。 这个选项添加了一些 ASCII 字符串来形象地展示你的分支、合并历史：
+
+~~~bash
 $ git log --pretty=format:"%h %s" --graph
+~~~
+
+~~~makedown
 git log 的常用选项
 选项                说明
 -p                  按补丁格式显示每个提交引入的差异。
@@ -506,17 +646,31 @@ git log 的常用选项
 --graph             在日志旁以 ASCII 图形显示分支与合并历史。
 --pretty            使用其他格式显示历史提交信息。可用的选项包括 oneline、short、full、fuller 和format（用来定义自己的格式）。
 --oneline           --pretty=oneline --abbrev-commit合用的简写。
+~~~
 
 ### 限制输出长度
 
-可以使用类似 -<n> 的选项，其中的n可以是任何整数，表示仅显示最近的n条提交。不过实践中这个选项不是很常用，因为 Git 默认会将所有的输出传送到分页程序中，所以你一次只会看到一页的内容。
-类似 --since 和 --until 这种按照时间作限制的选项很有用。例如，下面的命令会列出最近两周的所有提交：
+可以使用类似 -'<'n'>' 的选项，其中的n可以是任何整数，表示仅显示最近的n条提交。 不过实践中这个选项不是很常用，因为 Git 默认会将所有的输出传送到分页程序中，所以你一次只会看到一页的内容。
+
+类似 --since 和 --until 这种按照时间作限制的选项很有用。 例如，下面的命令会列出最近两周的所有提交：
+
+~~~bash
 $ git log --since=2.weeks
-该命令可用的格式十分丰富——可以是类似 "2008-01-15"的具体的某一天，也可以是类似 "2 years 1 day3 minutes ago"的相对日期。
-还可以过滤出匹配指定条件的提交。用 --author选项显示指定作者的提交，用 --grep 选项搜索提交说明中的关键字。可以指定多个 --author 和 --grep 搜索条件，这样会只输出任意匹配 --author 模式和 --grep 模式的提交。然而，如果你添加了 --all-match 选项，则只会输出所有匹配--grep 模式的提交。
-另一个非常有用的过滤器是 -S（俗称“pickaxe”选项），它接受一个字符串参数，并且只会显示那些添加或删除了该字符串的提交。假设你想找出添加或删除了对某一个特定函数的引用的提交，可以调用：
+~~~
+
+该命令可用的格式十分丰富——可以是类似 "2008-01-15" 的具体的某一天，也可以是类似 "2 years 1 day3 minutes ago" 的相对日期。
+
+还可以过滤出匹配指定条件的提交。 用 --author 选项显示指定作者的提交，用 --grep 选项搜索提交说明中的关键字。 可以指定多个 --author 和 --grep 搜索条件，这样会只输出任意匹配 --author 模式和 --grep 模式的提交。 然而，如果你添加了 --all-match 选项，则只会输出所有匹配--grep 模式的提交。
+
+另一个非常有用的过滤器是 -S （俗称“pickaxe”选项），它接受一个字符串参数，并且只会显示那些添加或删除了该字符串的提交。 假设你想找出添加或删除了对某一个特定函数的引用的提交，可以调用：
+
+~~~bash
 $ git log -S function_name
+~~~
+
 最后一个很实用的 git log 选项是路径（path），如果只关心某些文件或者目录的历史提交，可以在 git log 选项的最后指定它们的路径。
+
+~~~makedown
 限制 git log 输出的选项
 选项                    说明
 -<n>                    仅显示最近的 n 条提交。
@@ -526,22 +680,38 @@ $ git log -S function_name
 --committer             仅显示提交者匹配指定字符串的提交。
 --grep                  仅显示提交说明中包含指定字符串的提交。
 -S                      仅显示添加或删除内容匹配指定字符串的提交。
+~~~
+
 如果要在 Git 源码库中查看 Junio Hamano 在 2008 年 10 月其间， 除了合并提交之外的哪一个提交修改了测试文件，可以使用下面的命令：
+
+~~~bash
 $ git log --pretty="%h - %s" --author='Junio C Hamano' --since="2008-10-01" \   --before="2008-11-01" --no-merges -- t/
+~~~
 
 隐藏合并提交
-按照你代码仓库的工作流程，记录中可能有为数不少的合并提交，它们所包含的信息通常并不多。为了避免显示的合并提交弄乱历史记录，可以为 log 加上 --no-merges 选项。
+
+按照你代码仓库的工作流程，记录中可能有为数不少的合并提交，它们所包含的信息通常并不多。 为了避免显示的合并提交弄乱历史记录，可以为 log 加上 --no-merges 选项。
 
 ### 撤消操作
 
-注意，有些撤消操作是不可逆的。这是在使用 Git 的过程中，会因为操作失误而导致之前的工作丢失的少有的几个地方之一。
+注意，有些撤消操作是不可逆的。 这是在使用 Git 的过程中，会因为操作失误而导致之前的工作丢失的少有的几个地方之一。
+
 运行带有 --amend 选项的提交命令来重新提交：
+
+~~~bash
 $ git commit --amend
-这个命令会将暂存区中的文件提交。如果自上次提交以来你还未做任何修改（例如，在上次提交后马上执行了此命令）， 那么快照会保持不变，而你所修改的只是提交信息。
+~~~
+
+这个命令会将暂存区中的文件提交。 如果自上次提交以来你还未做任何修改（例如，在上次提交后马上执行了此命令），那么快照会保持不变，而你所修改的只是提交信息。
+
 例如，你提交后发现忘记了暂存某些需要的修改，可以像下面这样操作：
+
+~~~bash
 $ git commit -m 'initial commit'
 $ git add forgotten_file
 $ git commit --amend
+~~~
+
 最终你只会有一个提交——第二次提交将代替第一次提交的结果。
 
 ### 取消暂存的文件
@@ -553,8 +723,11 @@ On branch masterChanges to be committed:
   (use "git reset HEAD <file>..." to unstage)
     renamed:    README.md -> README
     modified:   CONTRIBUTING.md
+~~~
 
-在 “Changes to be committed” 文字正下方，提示使用 git reset HEAD <file>...来取消暂存。所以，我们可以这样来取消暂存 CONTRIBUTING.md 文件：
+在 “Changes to be committed” 文字正下方，提示使用 git reset HEAD <file>... 来取消暂存。 所以，我们可以这样来取消暂存 CONTRIBUTING.md 文件：
+
+~~~bash
 $ git reset HEAD CONTRIBUTING.md
 Unstaged changes after reset:
 M   CONTRIBUTING.md
@@ -570,20 +743,25 @@ Changes not staged for commit:
 
 ### 撤消对文件的修改
 
-如果你并不想保留对 CONTRIBUTING.md文件的修改，通过如下命令方便地撤消修改——将它还原成上次提交时的样子（或者刚克隆完的样子，或者刚把它放入工作目录时的样子）
+如果你并不想保留对 CONTRIBUTING.md 文件的修改，通过如下命令方便地撤消修改——将它还原成上次提交时的样子（或者刚克隆完的样子，或者刚把它放入工作目录时的样子）
+
+~~~bash
 $ git checkout -- CONTRIBUTING.md
-请务必记得 git checkout -- <file>是一个危险的命令。 你对那个文件在本地的任何修改都会消失——Git 会用最近提交的版本覆盖掉它。
+~~~
+
+请务必记得 git checkout -- '<'file'>' 是一个危险的命令。 你对那个文件在本地的任何修改都会消失—— Git 会用最近提交的版本覆盖掉它。
 
 ## 远程仓库的使用
 
 管理远程仓库包括了解如何添加远程仓库、移除无效的远程仓库、管理不同的远程分支并定义它们是否被跟踪等等。
 
 远程仓库可以在你的本地主机上
+
 你完全可以在一个“远程”仓库上工作，而实际上它在你本地的主机上。 词语“远程”未必表示仓库在网络或互联网上的其它位置，而只是表示它在别处。 在这样的远程仓库上工作，仍然需要和其它远程仓库上一样的标准推送、拉取和抓取操作。
 
 ### 查看远程仓库
 
-如果想查看你已经配置的远程仓库服务器，可以运行 git remote命令。它会列出你指定的每一个远程服务器的简写。如果你已经克隆了自己的仓库，那么至少应该能看到 origin ——这是 Git 给你克隆的仓库服务器的默认名字：
+如果想查看你已经配置的远程仓库服务器，可以运行 git remote 命令。 它会列出你指定的每一个远程服务器的简写。 如果你已经克隆了自己的仓库，那么至少应该能看到 origin ——这是 Git 给你克隆的仓库服务器的默认名字：
 
 ~~~bash
 $ git clone https://github.com/schacon/ticgit
@@ -638,7 +816,7 @@ pb  https://github.com/paulboone/ticgit (fetch)
 pb  https://github.com/paulboone/ticgit (push)
 ~~~
 
-现在你可以在命令行中使用字符串 pb 来代替整个 URL。例如，如果你想拉取 Paul 的仓库中有但你没有的信息，可以运行 git fetch pb：
+现在你可以在命令行中使用字符串 pb 来代替整个 URL 。 例如，如果你想拉取 Paul 的仓库中有但你没有的信息，可以运行 git fetch pb ：
 
 ~~~bash
 $ git fetch pb
@@ -651,7 +829,7 @@ From https://github.com/paulboone/ticgit
  * [new branch]      ticgit     -> pb/ticgit
 ~~~
 
-现在 Paul 的 master 分支可以在本地通过 pb/master访问到——你可以将它合并到自己的某个分支中，或者如果你想要查看它的话，可以检出一个指向该点的本地分支。
+现在 Paul 的 master 分支可以在本地通过 pb/master 访问到——你可以将它合并到自己的某个分支中，或者如果你想要查看它的话，可以检出一个指向该点的本地分支。
 
 ### 从远程仓库中抓取与拉取
 
@@ -661,20 +839,25 @@ From https://github.com/paulboone/ticgit
 $ git fetch <remote>
 ~~~
 
-这个命令会访问远程仓库，从中拉取所有你还没有的数据。执行完成后，你将会拥有那个远程仓库中所有分支的引用，可以随时合并或查看。
-如果你使用 clone 命令克隆了一个仓库，命令会自动将其添加为远程仓库并默认以 “origin” 为简写。所以，git fetch origin 会抓取克隆（或上一次抓取）后新推送的所有工作。必须注意 git fetch 命令只会将数据下载到你的本地仓库——它并不会自动合并或修改你当前的工作。当准备好时你必须手动将其合并入你的工作。
+这个命令会访问远程仓库，从中拉取所有你还没有的数据。 执行完成后，你将会拥有那个远程仓库中所有分支的引用，可以随时合并或查看。
+如果你使用 clone 命令克隆了一个仓库，命令会自动将其添加为远程仓库并默认以 “origin” 为简写。 所以，git fetch origin 会抓取克隆（或上一次抓取）后新推送的所有工作。必须注意 git fetch 命令只会将数据下载到你的本地仓库——它并不会自动合并或修改你当前的工作。 当准备好时你必须手动将其合并入你的工作。
+
 如果你的当前分支设置了跟踪远程分支（阅读下一节和 Git 分支了解更多信息），那么可以用 git pull 命令来自动抓取后合并该远程分支到当前分支。
 
 ### 推送到远程仓库
 
-当你想分享项目时，必须将其推送到上游。这个命令很简单：git push <remote> <branch>
-当你想要将 master分支推送到 origin服务器时（再次说明，克隆时通常会自动帮你设置好那两个名字），那么运行这个命令就可以将你所做的备份到服务器：
+当你想分享项目时，必须将其推送到上游。这个命令很简单： git push '<'remote'>' '<'branch'>'
+当你想要将 master 分支推送到 origin 服务器时（再次说明，克隆时通常会自动帮你设置好那两个名字），那么运行这个命令就可以将你所做的备份到服务器：
+
+~~~bash
 $ git push origin master
-只有当你有所克隆服务器的写入权限，并且之前没有人推送过时，这条命令才能生效。当你和其他人在同一时间克隆，他们先推送到上游然后你再推送到上游，你的推送就会毫无疑问地被拒绝。你必须先抓取他们的工作并将其合并进你的工作后才能推送。
+~~~
+
+只有当你有所克隆服务器的写入权限，并且之前没有人推送过时，这条命令才能生效。 当你和其他人在同一时间克隆，他们先推送到上游然后你再推送到上游，你的推送就会毫无疑问地被拒绝。 你必须先抓取他们的工作并将其合并进你的工作后才能推送。
 
 ### 查看某个远程仓库
 
-如果想要查看某一个远程仓库的更多信息，可以使用 git remote show <remote>命令。如果想以一个特定的缩写名运行这个命令，例如 origin，会得到像下面类似的信息：
+如果想要查看某一个远程仓库的更多信息，可以使用 git remote show '<'remote'>' 命令。如果想以一个特定的缩写名运行这个命令，例如 origin ，会得到像下面类似的信息：
 
 ~~~bash
 $ git remote show origin
@@ -691,14 +874,18 @@ $ git remote show origin
     master pushes to master (up to date)
 ~~~
 
-它同样会列出远程仓库的 URL 与跟踪分支的信息。 这些信息非常有用，它告诉你正处于 master分支，并且如果运行 git pull，就会抓取所有的远程引用，然后将远程 master分支合并到本地 master分支。它也会列出拉取到的所有远程引用。
+它同样会列出远程仓库的 URL 与跟踪分支的信息。 这些信息非常有用，它告诉你正处于 master 分支，并且如果运行 git pull ，就会抓取所有的远程引用，然后将远程 master 分支合并到本地 master 分支。它也会列出拉取到的所有远程引用。
 如果你是 Git 的重度使用者，那么还可以通过 git remote show 看到更多的信息。
+
+~~~bash
 $ git remote show
-这个命令列出了当你在特定的分支上执行 git push会自动地推送到哪一个远程分支。 它也同样地列出了哪些远程分支不在你的本地，哪些远程分支已经从服务器上移除了， 还有当你执行 git pull时哪些本地分支可以与它跟踪的远程分支自动合并。
+~~~
+
+这个命令列出了当你在特定的分支上执行 git push 会自动地推送到哪一个远程分支。 它也同样地列出了哪些远程分支不在你的本地，哪些远程分支已经从服务器上移除了，还有当你执行 git pull 时哪些本地分支可以与它跟踪的远程分支自动合并。
 
 ### 远程仓库的重命名与移除
 
-你可以运行 git remote rename 来修改一个远程仓库的简写名。例如，想要将 pb 重命名为 paul，可以用 git remote rename 这样做：
+你可以运行 git remote rename 来修改一个远程仓库的简写名。例如，想要将 pb 重命名为 paul ，可以用 git remote rename 这样做：
 
 ~~~bash
 $ git remote rename pb paul
@@ -707,9 +894,9 @@ origin
 paul
 ~~~
 
-值得注意的是这同样也会修改你所有远程跟踪的分支名字。那些过去引用 pb/master的现在会引用paul/master。
+值得注意的是这同样也会修改你所有远程跟踪的分支名字。那些过去引用 pb/master 的现在会引用paul/master 。
 
-如果因为一些原因想要移除一个远程仓库——你已经从服务器上搬走了或不再想使用某一个特定的镜像了，又或者某一个贡献者不再贡献了——可以使用 git remote remove 或 git remote rm：
+如果因为一些原因想要移除一个远程仓库——你已经从服务器上搬走了或不再想使用某一个特定的镜像了，又或者某一个贡献者不再贡献了——可以使用 git remote remove 或 git remote rm ：
 
 ~~~bash
 $ git remote remove paul
@@ -740,12 +927,14 @@ v2.0
 $ git tag -l "v1.8.5*"
 ~~~
 
-按照通配符列出标签需要 -l或 --list选项如果你只想要完整的标签列表，那么运行 git tag就会默认假定你想要一个列表，它会直接给你列出来， 此时的 -l或 --list是可选的。然而，如果你提供了一个匹配标签名的通配模式，那么 -l或 --list就是强制使用的。
+按照通配符列出标签需要 -l 或 --list 选项如果你只想要完整的标签列表，那么运行 git tag 就会默认假定你想要一个列表，它会直接给你列出来，此时的 -l 或 --list 是可选的。 然而，如果你提供了一个匹配标签名的通配模式，那么 -l 或 --list 就是强制使用的。
 
 #### 创建标签
 
 Git 支持两种标签：轻量标签（lightweight）与附注标签（annotated）。
+
 轻量标签很像一个不会改变的分支——它只是某个特定提交的引用。
+
 附注标签是存储在 Git 数据库中的一个完整对象， 它们是可以被校验的，其中包含打标签者的名字、电子邮件地址、日期时间， 此外还有一个标签信息，并且可以使用 GNU Privacy Guard （GPG）签名并验证。通常会建议创建附注标签，这样你可以拥有以上所有信息。
 
 #### 附注标签
@@ -760,7 +949,7 @@ v1.3
 v1.4
 ~~~
 
--m选项指定了一条将会存储在标签中的信息。如果没有为附注标签指定一条信息，Git 会启动编辑器要求你输入信息。通过使用 git show 命令可以看到标签信息和与之对应的提交信息：
+-m 选项指定了一条将会存储在标签中的信息。如果没有为附注标签指定一条信息，Git 会启动编辑器要求你输入信息。通过使用 git show 命令可以看到标签信息和与之对应的提交信息：
 
 ~~~bash
 $ git show v1.4
@@ -778,7 +967,7 @@ Date:   Mon Mar 17 21:52:11 2008 -0700
 
 #### 轻量标签
 
-轻量标签本质上是将提交校验和存储到一个文件中——没有保存任何其他信息。创建轻量标签，不需要使用 -a 、-s 或 -m 选项，只需要提供标签名字：
+轻量标签本质上是将提交校验和存储到一个文件中——没有保存任何其他信息。 创建轻量标签，不需要使用 -a 、-s 或 -m 选项，只需要提供标签名字：
 
 ~~~bash
 $ git tag v1.4-lw
@@ -790,7 +979,7 @@ v1.4-lw
 v1.5
 ~~~
 
-这时，如果在标签上运行 git show ，你不会看到额外的标签信息。命令只会显示出提交信息：
+这时，如果在标签上运行 git show ，你不会看到额外的标签信息。 命令只会显示出提交信息：
 
 ~~~bash
 $ git show v1.4-lw
@@ -819,7 +1008,11 @@ a6b4c97498bd301d84096da251c98a07c7723e65 beginning write support
 ~~~
 
 假设在 v1.2 时你忘记给项目打标签，也就是在 “updated rakefile” 提交。 你可以在之后补上标签。 要在那个提交上打标签，你需要在命令的末尾指定提交的校验和（或部分校验和）：
+
+~~~bash
 $ git tag -a v1.2 9fceb02
+~~~
+
 可以看到你已经在那次提交上打上标签了：
 
 ~~~bash
@@ -843,7 +1036,7 @@ Date:   Sun Apr 27 20:43:35 2008 -0700
 
 #### 共享标签
 
-默认情况下，git push命令并不会传送标签到远程仓库服务器上。在创建完标签后你必须显式地推送标签到共享服务器上。 这个过程就像共享远程分支一样——你可以运行 git push origin <tagname>。
+默认情况下，git push 命令并不会传送标签到远程仓库服务器上。在创建完标签后你必须显式地推送标签到共享服务器上。 这个过程就像共享远程分支一样——你可以运行 git push origin '<'tagname'>'。
 
 ~~~bash
 $ git push origin v1.5
@@ -867,11 +1060,11 @@ Total 1 (delta 0), reused 0 (delta 0)To git@github.com:schacon/simplegit.git
  * [new tag]         v1.4-lw -> v1.4-lw
 ~~~
 
-git push 推送两种标签使用 git push <remote> --tags 推送标签并不会区分轻量标签和附注标签， 没有简单的选项能够让你只选择推送一种标签。
+git push 推送两种标签使用 git push '<'remote'>' --tags 推送标签并不会区分轻量标签和附注标签， 没有简单的选项能够让你只选择推送一种标签。
 
 #### 删除标签
 
-要删除掉你本地仓库上的标签，可以使用命令 git tag -d <tagname>。
+要删除掉你本地仓库上的标签，可以使用命令 git tag -d '<'tagname'>' 。
 例如，可以使用以下命令删除一个轻量标签：
 
 ~~~bash
@@ -879,7 +1072,7 @@ $ git tag -d v1.4-lw
 Deleted tag 'v1.4-lw' (was e7d5add)
 ~~~
 
-注意上述命令并不会从任何远程仓库中移除这个标签，你必须用 git push <remote>:refs/tags/<tagname>来更新你的远程仓库：
+注意上述命令并不会从任何远程仓库中移除这个标签，你必须用 git push '<'remote'>':refs/tags/'<'tagname'>' 来更新你的远程仓库：
 第一种变体是
 
 ~~~bash
@@ -921,7 +1114,7 @@ $ git checkout -b version2 v2.0.0
 Switched to a new branch 'version2'
 ~~~
 
-如果在这之后又进行了一次提交，version2分支就会因为这个改动向前移动，此时它就会和v2.0.0标签稍微有些不同，这时就要当心了。
+如果在这之后又进行了一次提交，version2 分支就会因为这个改动向前移动，此时它就会和v2.0.0标签稍微有些不同，这时就要当心了。
 
 ### Git别名
 
@@ -934,7 +1127,7 @@ $ git config --global alias.ci commit
 $ git config --global alias.st status
 ~~~
 
-这意味着，当要输入 git commit时，只需要输入 git ci。
+这意味着，当要输入 git commit 时，只需要输入 git ci 。
 为了解决取消暂存文件的易用性问题，可以向 Git 中添加你自己的取消暂存别名：
 
 ~~~bash
@@ -965,7 +1158,7 @@ Date:   Tue Aug 26 19:48:51 2008 +0800
     Signed-off-by: Scott Chacon <schacon@example.com>
 ~~~
 
-可以看出，Git 只是简单地将别名替换为对应的命令。 然而，你可能想要执行外部命令，而不是一个 Git 子命令。 如果是那样的话，可以在命令前面加入  !符号。 如果你自己要写一些与 Git 仓库协作的工具的话，那会很有用。 我们现在演示将 git visual定义为 gitk的别名：
+可以看出，Git 只是简单地将别名替换为对应的命令。 然而，你可能想要执行外部命令，而不是一个 Git 子命令。 如果是那样的话，可以在命令前面加入 ! 符号。 如果你自己要写一些与 Git 仓库协作的工具的话，那会很有用。 我们现在演示将 git visual定义为 gitk的别名：
 
 ~~~bash
 $ git config --global alias.visual '!gitk'
@@ -975,23 +1168,27 @@ $ git config --global alias.visual '!gitk'
 
 ### 分支简介
 
-在进行提交操作时，Git 会保存一个提交对象（commit object）。 该提交对象会包含一个指向暂存内容快照的指针。 但不仅仅是这样，该提交对象还包含了作者的姓名和邮箱、提交时输入的信息以及指向它的父对象的指针。首次提交产生的提交对象没有父对象，普通提交操作产生的提交对象有一个父对象， 而由多个分支合并产生的提交对象有多个父对象.
-当使用 git commit进行提交操作时，Git 会先计算每一个子目录（本例中只有项目根目录）的校验和，然后在 Git 仓库中这些校验和保存为树对象。 随后，Git 便会创建一个提交对象，它除了包含上面提到的那些信息外，还包含指向这个树对象（项目根目录）的指针。 如此一来，Git 就可以在需要的时候重现此次保存的快照。
-现在，Git 仓库中有五个对象：三个 blob 对象（保存着文件快照）、一个 树对象 （记录着目录结构和 blob 对象索引）以及一个 提交对象（包含着指向前述树对象的指针和所有提交信息）。
+在进行提交操作时，Git 会保存一个提交对象（commit object）。 该提交对象会包含一个指向暂存内容快照的指针。 但不仅仅是这样，该提交对象还包含了作者的姓名和邮箱、提交时输入的信息以及指向它的父对象的指针。 首次提交产生的提交对象没有父对象，普通提交操作产生的提交对象有一个父对象，而由多个分支合并产生的提交对象有多个父对象.
+
+当使用 git commit 进行提交操作时，Git 会先计算每一个子目录（本例中只有项目根目录）的校验和，然后在 Git 仓库中这些校验和保存为树对象。 随后， Git 便会创建一个提交对象，它除了包含上面提到的那些信息外，还包含指向这个树对象（项目根目录）的指针。 如此一来， Git 就可以在需要的时候重现此次保存的快照。
+
+现在， Git 仓库中有五个对象：三个 blob 对象（保存着文件快照）、一个树对象（记录着目录结构和 blob 对象索引）以及一个提交对象（包含着指向前述树对象的指针和所有提交信息）。
+
 Git 的分支，其实本质上仅仅是指向提交对象的可变指针。 Git 的默认分支名字是 master 。 在多次提交操作之后，你其实已经有一个指向最后那个提交对象的 master 分支。 master分支会在每次提交时自动向前移动。
-Git 的 master分支并不是一个特殊分支。它就跟其它分支完全没有区别。 之所以几乎每一个仓库都有 master 分支，是因为 git init命令默认创建它，并且大多数人都懒得去改动它。
+
+Git 的 master 分支并不是一个特殊分支。它就跟其它分支完全没有区别。 之所以几乎每一个仓库都有 master 分支，是因为 git init 命令默认创建它，并且大多数人都懒得去改动它。
 
 ### 分支创建
 
-比如，创建一个 testing 分支， 你需要使用 git branch命令：
+比如，创建一个 testing 分支， 你需要使用 git branch 命令：
 
 ~~~bash
 $ git branch testing
 ~~~
 
-Git 有一个名为 HEAD 的特殊指针，指示当前在哪一个分支上。git branch 命令仅仅创建一个新分支，并不会自动切换到新分支中去。
+Git 有一个名为 HEAD 的特殊指针，指示当前在哪一个分支上。 git branch 命令仅仅创建一个新分支，并不会自动切换到新分支中去。
 
-可以简单地使用 git log 命令查看各个分支当前所指的对象。 提供这一功能的参数是 --decorate。
+可以简单地使用 git log 命令查看各个分支当前所指的对象。 提供这一功能的参数是 --decorate 。
 
 ~~~bash
 $ git log --oneline --decorate
@@ -1010,7 +1207,7 @@ $ git checkout testing
 
 这样 HEAD就指向 testing 分支了。
 
-切换回 master分支
+切换回 master 分支
 
 ~~~bash
 $ git checkout master
@@ -1034,7 +1231,8 @@ $ git log --oneline --decorate --graph --all
 
 #### 新建分支
 
-假设你正在你的项目上工作，并且在 master分支上已经有了一些提交。
+假设你正在你的项目上工作，并且在 master 分支上已经有了一些提交。
+
 现在，你已经决定要解决你的公司使用的问题追踪系统中的 #53 问题。 想要新建一个分支并同时切换到那个分支上，你可以运行一个带有 -b 参数的 git checkout 命令：
 
 ~~~bash
@@ -1049,7 +1247,7 @@ $ git branch iss53
 $ git checkout iss53
 ~~~
 
-你继续在 #53 问题上工作，并且做了一些提交。 在此过程中，iss53分支在不断的向前推进，因为你已经检出到该分支（也就是说，你的 HEAD 指针指向了 iss53 分支）
+你继续在 #53 问题上工作，并且做了一些提交。 在此过程中， iss53 分支在不断的向前推进，因为你已经检出到该分支（也就是说，你的 HEAD 指针指向了 iss53 分支）
 
 ~~~bash
 $ vim index.html
@@ -1057,6 +1255,7 @@ $ git commit -a -m 'added a new footer [issue 53]'
 ~~~
 
 有了 Git 的帮助，你不必把这个紧急问题和 iss53 的修改混在一起，你也不需要花大力气来还原关于 53# 问题的修改，然后再添加关于这个紧急问题的修改，最后将这个修改提交到线上分支。 你所要做的仅仅是切换回 master 分支。
+
 但是，在你这么做之前，要留意你的工作目录和暂存区里那些还没有被提交的修改，它可能会和你即将检出的分支产生冲突从而阻止 Git 切换到该分支。 最好的方法是，在你切换分支之前，保持好一个干净的状态。 有一些方法可以绕过这个问题（即，暂存（stashing） 和 修补提交（commit amending）），我们会在 贮藏与清理中 看到关于这两个命令的介绍。 现在，我们假设你已经把你的修改全部提交了，这时你可以切换回 master分支了：
 
 ~~~bash
@@ -1065,8 +1264,11 @@ Switched to branch 'master'
 ~~~
 
 这个时候，你的工作目录和你在开始 #53 问题之前一模一样。
+
 请牢记：当你切换分支的时候，Git 会重置你的工作目录，使其看起来像回到了你在那个分支上最后一次提交的样子。
+
 Git 会自动添加、删除、修改文件以确保此时你的工作目录和这个分支最后一次提交时的样子一模一样。
+
 接下来，你要修复这个紧急问题。 我们来建立一个 hotfix分支，在该分支上工作直到问题解决：
 
 ~~~bash
@@ -1077,7 +1279,7 @@ $ vim index.html$ git commit -a -m 'fixed the broken email address'
  1 file changed, 2 insertions(+)
 ~~~
 
-你可以运行你的测试，确保你的修改是正确的，然后将 hotfix分支合并回你的 master分支来部署到线上。你可以使用 git merge命令来达到上述目的：
+你可以运行你的测试，确保你的修改是正确的，然后将 hotfix 分支合并回你的 master 分支来部署到线上。你可以使用 git merge 命令来达到上述目的：
 
 ~~~bash
 $ git checkout master
@@ -1087,7 +1289,7 @@ Updating f42c576..3a0874cFast-forward index.html | 2 ++
 ~~~
 
 在合并的时候，你应该注意到了“快进（fast-forward）”这个词。 由于你想要合并的分支 hotfix 所指向的提交 C4 是你所在的提交 C2 的直接后继，因此 Git 会直接将指针向前移动。换句话说，当你试图合并两个分支时，如果顺着一个分支走下去能够到达另一个分支，那么 Git 在合并两者的时候，只会简单的将指针向前推进（指针右移），因为这种情况下的合并操作没有需要解决的分歧——这就叫做 “快进（fast-forward）”。
-关于这个紧急问题的解决方案发布之后，你准备回到被打断之前时的工作中。 然而，你应该先删除 hotfix 分支，因为你已经不再需要它了 —— master分支已经指向了同一个位置。 你可以使用带 -d 选项的 git branch 命令来删除分支：
+关于这个紧急问题的解决方案发布之后，你准备回到被打断之前时的工作中。 然而，你应该先删除 hotfix 分支，因为你已经不再需要它了 —— master 分支已经指向了同一个位置。 你可以使用带 -d 选项的 git branch 命令来删除分支：
 
 ~~~bash
 $ git branch -d hotfix
@@ -1105,11 +1307,11 @@ $ git commit -a -m 'finished the new footer [issue 53]'
 1 file changed, 1 insertion(+)
 ~~~
 
-你在 hotfix 分支上所做的工作并没有包含到 iss53 分支中。 如果你需要拉取 hotfix 所做的修改，你可以使用 git merge master 命令将 master分支合并入 iss53 分支，或者你也可以等到 iss53 分支完成其使命，再将其合并回 master分支。
+你在 hotfix 分支上所做的工作并没有包含到 iss53 分支中。 如果你需要拉取 hotfix 所做的修改，你可以使用 git merge master 命令将 master 分支合并入 iss53 分支，或者你也可以等到 iss53 分支完成其使命，再将其合并回 master分支。
 
 #### 分支的合并
 
-假设你已经修正了 #53 问题，并且打算将你的工作合并入 master 分支。 为此，你需要合并 iss53 分支到master 分支，这和之前你合并 hotfix 分支所做的工作差不多。 你只需要检出到你想合并入的分支，然后运行 git merge 命令：
+假设你已经修正了 #53 问题，并且打算将你的工作合并入 master 分支。 为此，你需要合并 iss53 分支到 master 分支，这和之前你合并 hotfix 分支所做的工作差不多。 你只需要检出到你想合并入的分支，然后运行 git merge 命令：
 
 ~~~bash
 $ git checkout master
@@ -1128,7 +1330,7 @@ $ git branch -d iss53
 
 #### 遇到冲突时的分支合并
 
-如果你在两个不同的分支中，对同一个文件的同一个部分进行了不同的修改，Git 就没法干净的合并它们。如果你对 #53 问题的修改和有关 hotfix 分支的修改都涉及到同一个文件的同一处，在合并它们的时候就会产生合并冲突：
+如果你在两个不同的分支中，对同一个文件的同一个部分进行了不同的修改，Git 就没法干净的合并它们。 如果你对 #53 问题的修改和有关 hotfix 分支的修改都涉及到同一个文件的同一处，在合并它们的时候就会产生合并冲突：
 
 ~~~bash
 $ git merge iss53
@@ -1171,7 +1373,8 @@ please contact us at email.support@github.com
 </div>
 ~~~
 
-上述的冲突解决方案仅保留了其中一个分支的修改，并且 <<<<<<< , ======= , 和 >>>>>>> 这些行被完全删除了。在你解决了所有文件里的冲突之后，对每个文件使用 git add 命令来将其标记为冲突已解决。 一旦暂存这些原本有冲突的文件，Git 就会将它们标记为冲突已解决。
+上述的冲突解决方案仅保留了其中一个分支的修改，并且 <<<<<<< , ======= , 和 >>>>>>> 这些行被完全删除了。 在你解决了所有文件里的冲突之后，对每个文件使用 git add 命令来将其标记为冲突已解决。 一旦暂存这些原本有冲突的文件，Git 就会将它们标记为冲突已解决。
+
 如果你想使用图形化工具来解决冲突，你可以运行 git mergetool ，该命令会为你启动一个合适的可视化合并工具，并带领你一步一步解决这些冲突：
 
 ~~~bash
@@ -1223,7 +1426,7 @@ Conflicts:
 
 ### 分支管理
 
-git branch命令不只是可以创建与删除分支。如果不加任何参数运行它，会得到当前所有分支的一个列表：
+git branch 命令不只是可以创建与删除分支。如果不加任何参数运行它，会得到当前所有分支的一个列表：
 
 ~~~bash
 $ git branch
@@ -1232,7 +1435,7 @@ $ git branch
   testing
 ~~~
 
-注意 master分支前的 *字符：它代表现在检出的那一个分支（也就是说，当前 HEAD指针所指向的分支）。这意味着如果在这时候提交，master分支将会随着新的工作向前移动。 如果需要查看每一个分支的最后一次提交，可以运行 git branch -v命令：
+注意 master 分支前的 * 字符：它代表现在检出的那一个分支（也就是说，当前 HEAD指针所指向的分支）。这意味着如果在这时候提交，master分支将会随着新的工作向前移动。 如果需要查看每一个分支的最后一次提交，可以运行 git branch -v 命令：
 
 ~~~bash
 $ git branch -v
@@ -1241,7 +1444,7 @@ $ git branch -v
   testing 782fd34 add scott to the author list in the readmes
 ~~~
 
---merged 与 --no-merged 这两个有用的选项可以过滤这个列表中已经合并或尚未合并到当前分支的分支。 如果要查看哪些分支已经合并到当前分支，可以运行 git branch --merged：
+--merged 与 --no-merged 这两个有用的选项可以过滤这个列表中已经合并或尚未合并到当前分支的分支。 如果要查看哪些分支已经合并到当前分支，可以运行 git branch --merged ：
 
 ~~~bash
 $ git branch --merged
@@ -1249,9 +1452,9 @@ $ git branch --merged
 * master
 ~~~
 
-因为之前已经合并了 iss53分支，所以现在看到它在列表中。 在这个列表中分支名字前没有 *号的分支通常可以使用 git branch -d删除掉；你已经将它们的工作整合到了另一个分支，所以并不会失去任何东西。
+因为之前已经合并了 iss53 分支，所以现在看到它在列表中。 在这个列表中分支名字前没有 * 号的分支通常可以使用 git branch -d 删除掉；你已经将它们的工作整合到了另一个分支，所以并不会失去任何东西。
 
-查看所有包含未合并工作的分支，可以运行 git branch --no-merged：
+查看所有包含未合并工作的分支，可以运行 git branch --no-merged ：
 
 ~~~bash
 $ git branch --no-merged
