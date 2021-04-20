@@ -1268,5 +1268,12 @@ If you are sure you want to delete it, run 'git branch -D testing'.
 
 如果真的想要删除分支并丢掉那些工作，如同帮助信息里所指出的，可以使用 -D 选项强制删除它。
 
-选项 --merged 和 --no-merged 会在没有给定提交或分支名作为参数时，分别列出已合并或未合并到当前分支的分支。
+选项 --merged 和 --no-merged 会在没有给定提交或分支名作为参数时，分别列出已合并或未合并到当前分支的分支。可以通过附加的参数来查看其它分支的合并状态而不必检出它们。 例如，尚未合并到 master 分支的有哪些：
+
+~~~bash
+\$ git checkout testing
+\$ git branch --no-merged master
+  topicA
+  featureB81
+~~~
 
