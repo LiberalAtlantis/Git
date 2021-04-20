@@ -123,7 +123,7 @@ Git 自带一个 git config 的工具来帮助设置控制 Git 外观和行为�
 2.~/.gitconfig或 ~/.config/git/config 文件：只针对当前用户。 你可以传递 --global 选项让 Git读写此文件，这会对你系统上所有的仓库生效。
 3.当前使用仓库的 Git 目录中的 config文件（即 .git/config）：针对该仓库。 你可以传递 --local选项让 Git 强制读写此文件，默认情况下用的就是它。（需要进入某个 Git 仓库中才能让该选项生效。）每一个级别会覆盖上一级别的配置，所以 .git/config 的配置变量会覆盖 /etc/gitconfig 中的配置变量。
 
-在 Windows 系统中，Git 会查找 \$HOME目录下（一般情况下是 C:\Users\\$USER）的 .gitconfig文件。Git 同样也会寻找 /etc/gitconfig文件，但只限于 MSys 的根目录下，即安装 Git 时所选的目标位置。 如果你在 Windows 上使用 Git 2.x 以后的版本，那么还有一个系统级的配置文件，Windows XP 上在C:\Documents and Settings\All Users\Application Data\Git\config，Windows Vista 及更新的版本在 C:\ProgramData\Git\config。此文件只能以管理员权限通过 git config -f <file> 来修改。你可以通过以下命令查看所有的配置以及它们所在的文件：
+在 Windows 系统中，Git 会查找 \$HOME目录下（一般情况下是 C:\Users\\$USER）的 .gitconfig文件。Git 同样也会寻找 /etc/gitconfig文件，但只限于 MSys 的根目录下，即安装 Git 时所选的目标位置。 如果你在 Windows 上使用 Git 2.x 以后的版本，那么还有一个系统级的配置文件，Windows XP 上在C:\Documents and Settings\All Users\Application Data\Git\config，Windows Vista 及更新的版本在 C:\ProgramData\Git\config。此文件只能以管理员权限通过 git config -f `'<'`file`'>'` 来修改。你可以通过以下命令查看所有的配置以及它们所在的文件：
 
 ~~~bash
 \$ git config --list --show-origin
@@ -170,7 +170,7 @@ color.diff=auto
 
 可能会看到重复的变量名，因为 Git 会从不同的文件中读取同一个配置（例如：/etc/gitconfig与~/.gitconfig）。 这种情况下，Git 会使用它找到的每一个变量的最后一个配置。
 
-可以通过输入 git config <key>：来检查 Git 的某一项配置
+可以通过输入 git config `'<'`key`'>'`：来检查 Git 的某一项配置
 
 ~~~bash
 \$ git config user.name
@@ -186,9 +186,9 @@ file:/home/johndoe/.gitconfig   false
 若你使用 Git 时需要获取帮助，有三种等价的方法可以找到 Git 命令的综合手册（manpage）：
 
 ~~~bash
-\$ git help <verb>
-\$ git <verb> --help
-\$ man git-<verb>
+\$ git help '<'verb'>'
+\$ git '<'verb'>' --help
+\$ man git-'<'verb'>'
 ~~~
 
 例如，要想获得 git config命令的手册，执行
@@ -197,7 +197,7 @@ file:/home/johndoe/.gitconfig   false
 如果你觉得手册或者本书的内容还不够用，你可以尝试在 Freenode IRC 服务器 [https://freenode.net] 上的 #git或 #github频道寻求帮助。
 如果你不需要全面的手册，只需要可用选项的快速参考，那么可以用 -h选项获得更简明的 “help” 输出：
 \$ git add -h
-usage: git add [<options>] [--] <pathspec>...
+usage: git add [`'<'`options`'>'`] [--] `'<'`pathspec`'>'`...
 -n, --dry-run         dry run
 -v, --verbose         be verbose
 -i, --interactive     interactive picking
@@ -260,7 +260,7 @@ usage: git add [<options>] [--] <pathspec>...
 
 如果你想获得一份已经存在了的 Git 仓库的拷贝，比如说，你想为某个开源项目贡献自己的一份力，这时就要用到 git clone命令。Git 克隆的是该 Git 仓库服务器上的几乎所有数据，而不是仅仅复制完成你的工作所需要文件。 当你执行 git clone命令的时候，默认配置下远程 Git 仓库中的每一个文件的每一个版本都将被拉取下来。
 
-克隆仓库的命令是 git clone <url>。比如，要克隆 Git 的链接库 libgit2，可以用下面的命令：
+克隆仓库的命令是 git clone `'<'`url`'>'`。比如，要克隆 Git 的链接库 libgit2，可以用下面的命令：
 
 ~~~bash
 \$ git clone https://github.com/libgit2/libgit2
@@ -290,13 +290,13 @@ Your branch is up-to-date with 'origin/master'.
 nothing to commit, working directory clean
 
 在项目下创建一个新的 README 文件
-\$ echo 'My Project' > README
+\$ echo 'My Project' '>' README
 如果之前并不存在这个文件，使用 git status命令，你将看到一个新的未跟踪文件：
 \$ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
 Untracked files:  
-(use "git add <file>..." to include in what will be committed)
+(use "git add ''<''file''>''..." to include in what will be committed)
 READMEnothing added to commit but untracked files present (use "git add" totrack)
 
 ### 跟踪新文件
@@ -307,7 +307,7 @@ READMEnothing added to commit but untracked files present (use "git add" totrack
 \$ git statusOn branch master
 Your branch is up-to-date with 'origin/master'.
 Changes to be committed:  
-(use "git restore --staged <file>..." to unstage)
+(use "git restore --staged ''<''file''>''..." to unstage)
 new file:   README
 只要在 Changes to be committed这行下面的，就说明是已暂存状态。git add命令使用文件或目录的路径作为参数；如果参数是目录的路径，该命令将递归地跟踪该目录下的所有文件。
 
@@ -318,11 +318,11 @@ new file:   README
 On branch master
 Your branch is up-to-date with 'origin/master'.
 Changes to be committed:  
-(use "git reset HEAD <file>..." to unstage)
+(use "git reset HEAD '<'file'>'..." to unstage)
 new file:   README
 Changes not staged for commit:  
-(use "git add <file>..." to update what will be committed)  
-(use "git checkout -- <file>..." to discard changes in workingdirectory)
+(use "git add '<'file'>'..." to update what will be committed)  
+(use "git checkout -- '<'file'>'..." to discard changes in workingdirectory)
 modified:   CONTRIBUTING.md
 文件 CONTRIBUTING.md出现在 Changes not staged for commit这行下面，说明已跟踪文件的内容发生了变化，但还没有放到暂存区。要暂存这次更新，需要运行 git add命令。
 运行了 gitadd之后又作了修订的文件，需要重新运行 git add把最新版本重新暂存起来。
@@ -400,8 +400,8 @@ Git 提供了一个跳过使用暂存区域的方式， 只要在提交的时候
 On branch master
 Your branch is up-to-date with 'origin/master'.
 Changes not staged for commit:  
-(use "git add <file>..." to update what will be committed)  
-(use "git checkout -- <file>..." to discard changes in workingdirectory)
+(use "git add '<'file'>'..." to update what will be committed)  
+(use "git checkout -- '<'file'>'..." to discard changes in workingdirectory)
 modified:   CONTRIBUTING.md
 no changes added to commit (use "git add" and/or "git commit -a")
 
@@ -451,15 +451,15 @@ git rm命令后面可以列出文件或者目录的名字，也可以使用 glob
 ~~~bash
 \$ git log
 commit ca82a6dff817ec66f44342007202690a93763949
-Author: Scott Chacon <schacon@gee-mail.com>
+Author: Scott Chacon '<'schacon@gee-mail.com'>'
 Date:   Mon Mar 17 21:52:11 2008 -0700
     changed the version number
 commit 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7
-Author: Scott Chacon <schacon@gee-mail.com>
+Author: Scott Chacon '<'schacon@gee-mail.com'>'
 Date:   Sat Mar 15 16:40:33 2008 -0700
     removed unnecessary test
 commit a11bef06a3f659402fe7563abf99ad00de2209e6
-Author: Scott Chacon <schacon@gee-mail.com>
+Author: Scott Chacon '<'schacon@gee-mail.com'>'
 Date:   Sat Mar 15 10:31:28 2008 -0700
     first commit
 ~~~
@@ -509,7 +509,7 @@ git log 的常用选项
 
 ### 限制输出长度
 
-可以使用类似 -<n> 的选项，其中的n可以是任何整数，表示仅显示最近的n条提交。不过实践中这个选项不是很常用，因为 Git 默认会将所有的输出传送到分页程序中，所以你一次只会看到一页的内容。
+可以使用类似 -'<'n'>' 的选项，其中的n可以是任何整数，表示仅显示最近的n条提交。不过实践中这个选项不是很常用，因为 Git 默认会将所有的输出传送到分页程序中，所以你一次只会看到一页的内容。
 类似 --since 和 --until 这种按照时间作限制的选项很有用。例如，下面的命令会列出最近两周的所有提交：
 \$ git log --since=2.weeks
 该命令可用的格式十分丰富——可以是类似 "2008-01-15"的具体的某一天，也可以是类似 "2 years 1 day3 minutes ago"的相对日期。
@@ -519,7 +519,7 @@ git log 的常用选项
 最后一个很实用的 git log 选项是路径（path），如果只关心某些文件或者目录的历史提交，可以在 git log 选项的最后指定它们的路径。
 限制 git log 输出的选项
 选项                    说明
--<n>                    仅显示最近的 n 条提交。
+-'<'n'>'                    仅显示最近的 n 条提交。
 --since, --after        仅显示指定时间之后的提交。
 --until, --before       仅显示指定时间之前的提交。
 --author                仅显示作者匹配指定字符串的提交。
@@ -550,21 +550,21 @@ git log 的常用选项
 \$ git add *
 \$ git status
 On branch masterChanges to be committed:
-  (use "git reset HEAD <file>..." to unstage)
-    renamed:    README.md -> README
+  (use "git reset HEAD '<'file'>'..." to unstage)
+    renamed:    README.md -'>' README
     modified:   CONTRIBUTING.md
 
-在 “Changes to be committed” 文字正下方，提示使用 git reset HEAD <file>...来取消暂存。所以，我们可以这样来取消暂存 CONTRIBUTING.md 文件：
+在 “Changes to be committed” 文字正下方，提示使用 git reset HEAD '<'file'>'...来取消暂存。所以，我们可以这样来取消暂存 CONTRIBUTING.md 文件：
 \$ git reset HEAD CONTRIBUTING.md
 Unstaged changes after reset:
 M   CONTRIBUTING.md
 \$ git status
 On branch masterChanges to be committed:
-  (use "git reset HEAD <file>..." to unstage)
-    renamed:    README.md -> README
+  (use "git reset HEAD '<'file'>'..." to unstage)
+    renamed:    README.md -'>' README
 Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in workingdirectory)
+  (use "git add '<'file'>'..." to update what will be committed)
+  (use "git checkout -- '<'file'>'..." to discard changes in workingdirectory)
     modified:   CONTRIBUTING.md
 ~~~
 
@@ -572,7 +572,7 @@ Changes not staged for commit:
 
 如果你并不想保留对 CONTRIBUTING.md文件的修改，通过如下命令方便地撤消修改——将它还原成上次提交时的样子（或者刚克隆完的样子，或者刚把它放入工作目录时的样子）
 \$ git checkout -- CONTRIBUTING.md
-请务必记得 git checkout -- <file>是一个危险的命令。 你对那个文件在本地的任何修改都会消失——Git 会用最近提交的版本覆盖掉它。
+请务必记得 git checkout -- '<'file'>'是一个危险的命令。 你对那个文件在本地的任何修改都会消失——Git 会用最近提交的版本覆盖掉它。
 
 ## 远程仓库的使用
 
@@ -625,7 +625,7 @@ origin    git@github.com:mojombo/grit.git (push)
 
 ### 添加远程仓库
 
-运行 git remote add <shortname> <url> 添加一个新的远程 Git 仓库，同时指定一个方便使用的简写：
+运行 git remote add '<'shortname'>' '<'url'>' 添加一个新的远程 Git 仓库，同时指定一个方便使用的简写：
 
 ~~~bash
 \$ git remote
@@ -647,8 +647,8 @@ remote: Compressing objects: 100% (36/36), done.
 remote: Total 43 (delta 10), reused 31 (delta 5)
 Unpacking objects: 100% (43/43), done.
 From https://github.com/paulboone/ticgit
- * [new branch]      master     -> pb/master
- * [new branch]      ticgit     -> pb/ticgit
+ * [new branch]      master     -'>' pb/master
+ * [new branch]      ticgit     -'>' pb/ticgit
 ~~~
 
 现在 Paul 的 master 分支可以在本地通过 pb/master访问到——你可以将它合并到自己的某个分支中，或者如果你想要查看它的话，可以检出一个指向该点的本地分支。
@@ -658,7 +658,7 @@ From https://github.com/paulboone/ticgit
 从远程仓库中获得数据，可以执行：
 
 ~~~bash
-\$ git fetch <remote>
+\$ git fetch '<'remote'>'
 ~~~
 
 这个命令会访问远程仓库，从中拉取所有你还没有的数据。执行完成后，你将会拥有那个远程仓库中所有分支的引用，可以随时合并或查看。
@@ -667,14 +667,14 @@ From https://github.com/paulboone/ticgit
 
 ### 推送到远程仓库
 
-当你想分享项目时，必须将其推送到上游。这个命令很简单：git push <remote> <branch>
+当你想分享项目时，必须将其推送到上游。这个命令很简单：git push '<'remote'>' '<'branch'>'
 当你想要将 master分支推送到 origin服务器时（再次说明，克隆时通常会自动帮你设置好那两个名字），那么运行这个命令就可以将你所做的备份到服务器：
 \$ git push origin master
 只有当你有所克隆服务器的写入权限，并且之前没有人推送过时，这条命令才能生效。当你和其他人在同一时间克隆，他们先推送到上游然后你再推送到上游，你的推送就会毫无疑问地被拒绝。你必须先抓取他们的工作并将其合并进你的工作后才能推送。
 
 ### 查看某个远程仓库
 
-如果想要查看某一个远程仓库的更多信息，可以使用 git remote show <remote>命令。如果想以一个特定的缩写名运行这个命令，例如 origin，会得到像下面类似的信息：
+如果想要查看某一个远程仓库的更多信息，可以使用 git remote show '<'remote'>'命令。如果想以一个特定的缩写名运行这个命令，例如 origin，会得到像下面类似的信息：
 
 ~~~bash
 \$ git remote show origin
@@ -765,11 +765,11 @@ v1.4
 ~~~bash
 \$ git show v1.4
 tag v1.4
-Tagger: Ben Straub <ben@straub.cc>
+Tagger: Ben Straub '<'ben@straub.cc'>'
 Date:   Sat May 3 20:19:12 2014 -0700
 my version 1.4
 commit ca82a6dff817ec66f44342007202690a93763949
-Author: Scott Chacon <schacon@gee-mail.com>
+Author: Scott Chacon '<'schacon@gee-mail.com'>'
 Date:   Mon Mar 17 21:52:11 2008 -0700
     changed the version number
 ~~~
@@ -795,7 +795,7 @@ v1.5
 ~~~bash
 \$ git show v1.4-lw
 commit ca82a6dff817ec66f44342007202690a93763949
-Author: Scott Chacon <schacon@gee-mail.com>
+Author: Scott Chacon '<'schacon@gee-mail.com'>'
 Date:   Mon Mar 17 21:52:11 2008 -0700
     changed the version number
 ~~~
@@ -832,18 +832,18 @@ v1.4-lw
 v1.5
 \$ git show v1.2
 tag v1.2
-Tagger: Scott Chacon <schacon@gee-mail.com>
+Tagger: Scott Chacon '<'schacon@gee-mail.com'>'
 Date:   Mon Feb 9 15:32:16 2009 -0800
 version 1.2
 commit 9fceb02d0ae598e95dc970b74767f19372d61af8
-Author: Magnus Chacon <mchacon@gee-mail.com>
+Author: Magnus Chacon '<'mchacon@gee-mail.com'>'
 Date:   Sun Apr 27 20:43:35 2008 -0700
     updated rakefile...
 ~~~
 
 #### 共享标签
 
-默认情况下，git push命令并不会传送标签到远程仓库服务器上。在创建完标签后你必须显式地推送标签到共享服务器上。 这个过程就像共享远程分支一样——你可以运行 git push origin <tagname>。
+默认情况下，git push命令并不会传送标签到远程仓库服务器上。在创建完标签后你必须显式地推送标签到共享服务器上。 这个过程就像共享远程分支一样——你可以运行 git push origin '<'tagname'>'。
 
 ~~~bash
 \$ git push origin v1.5
@@ -853,7 +853,7 @@ Compressing objects: 100% (12/12), done.
 Writing objects: 100% (14/14), 2.05 KiB | 0 bytes/s, done.
 Total 14 (delta 3), reused 0 (delta 0)
 To git@github.com:schacon/simplegit.git
- * [new tag]         v1.5 -> v1.5
+ * [new tag]         v1.5 -'>' v1.5
 ~~~
 
 如果想要一次性推送很多标签，也可以使用带有 --tags 选项的 git push 命令。这将会把所有不在远程仓库服务器上的标签全部传送到那里。
@@ -863,15 +863,15 @@ To git@github.com:schacon/simplegit.git
 Counting objects: 1, done.
 Writing objects: 100% (1/1), 160 bytes | 0 bytes/s, done.
 Total 1 (delta 0), reused 0 (delta 0)To git@github.com:schacon/simplegit.git
- * [new tag]         v1.4 -> v1.4
- * [new tag]         v1.4-lw -> v1.4-lw
+ * [new tag]         v1.4 -'>' v1.4
+ * [new tag]         v1.4-lw -'>' v1.4-lw
 ~~~
 
-git push 推送两种标签使用 git push <remote> --tags 推送标签并不会区分轻量标签和附注标签， 没有简单的选项能够让你只选择推送一种标签。
+git push 推送两种标签使用 git push '<'remote'>' --tags 推送标签并不会区分轻量标签和附注标签， 没有简单的选项能够让你只选择推送一种标签。
 
 #### 删除标签
 
-要删除掉你本地仓库上的标签，可以使用命令 git tag -d <tagname>。
+要删除掉你本地仓库上的标签，可以使用命令 git tag -d '<'tagname'>'。
 例如，可以使用以下命令删除一个轻量标签：
 
 ~~~bash
@@ -879,11 +879,11 @@ git push 推送两种标签使用 git push <remote> --tags 推送标签并不会
 Deleted tag 'v1.4-lw' (was e7d5add)
 ~~~
 
-注意上述命令并不会从任何远程仓库中移除这个标签，你必须用 git push <remote>:refs/tags/<tagname>来更新你的远程仓库：
+注意上述命令并不会从任何远程仓库中移除这个标签，你必须用 git push '<'remote'>':refs/tags/'<'tagname'>'来更新你的远程仓库：
 第一种变体是
 
 ~~~bash
-\$ git push <remote> :refs/tags/<tagname>：
+\$ git push '<'remote'>' :refs/tags/'<'tagname'>'：
 ~~~
 
 ~~~bash
@@ -895,7 +895,7 @@ To /git@github.com:schacon/simplegit.git
 第二种更直观的删除远程标签的方式是：
 
 ~~~bash
-\$ git push origin --delete <tagname>
+\$ git push origin --delete '<'tagname'>'
 ~~~
 
 #### 检出标签
@@ -907,7 +907,7 @@ To /git@github.com:schacon/simplegit.git
 Note: checking out '2.0.0'.
 You are in 'detached HEAD' state. You can look around, make experimentalchanges and commit them, and you can discard any commits you make in thisstate without impacting any branches by performing another checkout.
 If you want to create a new branch to retain commits you create, you maydo so (now or later) by using -b with the checkout command again. Example:
-  git checkout -b <new-branch>
+  git checkout -b '<'new-branch'>'
 HEAD is now at 99ada87... Merge pull request #89 from schacon/appendix-final
 \$ git checkout 2.0-beta-0.1
 Previous HEAD position was 99ada87... Merge pull request #89 fromschacon/appendix-final
@@ -959,10 +959,10 @@ Switched to a new branch 'version2'
 ~~~bash
 \$ git last
 commit 66938dae3329c7aebe598c2246a8e6af90d04646
-Author: Josh Goebel <dreamer3@example.com>
+Author: Josh Goebel '<'dreamer3@example.com'>'
 Date:   Tue Aug 26 19:48:51 2008 +0800
     test for current head
-    Signed-off-by: Scott Chacon <schacon@example.com>
+    Signed-off-by: Scott Chacon '<'schacon@example.com'>'
 ~~~
 
 可以看出，Git 只是简单地将别名替换为对应的命令。 然而，你可能想要执行外部命令，而不是一个 Git 子命令。 如果是那样的话，可以在命令前面加入  !符号。 如果你自己要写一些与 Git 仓库协作的工具的话，那会很有用。 我们现在演示将 git visual定义为 gitk的别名：
@@ -995,7 +995,7 @@ Git 有一个名为 HEAD 的特殊指针，指示当前在哪一个分支上。g
 
 ~~~bash
 \$ git log --oneline --decorate
-f30ab (HEAD -> master, testing) add feature #32 - ability to add newformats to the central interface
+f30ab (HEAD -'>' master, testing) add feature #32 - ability to add newformats to the central interface
 34ac2 Fixed bug #1328 - stack overflow under certain conditions
 98ca9 The initial commit of my project
 ~~~
@@ -1145,7 +1145,7 @@ On branch master
 You have unmerged paths.
   (fix conflicts and run "git commit")
 Unmerged paths:
-  (use "git add <file>..." to mark resolution)
+  (use "git add '<'file'>'..." to mark resolution)
     both modified:      index.html
 no changes added to commit (use "git add" and/or "git commit -a")
 ~~~
@@ -1153,25 +1153,25 @@ no changes added to commit (use "git add" and/or "git commit -a")
 任何因包含合并冲突而有待解决的文件，都会以未合并状态标识出来。 Git 会在有冲突的文件中加入标准的冲突解决标记，这样你可以打开这些包含冲突的文件然后手动解决冲突。 出现冲突的文件会包含一些特殊区段，看起来像下面这个样子：
 
 ~~~bash
-<<<<<<< HEAD:index.html
-<div id="footer">contact : email.support@github.com</div>
+'<''<''<''<''<''<''<' HEAD:index.html
+'<'div id="footer"'>'contact : email.support@github.com'<'/div'>'
 =======
-<div id="footer">
+'<'div id="footer"'>'
  please contact us at support@github.com
-</div>
->>>>>>> iss53:index.html
+'<'/div'>'
+'>''>''>''>''>''>''>' iss53:index.html
 ~~~
 
 这表示 HEAD 所指示的版本（也就是你的 master 分支所在的位置，因为你在运行 merge 命令的时候已经检出到了这个分支）在这个区段的上半部分（=======的上半部分），而 iss53 分支所指示的版本在 ======= 的下半部分。
 为了解决冲突，你必须选择使用由 =======分割的两部分中的一个，或者你也可以自行合并这些内容。 例如，你可以通过把这段内容换成下面的样子来解决冲突：
 
 ~~~bash
-<div id="footer">
+'<'div id="footer"'>'
 please contact us at email.support@github.com
-</div>
+'<'/div'>'
 ~~~
 
-上述的冲突解决方案仅保留了其中一个分支的修改，并且 <<<<<<< , ======= , 和 >>>>>>> 这些行被完全删除了。在你解决了所有文件里的冲突之后，对每个文件使用 git add 命令来将其标记为冲突已解决。 一旦暂存这些原本有冲突的文件，Git 就会将它们标记为冲突已解决。
+上述的冲突解决方案仅保留了其中一个分支的修改，并且 '<''<''<''<''<''<''<' , ======= , 和 '>''>''>''>''>''>''>' 这些行被完全删除了。在你解决了所有文件里的冲突之后，对每个文件使用 git add 命令来将其标记为冲突已解决。 一旦暂存这些原本有冲突的文件，Git 就会将它们标记为冲突已解决。
 如果你想使用图形化工具来解决冲突，你可以运行 git mergetool ，该命令会为你启动一个合适的可视化合并工具，并带领你一步一步解决这些冲突：
 
 ~~~bash
