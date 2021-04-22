@@ -312,7 +312,7 @@ $ git clone https://github.com/libgit2/libgit2 mylibgit
 
 这会执行与上一条命令相同的操作，但目标目录名变为了 mylibgit 。
 
-Git 支持多种数据传输协议。 上面的例子使用的是 https://协议 ，不过你也可以使用 git://协议或者使用SSH 传输协议，比如 user@server:path/to/repo.git 。
+Git 支持多种数据传输协议。 上面的例子使用的是 https://协议 ，不过你也可以使用 git://协议 或者使用 SSH传输协议 ，比如 user@server:path/to/repo.git 。
 
 工作目录下的每一个文件都不外乎这两种状态：已跟踪或 未跟踪。 已跟踪的文件是指那些被纳入了版本控制的文件，在上一次快照中有它们的记录，在工作一段时间后，它们的状态可能是未修改，已修改或已放入暂存区。 简而言之，已跟踪的文件就是 Git 已经知道的文件。
 
@@ -357,7 +357,8 @@ $ git add README
 再运行 git status 命令，会看到 README 文件已被跟踪，并处于暂存状态：
 
 ~~~bash
-$ git statusOn branch master
+$ git status
+On branch master
 Your branch is up-to-date with 'origin/master'.
 Changes to be committed:  
 (use "git restore --staged <file>..." to unstage)
