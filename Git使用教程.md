@@ -342,7 +342,7 @@ $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
 Untracked files:  
-(use "git add '<'file'>'..." to include in what will be committed)
+(use "git add <file>..." to include in what will be committed)
 READMEnothing added to commit but untracked files present (use "git add" totrack)
 ~~~
 
@@ -360,11 +360,11 @@ $ git add README
 $ git statusOn branch master
 Your branch is up-to-date with 'origin/master'.
 Changes to be committed:  
-(use "git restore --staged '<'file'>'..." to unstage)
+(use "git restore --staged <file>..." to unstage)
 new file:   README
 ~~~
 
-只要在 Changes to be committed 这行下面的，就说明是已暂存状态。git add 命令使用文件或目录的路径作为参数；如果参数是目录的路径，该命令将递归地跟踪该目录下的所有文件。
+只要在 Changes to be committed 这行下面的，就说明是已暂存状态。 git add 命令使用文件或目录的路径作为参数；如果参数是目录的路径，该命令将递归地跟踪该目录下的所有文件。
 
 ### 5.5 暂存已修改的文件
 
@@ -428,7 +428,7 @@ $ cat .gitignore
 
 •要忽略指定模式以外的文件或目录，可以在模式前加上叹号（!）取反。
 
-所谓的 glob 模式是指 bash 所使用的简化了的正则表达式。 星号（*）匹配零个或多个任意字符；[abc]匹配任何一个列在方括号中的字符（这个例子要么匹配一个 a，要么匹配一个 b，要么匹配一个 c）； 问号（?）只匹配一个任意字符；如果在方括号中使用短划线分隔两个字符， 表示所有在这两个字符范围内的都可以匹配（比如 [0-9]表示匹配所有 0 到 9 的数字）。 使用两个星号（\*\*） 表示匹配任意中间目录，比如 a/\*\*/z可以匹配 a/z 、 a/b/z 或 a/b/c/z 等。
+所谓的 glob 模式是指 bash 所使用的简化了的正则表达式。 星号（*）匹配零个或多个任意字符； [abc] 匹配任何一个列在方括号中的字符（这个例子要么匹配一个 a，要么匹配一个 b，要么匹配一个 c）； 问号（?）只匹配一个任意字符；如果在方括号中使用短划线分隔两个字符， 表示所有在这两个字符范围内的都可以匹配（比如 [0-9] 表示匹配所有 0 到 9 的数字）。 使用两个星号（\*\*） 表示匹配任意中间目录，比如 a/\*\*/z可以匹配 a/z 、 a/b/z 或 a/b/c/z 等。
 
 我们再看一个 .gitignore 文件的例子：
 
@@ -447,7 +447,7 @@ doc/*.txt
 doc/**/*.pdf
 ~~~
 
-GitHub 有一个十分详细的针对数十种项目及语言的 .gitignore 文件列表， 你可以在[https://github.com/github/gitignore]找到它。
+GitHub 有一个十分详细的针对数十种项目及语言的 .gitignore 文件列表， 你可以在 [https://github.com/github/gitignore] 找到它。
 在最简单的情况下，一个仓库可能只根目录下有一个 .gitignore 文件，它递归地应用到整个仓库中。 然而，子目录下也可以有额外的 .gitignore 文件。子目录中的 .gitignore 文件中的规则只作用于它所在的目录中。 （Linux 内核的源码库拥有 206 个 .gitignore 文件。）
 
 ### 5.8 查看已暂存和未暂存的修改
@@ -650,7 +650,7 @@ git log 的常用选项
 
 ### 5.14 限制输出长度
 
-可以使用类似 -'<'n'>' 的选项，其中的n可以是任何整数，表示仅显示最近的n条提交。 不过实践中这个选项不是很常用，因为 Git 默认会将所有的输出传送到分页程序中，所以你一次只会看到一页的内容。
+可以使用类似 -`<`n`>` 的选项，其中的n可以是任何整数，表示仅显示最近的n条提交。 不过实践中这个选项不是很常用，因为 Git 默认会将所有的输出传送到分页程序中，所以你一次只会看到一页的内容。
 
 类似 --since 和 --until 这种按照时间作限制的选项很有用。 例如，下面的命令会列出最近两周的所有提交：
 
@@ -725,7 +725,7 @@ On branch masterChanges to be committed:
     modified:   CONTRIBUTING.md
 ~~~
 
-在 “Changes to be committed” 文字正下方，提示使用 git reset HEAD '<'file'>'... 来取消暂存。 所以，我们可以这样来取消暂存 CONTRIBUTING.md 文件：
+在 “Changes to be committed” 文字正下方，提示使用 git reset HEAD `<`file`>`... 来取消暂存。 所以，我们可以这样来取消暂存 CONTRIBUTING.md 文件：
 
 ~~~bash
 $ git reset HEAD CONTRIBUTING.md
@@ -749,7 +749,7 @@ Changes not staged for commit:
 $ git checkout -- CONTRIBUTING.md
 ~~~
 
-请务必记得 git checkout -- '<'file'>' 是一个危险的命令。 你对那个文件在本地的任何修改都会消失—— Git 会用最近提交的版本覆盖掉它。
+请务必记得 git checkout -- `<`file`>` 是一个危险的命令。 你对那个文件在本地的任何修改都会消失—— Git 会用最近提交的版本覆盖掉它。
 
 ## 6 远程仓库的使用
 
@@ -803,7 +803,7 @@ origin    git@github.com:mojombo/grit.git (push)
 
 ### 6.2 添加远程仓库
 
-运行 git remote add '<'shortname'>' '<'url'>' 添加一个新的远程 Git 仓库，同时指定一个方便使用的简写：
+运行 git remote add `<`shortname`>` `<`url`>` 添加一个新的远程 Git 仓库，同时指定一个方便使用的简写：
 
 ~~~bash
 $ git remote
@@ -846,7 +846,7 @@ $ git fetch <remote>
 
 ### 6.4 推送到远程仓库
 
-当你想分享项目时，必须将其推送到上游。这个命令很简单： git push '<'remote'>' '<'branch'>'
+当你想分享项目时，必须将其推送到上游。这个命令很简单： git push `<`remote`>` `<`branch`>`
 当你想要将 master 分支推送到 origin 服务器时（再次说明，克隆时通常会自动帮你设置好那两个名字），那么运行这个命令就可以将你所做的备份到服务器：
 
 ~~~bash
@@ -857,7 +857,7 @@ $ git push origin master
 
 ### 6.5 查看某个远程仓库
 
-如果想要查看某一个远程仓库的更多信息，可以使用 git remote show '<'remote'>' 命令。如果想以一个特定的缩写名运行这个命令，例如 origin ，会得到像下面类似的信息：
+如果想要查看某一个远程仓库的更多信息，可以使用 git remote show `<`remote`>` 命令。如果想以一个特定的缩写名运行这个命令，例如 origin ，会得到像下面类似的信息：
 
 ~~~bash
 $ git remote show origin
@@ -1036,7 +1036,7 @@ Date:   Sun Apr 27 20:43:35 2008 -0700
 
 #### 6.7.6 共享标签
 
-默认情况下，git push 命令并不会传送标签到远程仓库服务器上。在创建完标签后你必须显式地推送标签到共享服务器上。 这个过程就像共享远程分支一样——你可以运行 git push origin '<'tagname'>'。
+默认情况下，git push 命令并不会传送标签到远程仓库服务器上。在创建完标签后你必须显式地推送标签到共享服务器上。 这个过程就像共享远程分支一样——你可以运行 git push origin `<`tagname`>`。
 
 ~~~bash
 $ git push origin v1.5
@@ -1060,11 +1060,11 @@ Total 1 (delta 0), reused 0 (delta 0)To git@github.com:schacon/simplegit.git
  * [new tag]         v1.4-lw -> v1.4-lw
 ~~~
 
-git push 推送两种标签使用 git push '<'remote'>' --tags 推送标签并不会区分轻量标签和附注标签， 没有简单的选项能够让你只选择推送一种标签。
+git push 推送两种标签使用 git push `<`remote`>` --tags 推送标签并不会区分轻量标签和附注标签， 没有简单的选项能够让你只选择推送一种标签。
 
 #### 6.7.7 删除标签
 
-要删除掉你本地仓库上的标签，可以使用命令 git tag -d '<'tagname'>' 。
+要删除掉你本地仓库上的标签，可以使用命令 git tag -d `<`tagname`>` 。
 例如，可以使用以下命令删除一个轻量标签：
 
 ~~~bash
@@ -1072,7 +1072,7 @@ $ git tag -d v1.4-lw
 Deleted tag 'v1.4-lw' (was e7d5add)
 ~~~
 
-注意上述命令并不会从任何远程仓库中移除这个标签，你必须用 git push '<'remote'>':refs/tags/'<'tagname'>' 来更新你的远程仓库：
+注意上述命令并不会从任何远程仓库中移除这个标签，你必须用 git push `<`remote`>`:refs/tags/`<`tagname`>` 来更新你的远程仓库：
 第一种变体是
 
 ~~~bash
@@ -1479,3 +1479,140 @@ $ git branch --no-merged master
   topicA
   featureB81
 ~~~
+
+### 7.6 分支开发工作流
+
+#### 7.6.1 长期分支
+
+在整个项目开发周期的不同阶段，可以同时拥有多个开放的分支；可以定期地把某些主题分支合并入其他分支中。
+
+许多使用 Git 的开发者都喜欢使用这种方式来工作，比如只在 master 分支上保留完全稳定的代码——有可能仅仅是已经发布或即将发布的代码。 他们还有一些名为 develop 或者 next 的平行分支，被用来做后续开发或者测试稳定性——这些分支不必保持绝对稳定，但是一旦达到稳定状态，它们就可以被合并入 master 分支了。 这样，在确保这些已完成的主题分支（短期分支，比如之前的 iss53 分支）能够通过所有测试，并且不会引入更多 bug 之后，就可以合并入主干分支中，等待下一次的发布。
+
+稳定分支的指针总是在提交历史中落后一大截，而前沿分支的指针往往比较靠前。
+
+使用多个长期分支的方法并非必要，但是这么做通常很有帮助，尤其是在一个非常庞大或者复杂的项目中工作时。
+
+#### 7.6.2 主题分支
+
+主题分支是一种短期分支，它被用来实现单一特性或其相关工作。
+
+请牢记，当你做这么多操作的时候，这些分支全部都存于本地。 当你新建和合并分支的时候，所有这一切都只发生在你本地的 Git 版本库中 —— 没有与服务器发生交互。
+
+#### 7.6.3 远程分支
+
+远程引用是对远程仓库的引用（指针），包括分支、标签等等。 你可以通过 git ls-remote `<`remote`>` 来显式地获得远程引用的完整列表， 或者通过 git remote show `<`remote`>` 获得远程分支的更多信息。 然而，一个更常见的做法是利用远程跟踪分支。
+
+远程跟踪分支是远程分支状态的引用。 它们是你无法移动的本地引用。 一旦你进行了网络通信， Git 就会为你移动它们以精确反映远程仓库的状态。 请将它们看做书签，这样可以提醒你该分支在远程仓库中的位置就是你最后一次连接到它们的位置。
+
+它们以 `<`remote`>`/`<`branch`>`的形式命名。 例如，如果你想要看你最后一次与远程仓库 origin 通信时 master 分支的状态，你可以查看 origin/master 分支。 你与同事合作解决一个问题并且他们推送了一个 iss53 分支，你可能有自己的本地 iss53 分支， 然而在服务器上的分支会以 origin/iss53 来表示。 假设你的网络里有一个在 git.ourcompany.com 的 Git 服务器。 如果你从这里克隆，Git 的 clone 命令会为你自动将其命名为 origin ，拉取它的所有数据，创建一个指向它的 master 分支的指针，并且在本地将其命名为 origin/master 。 Git 也会给你一个与 origin 的 master 分支在指向同一个地方的本地 master 分支，这样你就有工作的基础。
+
+“origin” 并无特殊含义远程仓库名字 “origin” 与分支名字 “master” 一样，在 Git 中并没有任何特别的含义一样。 同时 “master” 是当你运行 git init 时默认的起始分支名字，原因仅仅是它的广泛使用， “origin” 是当你运行 git clone 时默认的远程仓库名字。 如果你运行 git clone-o booyah ，那么你默认的远程分支名字将会是 booyah/master。
+
+如果你在本地的 master 分支做了一些工作，在同一段时间内有其他人推送提交到 git.ourcompany.com 并且更新了它的 master 分支，这就是说你们的提交历史已走向不同的方向。 即便这样，只要你保持不与 origin 服务器连接（并拉取数据），你的 origin/master 指针就不会移动。
+
+如果要与给定的远程仓库同步数据，运行 git fetch `<`remote`>` 命令（在本例中为 git fetch origin ）。这个命令查找 “origin” 是哪一个服务器（在本例中，它是 git.ourcompany.com ），从中抓取本地没有的数据，并且更新本地数据库，移动 origin/master 指针到更新之后的位置。
+
+为了演示有多个远程仓库与远程分支的情况，我们假定你有另一个内部 Git 服务器，仅服务于你的某个敏捷开发团队。 这个服务器位于 git.team1.ourcompany.com 。 你可以运行 git remote add 命令添加一个新的远程仓库引用到当前的项目。 将这个远程仓库命名为 teamone ，将其作为完整 URL 的缩写。
+现在，可以运行 git fetch teamone 来抓取远程仓库 teamone 有而本地没有的数据。 因为那台服务器上现有的数据是 origin 服务器上的一个子集， 所以 Git 并不会抓取数据而是会设置远程跟踪分支 teamone/master 指向 teamone 的 master 分支。
+
+#### 7.6.4 推送
+
+当你想要公开分享一个分支时，需要将其推送到有写入权限的远程仓库上。 本地的分支并不会自动与远程仓库同步——你必须显式地推送想要分享的分支。 这样，你就可以把不愿意分享的内容放到私人分支上，而将需要和别人协作的内容推送到公开分支。
+
+如果希望和别人一起在名为 serverfix 的分支上工作，你可以像推送第一个分支那样推送它。 运行 git push `<`remote`>` `<`branch`>` :
+
+~~~bash
+$ git push origin serverfix
+Counting objects: 24, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (15/15), done.
+Writing objects: 100% (24/24), 1.91 KiB | 0 bytes/s, done.
+Total 24 (delta 2), reused 0 (delta 0)
+To https://github.com/schacon/simplegit
+ * [new branch]      serverfix -> serverfix
+~~~
+
+Git 自动将 serverfix 分支名字展开为 refs/heads/serverfix:refs/heads/serverfix ，那意味着，“推送本地的 serverfix 分支来更新远程仓库上的 serverfix 分支”。 你也可以运行 git push origin serverfix:serverfix ，它会做同样的事——也就是说“推送本地的 serverfix 分支，将其作为远程仓库的 serverfix 分支” 可以通过这种格式来推送本地分支到一个命名不相同的远程分支。 如果并不想让远程仓库上的分支叫做 serverfix ，可以运行 git pushorigin serverfix:awesomebranch 来将本地的 serverfix 分支推送到远程仓库上的 awesomebranch 分支。
+
+如果你正在使用 HTTPS URL 来推送， Git 服务器会询问用户名与密码。 默认情况下它会在终端中提示服务器是否允许你进行推送。 如果不想在每一次推送时都输入用户名与密码，你可以设置一个 “credential cache” 。 最简单的方式就是将其保存在内存中几分钟，可以简单地运行 git config --globalcredential.helper cache 来设置它。
+
+下一次其他协作者从服务器上抓取数据时，他们会在本地生成一个远程分支 origin/serverfix ，指向服务器的 serverfix 分支的引用：
+
+~~~bash
+$ git fetch origin
+remote: Counting objects: 7, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 3 (delta 0)
+Unpacking objects: 100% (3/3), done.
+From https://github.com/schacon/simplegit
+ * [new branch]      serverfix    -> origin/serverfix
+~~~
+
+要特别注意的一点是当抓取到新的远程跟踪分支时，本地不会自动生成一份可编辑的副本（拷贝）。 换一句话说，这种情况下，不会有一个新的 serverfix 分支——只有一个不可以修改的 origin/serverfix 指针。 可以运行 git merge origin/serverfix 将这些工作合并到当前所在的分支。 如果想要在自己的 serverfix 分支上工作，可以将其建立在远程跟踪分支之上：
+
+~~~bash
+$ git checkout -b serverfix origin/serverfix
+Branch serverfix set up to track remote branch serverfix from origin.
+Switched to a new branch 'serverfix'
+~~~
+
+这会给你一个用于工作的本地分支，并且起点位于 origin/serverfix 。
+
+#### 7.6.5 跟踪分支
+
+从一个远程跟踪分支检出一个本地分支会自动创建所谓的“跟踪分支”（它跟踪的分支叫做“上游分支”）。 跟踪分支是与远程分支有直接关系的本地分支。 如果在一个跟踪分支上输入 git pull ， Git 能自动地识别去哪个服务器上抓取、合并到哪个分支。
+
+当克隆一个仓库时，它通常会自动地创建一个跟踪 origin/master 的 master 分支。 如果你愿意的话可以设置其他的跟踪分支，或是一个在其他远程仓库上的跟踪分支，又或者不跟踪 master 分支。 最简单的实例就是像之前看到的那样，运行 git checkout -b `<`branch`>` `<`remote`>`/`<`branch`>` 。 这是一个十分常用的操作所以 Git 提供了 --track 快捷方式：
+
+~~~bash
+$ git checkout --track origin/serverfix
+Branch serverfix set up to track remote branch serverfix from origin.
+Switched to a new branch 'serverfix'
+~~~
+
+如果你尝试检出的分支 (a) 不存在且 (b) 刚好只有一个名字与之匹配的远程分支，那么 Git 就会为你创建一个跟踪分支：
+
+~~~bash
+$ git checkout serverfix
+Branch serverfix set up to track remote branch serverfix from origin.
+Switched to a new branch 'serverfix'
+~~~
+
+如果想要将本地分支与远程分支设置为不同的名字，你可以轻松地使用上一个命令增加一个不同名字的本地分支：
+
+~~~bash
+$ git checkout -b sf origin/serverfix
+Branch sf set up to track remote branch serverfix from origin.
+Switched to a new branch 'sf'
+~~~
+
+现在，本地分支 sf 会自动从 origin/serverfix 拉取。
+
+设置已有的本地分支跟踪一个刚刚拉取下来的远程分支，或者想要修改正在跟踪的上游分支，可以在任意时间使用 -u 或 --set-upstream-to 选项运行 git branch 来显式地设置。
+
+~~~bash
+$ git branch -u origin/serverfix
+Branch serverfix set up to track remote branch serverfix from origin.
+~~~
+
+当设置好跟踪分支后，可以通过简写 @{upstream} 或 @{u} 来引用它的上游分支。 所以在 master 分支时并且它正在跟踪 origin/master 时，如果愿意的话可以使用 git merge @{u} 来取代 git merge origin/master 。
+
+如果想要查看设置的所有跟踪分支，可以使用 git branch的 -vv选项。 这会将所有的本地分支列出来并且包含更多的信息，如每一个分支正在跟踪哪个远程分支与本地分支是否是领先、落后或是都有。
+
+~~~bash
+$ git branch -vv
+  iss53     7e424c3 [origin/iss53: ahead 2] forgot the brackets
+  master    1ae2a45 [origin/master] deploying index fix
+* serverfix f8674d9 [teamone/server-fix-good: ahead 3, behind 1] thisshould do it
+  testing   5ea463a trying something new
+~~~
+
+可以看到 iss53 分支正在跟踪 origin/iss53 并且 “ahead” 是 2，意味着本地有两个提交还没有推送到服务器上。 也能看到 master 分支正在跟踪 origin/master 分支并且是最新的。 接下来可以看到 serverfix 分支正在跟踪 teamone 服务器上的 server-fix-good 分支并且领先 3 落后 1 ， 意味着服务器上有一次提交还没有合并入同时本地有三次提交还没有推送。 最后看到 testing 分支并没有跟踪任何远程分支。
+
+需要重点注意的一点是这些数字的值来自于你从每个服务器上最后一次抓取的数据。 这个命令并没有连接服务器，它只会告诉你关于本地缓存的服务器数据。 如果想要统计最新的领先与落后数字，需要在运行此命令前抓取所有的远程仓库。 可以像这样做：
+
+~~~bash
+$ git fetch --all; git branch -vv
+~~~
+
+#### 7.6.6 
