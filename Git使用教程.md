@@ -16,35 +16,37 @@ Git 有三种状态，你的文件可能处于其中之一：已提交（committ
 
 这会让我们的 Git 项目拥有三个阶段：工作区、暂存区以及 Git 目录。
 
-工作区是对项目的某个版本独立提取出来的内容。 这些从 Git 仓库的压缩数据库中提取出来的文件，放在磁盘上供你使用或修改。
+工作区是对项目的某个版本独立提取出来的内容。这些从 Git 仓库的压缩数据库中提取出来的文件，放在磁盘上供你使用或修改。
 
-暂存区是一个文件，保存了下次将要提交的文件列表信息，一般在 Git 仓库目录中。 按照 Git 的术语叫做“索引”，不过一般说法还是叫“暂存区”。
+暂存区是一个文件，保存了下次将要提交的文件列表信息，一般在 Git 仓库目录中。按照 Git 的术语叫做“索引”，不过一般说法还是叫“暂存区”。
 
-Git 仓库目录是 Git 用来保存项目的元数据和对象数据库的地方。 这是 Git 中最重要的部分，从其它计算机克隆仓库时，复制的就是这里的数据。
+Git 仓库目录是 Git 用来保存项目的元数据和对象数据库的地方。这是 Git 中最重要的部分，从其它计算机克隆仓库时，复制的就是这里的数据。
 
 基本的 Git 工作流程如下：
 
 1.在工作区中修改文件。
 
-2.将你想要下次提交的更改选择性地暂存，这样只会将更改的部分添加到暂存区。
+2.将想要下次提交的更改选择性地暂存，这样只会将更改的部分添加到暂存区。
 
 3.提交更新，找到暂存区的文件，将快照永久性存储到 Git 目录。
 
-如果 Git 目录中保存着特定版本的文件，就属于 已提交状态。 如果文件已修改并放入暂存区，就属于 已暂存状态。 如果自上次检出后，作了修改但还没有放到暂存区域，就是 已修改状态。
+如果 Git 目录中保存着特定版本的文件，就属于已提交状态。如果文件已修改并放入暂存区，就属于已暂存状态。如果自上次检出后，作了修改但还没有放到暂存区域，就是已修改状态。
 
 ## 3 Git安装
 
 ### 3.1 Linux
 
-以 Fedora 为例，如果你在使用它（或与之紧密相关的基于 RPM 的发行版，如 RHEL 或 CentOS），你可以使用 dnf ：
+以 Fedora 为例，如果你在使用它（或与之紧密相关的基于 RPM 的发行版，如 RHEL 或 CentOS），可以使用 dnf ：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ sudo dnf install git-all
 ~~~
 
-如果你在基于 Debian 的发行版上，如 Ubuntu，请使用 apt ：
+如果在基于 Debian 的发行版上，如 Ubuntu，请使用 apt ：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ sudo apt install git-all
 ~~~
 
@@ -53,9 +55,10 @@ $ sudo apt install git-all
 
 ### 3.2 macOS
 
-在 Mac 上安装 Git 有多种方式。 最简单的方法是安装 Xcode Command Line Tools 。 Mavericks （10.9） 或更高版本的系统中，在 Terminal 里尝试首次运行 git 命令即可。
+在 Mac 上安装 Git 有多种方式。最简单的方法是安装 Xcode Command Line Tools 。Mavericks （10.9） 或更高版本的系统中，在 Terminal 里尝试首次运行 git 命令即可。
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git --version
 ~~~
 
@@ -64,111 +67,138 @@ $ git --version
 
 ### 3.3 Windows
 
-在 Windows 上安装 Git 也有几种安装方法。 官方版本可以在 Git 官方网站下载。 打开 [https://git-scm.com/download/win] ，下载会自动开始。 要注意这是一个名为 Git for Windows 的项目（也叫做 msysGit），和 Git是分别独立的项目；更多信息请访问 [http://msysgit.github.io/] 。
+在 Windows 上安装 Git 也有几种安装方法。 官方版本可以在 Git 官方网站下载。打开 [https://git-scm.com/download/win] ，下载会自动开始。要注意这是一个名为 Git for Windows 的项目（也叫做 msysGit），和 Git是分别独立的项目；更多信息请访问 [http://msysgit.github.io/] 。
 
-要进行自动安装，你可以使用 Git Chocolatey 包。 注意 Chocolatey 包是由社区维护的。
+要进行自动安装，可以使用 Git Chocolatey 包。注意 Chocolatey 包是由社区维护的。
 
-另一个简单的方法是安装 GitHub Desktop 。 该安装程序包含图形化和命令行版本的 Git 。 它也能支持Powerbash，提供了稳定的凭证缓存和健全的换行设置。稍后我们会对这方面有更多了解，现在只要一句话就够了，这些都是你所需要的。 你可以在 GitHub for Windows 网站下载，网址为 GitHub Desktop 网站。
+另一个简单的方法是安装 GitHub Desktop 。该安装程序包含图形化和命令行版本的 Git 。它也能支持Powerbash，提供了稳定的凭证缓存和健全的换行设置。稍后会对这方面有更多了解，现在只要一句话就够了，这些都是所需要的。可以在 GitHub for Windows 网站下载，网址为 GitHub Desktop 网站。
 
 ### 3.4 从源码安装
 
-如果你想从源码安装 Git，需要安装 Git 依赖的库：autotools、curl、zlib、openssl、expat 和 libiconv。 如果你的系统上有 dnf（如 Fedora）或者 apt（如基于 Debian 的系统），可以使用对应的命令来安装最少的依赖以便编译并安装 Git 的二进制版：
+如果从源码安装 Git，需要安装 Git 依赖的库：autotools、curl、zlib、openssl、expat 和 libiconv 。如果系统上有 dnf（如 Fedora）或者 apt（如基于 Debian 的系统），可以使用对应的命令来安装最少的依赖以便编译并安装 Git 的二进制版：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ sudo dnf install dh-autoreconf curl-devel expat-devel gettext-devel \  openssl-devel perl-devel zlib-devel
+
+MasterChief@DESKTOP MINGW64 ~
 $ sudo apt-get install dh-autoreconf libcurl4-gnutls-dev libexpat1-dev \  gettext libz-dev libssl-dev
 ~~~
 
 为了添加文档的多种格式（doc、html、info），需要以下附加的依赖：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ sudo dnf install asciidoc xmlto docbook2X
+
+MasterChief@DESKTOP MINGW64 ~
 $ sudo apt-get install asciidoc xmlto docbook2x
 ~~~
 
-使用 RHEL 和 RHEL 衍生版，如 CentOS 和 Scientific Linux 的用户需要 开启 EPEL 库以便下载 docbook2X 包。
+使用 RHEL 和 RHEL 衍生版，如 CentOS 和 Scientific Linux 的用户需要开启 EPEL 库以便下载 docbook2X 包。
 
-如果你使用基于 Debian 的发行版（Debian/Ubuntu/Ubuntu-derivatives），你也需要 install-info 包：
+如果使用基于 Debian 的发行版（Debian/Ubuntu/Ubuntu-derivatives），也需要 install-info 包：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ sudo apt-get install install-info
 ~~~
 
-如果你使用基于 RPM 的发行版（Fedora/RHEL/RHEL衍生版），你还需要 getopt 包 （它已经在基于 Debian 的发行版中预装了）：
+如果使用基于 RPM 的发行版（Fedora/RHEL/RHEL衍生版），还需要 getopt 包 （它已经在基于 Debian 的发行版中预装了）：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ sudo dnf install getopt
 ~~~
 
-此外，如果你使用 Fedora/RHEL/RHEL 衍生版，那么你需要执行以下命令：
+此外，如果使用 Fedora/RHEL/RHEL 衍生版，那么需要执行以下命令：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ sudo ln -s /usr/bin/db2x_docbook2texi /usr/bin/docbook2x-texi
 ~~~
 
 以此来解决二进制文件名的不同。
 
-当你安装好所有的必要依赖，你可以继续从几个地方来取得最新发布版本的 tar 包。 你可以从 Kernel.org 网站获取，网址为 [https://www.kernel.org/pub/software/scm/git] ，或从 GitHub 网站上的镜像来获得，网址为[https://github.com/git/git/releases] 。 通常在 GitHub 上的是最新版本，但 kernel.org 上包含有文件下载签名，如果你想验证下载正确性的话会用到。
+当安装好所有的必要依赖，可以继续从几个地方来取得最新发布版本的 tar 包。可以从 Kernel.org 网站获取，网址为[https://www.kernel.org/pub/software/scm/git]，或从 GitHub 网站上的镜像来获得，网址为[https://github.com/git/git/releases]。通常在 GitHub 上的是最新版本，但 kernel.org 上包含有文件下载签名，如果想验证下载正确性的话会用到。
 
 编译并安装
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ tar -zxf git-2.8.0.tar.gz
+
+MasterChief@DESKTOP MINGW64 ~
 $ cd git-2.8.0
+
+MasterChief@DESKTOP MINGW64 ~
 $ make configure
+
+MasterChief@DESKTOP MINGW64 ~
 $ ./configure --prefix=/usr
+
+MasterChief@DESKTOP MINGW64 ~
 $ make all doc info
+
+MasterChief@DESKTOP MINGW64 ~
 $ sudo make install install-doc install-html install-info
 ~~~
 
 使用 Git 来获取 Git 的更新
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git clone git://git.kernel.org/pub/scm/git/git.git
 ~~~
 
 ## 4 初次运行
 
-每台计算机上只需要配置一次，程序升级时会保留配置信息。 你可以在任何时候再次通过运行命令来修改它们。
+每台计算机上只需要配置一次，程序升级时会保留配置信息。可以在任何时候再次通过运行命令来修改它们。
 
 Git 自带一个 git config 的工具来帮助设置控制 Git 外观和行为的配置变量。这些变量存储在三个不同的位置：
 
 1./etc/gitconfig 文件: 包含系统上每一个用户及他们仓库的通用配置。如果在执行 git config 时带上 --system 选项，那么它就会读写该文件中的配置变量。（由于它是系统配置文件，因此你需要管理员或超级用户权限来修改它。）
 
-2.~/.gitconfig或 ~/.config/git/config 文件：只针对当前用户。 你可以传递 --global 选项让 Git 读写此文件，这会对你系统上所有的仓库生效。
+2.~/.gitconfig或 ~/.config/git/config 文件：只针对当前用户。可以传递 --global 选项让 Git 读写此文件，这会对系统上所有的仓库生效。
 
-3.当前使用仓库的 Git 目录中的 config 文件（即 .git/config ）：针对该仓库。 你可以传递 --local 选项让 Git 强制读写此文件，默认情况下用的就是它。（需要进入某个 Git 仓库中才能让该选项生效。）每一个级别会覆盖上一级别的配置，所以 .git/config 的配置变量会覆盖 /etc/gitconfig 中的配置变量。
+3.当前使用仓库的 Git 目录中的 config 文件（即 .git/config ）：针对该仓库。可以传递 --local 选项让 Git 强制读写此文件，默认情况下用的就是它。（需要进入某个 Git 仓库中才能让该选项生效。）每一个级别会覆盖上一级别的配置，所以 .git/config 的配置变量会覆盖 /etc/gitconfig 中的配置变量。
 
-在 Windows 系统中，Git 会查找 $HOME目录下（一般情况下是 C:\Users\$USER）的 .gitconfig 文件。Git 同样也会寻找 /etc/gitconfig 文件，但只限于 MSys 的根目录下，即安装 Git 时所选的目标位置。 如果你在 Windows 上使用 Git 2.x 以后的版本，那么还有一个系统级的配置文件，Windows XP 上在 C:\Documents and Settings\All Users\Application Data\Git\config ，Windows Vista 及更新的版本在 C:\ProgramData\Git\config 。此文件只能以管理员权限通过 git config -f `<`file`>` 来修改。你可以通过以下命令查看所有的配置以及它们所在的文件：
+在 Windows 系统中，Git 会查找 $HOME 目录下（一般情况下是 C:\Users\$USER ）的 .gitconfig 文件。Git 同样也会寻找 /etc/gitconfig 文件，但只限于 MSys 的根目录下，即安装 Git 时所选的目标位置。 如果在 Windows 上使用 Git 2.x 以后的版本，那么还有一个系统级的配置文件，Windows XP 上在 C:\Documents and Settings\All Users\Application Data\Git\config ，Windows Vista 及更新的版本在 C:\ProgramData\Git\config 。此文件只能以管理员权限通过 git config -f `<`file`>` 来修改。可以通过以下命令查看所有的配置以及它们所在的文件：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git config --list --show-origin
 ~~~
 
 ### 4.1 用户信息
 
-安装完 Git 之后，要做的第一件事就是设置你的用户名和邮件地址。 这一点很重要，因为每一个 Git 提交都会使用这些信息，它们会写入到你的每一次提交中，不可更改：
+安装完 Git 之后，要做的第一件事就是设置用户名和邮件地址。这一点很重要，因为每一个 Git 提交都会使用这些信息，它们会写入到每一次提交中，不可更改：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git config --global user.name "John Doe"
+
+MasterChief@DESKTOP MINGW64 ~
 $ git config --global user.email johndoe@example.com
 ~~~
 
-如果使用了 --global 选项，那么该命令只需要运行一次，之后无论你在该系统上做任何事情， Git 都会使用那些信息。 当你想针对特定项目使用不同的用户名称与邮件地址时，可以在那个项目目录下运行没有 --global选项的命令来配置。
+如果使用了 --global 选项，那么该命令只需要运行一次，之后无论在该系统上做任何事情，Git 都会使用那些信息。当想针对特定项目使用不同的用户名称与邮件地址时，可以在那个项目目录下运行没有 --global 选项的命令来配置。
 
 ### 4.2 文本编辑器
 
-用户信息设置完毕，可以配置默认文本编辑器，当 Git 需要你输入信息时会调用它。 如果未配置，Git 会使用操作系统默认的文本编辑器。如果你想使用不同的文本编辑器，例如 Emacs ，可以输入如下命令：
+用户信息设置完毕，可以配置默认文本编辑器，当 Git 需要输入信息时会调用它。 如果未配置，Git 会使用操作系统默认的文本编辑器。如果想使用不同的文本编辑器，例如 Emacs ，可以输入如下命令：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git config --global core.editor emacs
 ~~~
 
-在 Windows 系统上，如果你想要使用别的文本编辑器，那么必须指定可执行文件的完整路径。 它可能随你的编辑器的打包方式而不同。
+在 Windows 系统上，如果想要使用别的文本编辑器，那么必须指定可执行文件的完整路径。它可能随编辑器的打包方式而不同。
 
-对于 Notepad++，一个流行的代码编辑器来说，你可能想要使用 32 位的版本， 因为在本书编写时 64 位的版本尚不支持所有的插件。 如果你在使用 32 位的 Windows 系统，或在 64 位系统上使用 64 位的编辑器，那么你需要输入如下命令：
+对于 Notepad++，一个流行的代码编辑器来说，可能想要使用 32 位的版本， 因为 64 位的版本可能尚不支持所有的插件。如果在使用 32 位的 Windows 系统，或在 64 位系统上使用 64 位的编辑器，那么需要输入如下命令：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git config --global core.editor "'C:/ProgramFiles/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin"
 ~~~
 
@@ -177,6 +207,7 @@ $ git config --global core.editor "'C:/ProgramFiles/Notepad++/notepad++.exe' -mu
 使用 git config --list 命令来列出所有 Git 当时能找到的配置。
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git config --list
 user.name=John Doe
 user.email=johndoe@example.com
@@ -187,44 +218,56 @@ color.diff=auto
 ...
 ~~~
 
-可能会看到重复的变量名，因为 Git 会从不同的文件中读取同一个配置（例如：/etc/gitconfig与~/.gitconfig）。 这种情况下，Git 会使用它找到的每一个变量的最后一个配置。
+可能会看到重复的变量名，因为 Git 会从不同的文件中读取同一个配置（例如：/etc/gitconfig与~/.gitconfig）。这种情况下，Git 会使用它找到的每一个变量的最后一个配置。
 
-可以通过输入 git config `<`key`>`：来检查 Git 的某一项配置
+可以通过输入 git config 'key' 来检查 Git 的某一项配置
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git config user.name
 John Doe
 ~~~
 
-由于 Git 会从多个文件中读取同一配置变量的不同值，因此你可能会在其中看到意料之外的值而不知道为什么。 此时，你可以查询 Git 中该变量的 原始值，它会告诉你哪一个配置文件最后设置了该值：
+由于 Git 会从多个文件中读取同一配置变量的不同值，因此你可能会在其中看到意料之外的值而不知道为什么。此时，可以查询 Git 中该变量的原始值，它会告诉你哪一个配置文件最后设置了该值：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git config --show-origin rerere.autoUpdate
-file:/home/johndoe/.gitconfig   false
+file:/home/johndoe/.gitconfig false
 ~~~
 
 ### 4.4 获取帮助
 
-若你使用 Git 时需要获取帮助，有三种等价的方法可以找到 Git 命令的综合手册（manpage）：
+若使用 Git 时需要获取帮助，有三种等价的方法可以找到 Git 命令的综合手册（manpage）：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git help <verb>
+
+MasterChief@DESKTOP MINGW64 ~
 $ git <verb> --help
+
+MasterChief@DESKTOP MINGW64 ~
 $ man git-<verb>
 ~~~
 
-例如，要想获得 git config命令的手册，执行
+例如，要想获得 git config 命令的手册，执行
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git help config
 ~~~
 
-如果你觉得手册或者本书的内容还不够用，你可以尝试在 Freenode IRC 服务器 [https://freenode.net] 上的 #git 或 #github 频道寻求帮助。
+如果觉得手册或者本书的内容还不够用，可以尝试在 Freenode IRC 服务器 [https://freenode.net] 上的 #git 或 #github 频道寻求帮助。
 
-如果你不需要全面的手册，只需要可用选项的快速参考，那么可以用 -h选项获得更简明的 “help” 输出：
+如果不需要全面的手册，只需要可用选项的快速参考，那么可以用 -h 选项获得更简明的 “help” 输出：
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git add -h
+~~~
 
-~~~markdown
+~~~bash
 usage: git add [<options>] [--] <pathspec>...
 -n, --dry-run         dry run
 -v, --verbose         be verbose
@@ -245,15 +288,17 @@ usage: git add [<options>] [--] <pathspec>...
 
 ## 5 Git基础
 
+如果只想通过阅读一章来学习 Git，那么本章将是不二选择。本章涵盖了在使用 Git 完成各种工作时将会用到的各种基本命令。在学习完本章之后，应该能够配置并初始化一个仓库（repository）、开始或停止跟踪（track）文件、暂存（stage）或提交（commit）更改。本章也将演示如何配置 Git 来忽略指定的文件和文件模式、如何迅速而简单地撤销错误操作、如何浏览项目的历史版本以及不同提交（commits）之间的差异、如何向远程仓库推送（push）以及如何从远程仓库拉取（pull）文件。
+
 ### 5.1 获取Git仓库
 
 通常有两种获取 Git 项目仓库的方式：
 
 1.将尚未进行版本控制的本地目录转换为 Git 仓库；
 
-2.从其它服务器 克隆一个已存在的 Git 仓库。
+2.从其它服务器克隆一个已存在的 Git 仓库。
 
-两种方式都会在你的本地机器上得到一个工作就绪的 Git 仓库。
+两种方式都会在的本地机器上得到一个工作就绪的 Git 仓库。
 
 #### 5.1.1 在已存在目录中初始化仓库
 
@@ -261,34 +306,43 @@ usage: git add [<options>] [--] <pathspec>...
 在 Linux 上：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ cd /home/user/my_project
 ~~~
 
 在 macOS 上：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ cd /Users/user/my_project
 ~~~
 
 在 Windows 上：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ cd /c/user/my_project
 ~~~
 
 初始化Git仓库，执行：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git init
 ~~~
 
-该命令将创建一个名为 .git 的子目录，这个子目录含有你初始化的 Git 仓库中所有的必须文件，这些文件是 Git 仓库的骨干。 但是，在这个时候，我们仅仅是做了一个初始化的操作，你的项目里的文件还没有被跟踪。
+该命令将创建一个名为 .git 的子目录，这个子目录含有初始化的 Git 仓库中所有的必须文件，这些文件是 Git 仓库的骨干。但是，在这个时候，我们仅仅是做了一个初始化的操作，项目里的文件还没有被跟踪。
 
-如果在一个已存在文件的文件夹（而非空文件夹）中进行版本控制，你应该开始追踪这些文件并进行初始提交。可以通过 git add命令来指定所需的文件来进行追踪，然后执行 git commit ：
+如果在一个已存在文件的文件夹（而非空文件夹）中进行版本控制，应该开始追踪这些文件并进行初始提交。可以通过 git add 命令来指定所需的文件来进行追踪，然后执行 git commit ：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git add *.c
+
+MasterChief@DESKTOP MINGW64 ~
 $ git add LICENSE
+
+MasterChief@DESKTOP MINGW64 ~
 $ git commit -m 'initial project version'
 ~~~
 
@@ -296,9 +350,10 @@ $ git commit -m 'initial project version'
 
 如果你想获得一份已经存在了的 Git 仓库的拷贝，比如说，你想为某个开源项目贡献自己的一份力，这时就要用到 git clone 命令。 Git 克隆的是该 Git 仓库服务器上的几乎所有数据，而不是仅仅复制完成你的工作所需要文件。 当你执行 git clone 命令的时候，默认配置下远程 Git 仓库中的每一个文件的每一个版本都将被拉取下来。
 
-克隆仓库的命令是 git clone `<`url`>` 。比如，要克隆 Git 的链接库 libgit2 ，可以用下面的命令：
+克隆仓库的命令是 git clone 'url' 。比如，要克隆 Git 的链接库 libgit2 ，可以用下面的命令：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git clone https://github.com/libgit2/libgit2
 ~~~
 
@@ -307,22 +362,24 @@ $ git clone https://github.com/libgit2/libgit2
 如果你想在克隆远程仓库的时候，自定义本地仓库的名字，你可以通过额外的参数指定新的目录名：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git clone https://github.com/libgit2/libgit2 mylibgit
 ~~~
 
 这会执行与上一条命令相同的操作，但目标目录名变为了 mylibgit 。
 
-Git 支持多种数据传输协议。 上面的例子使用的是 https://协议 ，不过你也可以使用 git://协议 或者使用 SSH传输协议 ，比如 user@server:path/to/repo.git 。
+Git 支持多种数据传输协议。 上面的例子使用的是 https://协议 ，不过你也可以使用 git://协议 或者使用 SSH 传输协议 ，比如 user@server:path/to/repo.git 。
 
-工作目录下的每一个文件都不外乎这两种状态：已跟踪或 未跟踪。 已跟踪的文件是指那些被纳入了版本控制的文件，在上一次快照中有它们的记录，在工作一段时间后，它们的状态可能是未修改，已修改或已放入暂存区。 简而言之，已跟踪的文件就是 Git 已经知道的文件。
+工作目录下的每一个文件都不外乎这两种状态：已跟踪或未跟踪。已跟踪的文件是指那些被纳入了版本控制的文件，在上一次快照中有它们的记录，在工作一段时间后，它们的状态可能是未修改，已修改或已放入暂存区。简而言之，已跟踪的文件就是 Git 已经知道的文件。
 
-工作目录中除已跟踪文件外的其它所有文件都属于未跟踪文件，它们既不存在于上次快照的记录中，也没有被放入暂存区。 初次克隆某个仓库的时候，工作目录中的所有文件都属于已跟踪文件，并处于未修改状态，因为 Git刚刚检出了它们，而你尚未编辑过它们。
+工作目录中除已跟踪文件外的其它所有文件都属于未跟踪文件，它们既不存在于上次快照的记录中，也没有被放入暂存区。初次克隆某个仓库的时候，工作目录中的所有文件都属于已跟踪文件，并处于未修改状态，因为 Git 刚刚检出了它们，而用户尚未编辑过它们。
 
 ### 5.3 检查当前文件状态
 
-用 git status命令查看哪些文件处于什么状态。 如果在克隆仓库后立即使用此命令，会看到类似这样的输出：
+用 git status 命令查看哪些文件处于什么状态。如果在克隆仓库后立即使用此命令，会看到类似这样的输出：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
@@ -332,12 +389,14 @@ nothing to commit, working directory clean
 在项目下创建一个新的 README 文件
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ echo 'My Project' > README
 ~~~
 
-如果之前并不存在这个文件，使用 git status 命令，你将看到一个新的未跟踪文件：
+如果之前并不存在这个文件，使用 git status 命令，将看到一个新的未跟踪文件：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
@@ -351,12 +410,14 @@ READMEnothing added to commit but untracked files present (use "git add" totrack
 使用命令 git add 开始跟踪一个文件。所以，要跟踪 README 文件，运行：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git add README
 ~~~
 
 再运行 git status 命令，会看到 README 文件已被跟踪，并处于暂存状态：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
@@ -369,9 +430,10 @@ new file:   README
 
 ### 5.5 暂存已修改的文件
 
-如果你修改了一个名为 CONTRIBUTING.md 的已被跟踪的文件，然后运行 git status 命令，会看到下面内容：
+如果用户修改了一个名为 CONTRIBUTING.md 的已被跟踪的文件，然后运行 git status 命令，会看到下面内容：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git status
 On branch master
 Your branch is up-to-date with 'origin/master'.
@@ -390,9 +452,10 @@ modified:   CONTRIBUTING.md
 
 ### 5.6 状态简览
 
-git status 命令的输出十分详细，但其用语有些繁琐。 Git 有一个选项可以缩短状态命令的输出，以简洁的方式查看更改。 使用 git status -s 命令或 git status --short 命令，将得到一种格式更为紧凑的输出。
+git status 命令的输出十分详细，但其用语有些繁琐。 Git 有一个选项可以缩短状态命令的输出，以简洁的方式查看更改。使用 git status -s 命令或 git status --short 命令，将得到一种格式更为紧凑的输出。
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git status -s
  M README
 MM Rakefile
@@ -401,23 +464,24 @@ M  lib/simplegit.rb
 ?? LICENSE.txt
 ~~~
 
-新添加的未跟踪文件前面有 ?? 标记，新添加到暂存区中的文件前面有 A 标记，修改过的文件前面有 M 标记。 输出中有两栏，左栏指明了暂存区的状态，右栏指明了工作区的状态。 例如，上面的状态报告显示： README 文件在工作区已修改但尚未暂存，而 lib/simplegit.rb 文件已修改且已暂存。 Rakefile 文件已修，暂存后又作了修改，因此该文件的修改中既有已暂存的部分，又有未暂存的部分。
+新添加的未跟踪文件前面有 ?? 标记，新添加到暂存区中的文件前面有 A 标记，修改过的文件前面有 M 标记。输出中有两栏，左栏指明了暂存区的状态，右栏指明了工作区的状态。例如，上面的状态报告显示： README 文件在工作区已修改但尚未暂存，而 lib/simplegit.rb 文件已修改且已暂存。 Rakefile 文件已修，暂存后又作了修改，因此该文件的修改中既有已暂存的部分，又有未暂存的部分。
 
 ### 5.7 忽略文件
 
-有些文件无需纳入 Git 的管理，也不希望它们总出现在未跟踪文件列表。 通常都是些自动生成的文件，比如日志文件，或者编译过程中创建的临时文件等。 在这种情况下，可以创建一个名为 .gitignore 的文件，列出要忽略的文件的模式。 来看一个实际的 .gitignore 例子：
+有些文件无需纳入 Git 的管理，也不希望它们总出现在未跟踪文件列表。通常都是些自动生成的文件，比如日志文件，或者编译过程中创建的临时文件等。这种情况下，可以创建一个名为 .gitignore 的文件，列出要忽略的文件的模式。来看一个实际的 .gitignore 例子：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ cat .gitignore
 *.[oa]
 *~
 ~~~
 
-第一行告诉 Git 忽略所有以 .o或 .a结尾的文件。
+第一行告诉 Git 忽略所有以 .o 或 .a 结尾的文件。
 
 第二行告诉 Git 忽略所有名字以波浪符（~）结尾的文件，许多文本编辑软件（比如 Emacs）都用这样的文件名保存副本。
 
-.gitignore 文件的格式规范如下：
+**.gitignore 文件的格式规范如下：**
 
 •所有空行或者以 # 开头的行都会被 Git 忽略。
 
@@ -429,11 +493,11 @@ $ cat .gitignore
 
 •要忽略指定模式以外的文件或目录，可以在模式前加上叹号（!）取反。
 
-所谓的 glob 模式是指 bash 所使用的简化了的正则表达式。 星号（*）匹配零个或多个任意字符； [abc] 匹配任何一个列在方括号中的字符（这个例子要么匹配一个 a，要么匹配一个 b，要么匹配一个 c）； 问号（?）只匹配一个任意字符；如果在方括号中使用短划线分隔两个字符， 表示所有在这两个字符范围内的都可以匹配（比如 [0-9] 表示匹配所有 0 到 9 的数字）。 使用两个星号（\*\*） 表示匹配任意中间目录，比如 a/\*\*/z可以匹配 a/z 、 a/b/z 或 a/b/c/z 等。
+所谓的 glob 模式是指 bash 所使用的简化了的正则表达式。星号（\*）匹配零个或多个任意字符； \[abc\] 匹配任何一个列在方括号中的字符（这个例子要么匹配一个 a，要么匹配一个 b，要么匹配一个 c）； 问号（?）只匹配一个任意字符；如果在方括号中使用短划线分隔两个字符， 表示所有在这两个字符范围内的都可以匹配（比如 \[0-9\] 表示匹配所有 0 到 9 的数字）。 使用两个星号（\*\*） 表示匹配任意中间目录，比如 a/\*\*/z可以匹配 a/z 、 a/b/z 或 a/b/c/z 等。
 
 我们再看一个 .gitignore 文件的例子：
 
-~~~.gitignore
+~~~bash
 # 忽略所有的 .a 文件
 *.a
 # 但跟踪所有的 lib.a，即便你在前面忽略了 .a 文件
@@ -448,8 +512,8 @@ doc/*.txt
 doc/**/*.pdf
 ~~~
 
-GitHub 有一个十分详细的针对数十种项目及语言的 .gitignore 文件列表， 你可以在 [https://github.com/github/gitignore] 找到它。
-在最简单的情况下，一个仓库可能只根目录下有一个 .gitignore 文件，它递归地应用到整个仓库中。 然而，子目录下也可以有额外的 .gitignore 文件。子目录中的 .gitignore 文件中的规则只作用于它所在的目录中。 （Linux 内核的源码库拥有 206 个 .gitignore 文件。）
+GitHub 有一个十分详细的针对数十种项目及语言的 .gitignore 文件列表，可以在 [https://github.com/github/gitignore] 找到它。
+在最简单的情况下，一个仓库可能只根目录下有一个 .gitignore 文件，它递归地应用到整个仓库中。然而，子目录下也可以有额外的 .gitignore 文件。子目录中的 .gitignore 文件中的规则只作用于它所在的目录中。（Linux 内核的源码库拥有 206 个 .gitignore 文件。）
 
 ### 5.8 查看已暂存和未暂存的修改
 
@@ -460,20 +524,23 @@ GitHub 有一个十分详细的针对数十种项目及语言的 .gitignore 文�
 若要查看已暂存的将要添加到下次提交里的内容，可以用 git diff --staged 命令。
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git diff --staged
 ~~~
 
-使用 git diff 来分析文件差异,也可以使用图形化的工具或外部 diff 工具来比较差异。可以使用 git difftool 命令来调用 emerge 或 vimdiff 等软件（包括商业软件）输出 diff 的分析结果。 使用 git difftool --tool-help 命令来看你的系统支持哪些 Git Diff 插件。
+使用 git diff 来分析文件差异,也可以使用图形化的工具或外部 diff 工具来比较差异。可以使用 git difftool 命令来调用 emerge 或 vimdiff 等软件（包括商业软件）输出 diff 的分析结果。使用 git difftool --tool-help 命令来看系统支持哪些 Git Diff 插件。
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git difftool --tool-help
 ~~~
 
 ### 5.9 提交更新
 
-在提交之前，务必确认还有什么已修改或新建的文件还没有 git add 过， 否则提交的时候不会记录这些尚未暂存的变化。已修改但未暂存的文件只会保留在本地磁盘。所以，每次准备提交前，先用 git status 看下，你所需要的文件是不是都已暂存起来了，然后再运行提交命令 git commit ：
+在提交之前，务必确认还有什么已修改或新建的文件还没有 git add 过， 否则提交的时候不会记录这些尚未暂存的变化。已修改但未暂存的文件只会保留在本地磁盘。所以，每次准备提交前，先用 git status 看下，所需要的文件是不是都已暂存起来了，然后再运行提交命令 git commit ：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git commit
 ~~~
 
