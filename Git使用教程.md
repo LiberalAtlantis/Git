@@ -350,7 +350,7 @@ $ git commit -m 'initial project version'
 
 如果用户想获得一份已经存在了的 Git 仓库的拷贝，比如说，用户想为某个开源项目贡献自己的一份力，这时就要用到 git clone 命令。 Git 克隆的是该 Git 仓库服务器上的几乎所有数据，而不是仅仅复制完成用户的工作所需要文件。 当用户执行 git clone 命令的时候，默认配置下远程 Git 仓库中的每一个文件的每一个版本都将被拉取下来。
 
-克隆仓库的命令是 git clone 'url' 。比如，要克隆 Git 的链接库 libgit2 ，可以用下面的命令：
+克隆仓库的命令是 git clone < url > 。比如，要克隆 Git 的链接库 libgit2 ，可以用下面的命令：
 
 ~~~bash
 MasterChief@DESKTOP MINGW64 ~
@@ -368,7 +368,7 @@ $ git clone https://github.com/libgit2/libgit2 mylibgit
 
 这会执行与上一条命令相同的操作，但目标目录名变为了 mylibgit 。
 
-Git 支持多种数据传输协议。 上面的例子使用的是 https://协议 ，不过用户也可以使用 git://协议 或者使用 SSH 传输协议 ，比如 user@server:path/to/repo.git 。
+Git 支持多种数据传输协议。 上面的例子使用的是 https 协议 ，不过用户也可以使用 git 协议 或者使用 SSH 传输协议 ，比如 user@server:path/to/repo.git 。
 
 工作目录下的每一个文件都不外乎这两种状态：已跟踪或未跟踪。已跟踪的文件是指那些被纳入了版本控制的文件，在上一次快照中有它们的记录，在工作一段时间后，它们的状态可能是未修改，已修改或已放入暂存区。简而言之，已跟踪的文件就是 Git 已经知道的文件。
 
@@ -493,7 +493,7 @@ $ cat .gitignore
 
 •要忽略指定模式以外的文件或目录，可以在模式前加上叹号（!）取反。
 
-所谓的 glob 模式是指 bash 所使用的简化了的正则表达式。星号（\*）匹配零个或多个任意字符； \[abc\] 匹配任何一个列在方括号中的字符（这个例子要么匹配一个 a，要么匹配一个 b，要么匹配一个 c）； 问号（?）只匹配一个任意字符；如果在方括号中使用短划线分隔两个字符， 表示所有在这两个字符范围内的都可以匹配（比如 \[0-9\] 表示匹配所有 0 到 9 的数字）。 使用两个星号（\*\*） 表示匹配任意中间目录，比如 a/\*\*/z可以匹配 a/z 、 a/b/z 或 a/b/c/z 等。
+所谓的 glob 模式是指 bash 所使用的简化了的正则表达式。星号（\*）匹配零个或多个任意字符； \[abc\] 匹配任何一个列在方括号中的字符（这个例子要么匹配一个 a ，要么匹配一个 b ，要么匹配一个 c ）； 问号（?）只匹配一个任意字符；如果在方括号中使用短划线分隔两个字符， 表示所有在这两个字符范围内的都可以匹配（比如 \[0-9\] 表示匹配所有 0 到 9 的数字）。 使用两个星号（\*\*） 表示匹配任意中间目录，比如 a/\*\*/z可以匹配 a/z 、 a/b/z 或 a/b/c/z 等。
 
 我们再看一个 .gitignore 文件的例子：
 
@@ -513,7 +513,7 @@ doc/**/*.pdf
 ~~~
 
 GitHub 有一个十分详细的针对数十种项目及语言的 .gitignore 文件列表，可以在 [https://github.com/github/gitignore] 找到它。
-在最简单的情况下，一个仓库可能只根目录下有一个 .gitignore 文件，它递归地应用到整个仓库中。然而，子目录下也可以有额外的 .gitignore 文件。子目录中的 .gitignore 文件中的规则只作用于它所在的目录中。（Linux 内核的源码库拥有 206 个 .gitignore 文件。）
+在最简单的情况下，一个仓库可能只根目录下有一个 .gitignore 文件，它递归地应用到整个仓库中。然而，子目录下也可以有额外的 .gitignore 文件。子目录中的 .gitignore 文件中的规则只作用于它所在的目录中。（ Linux 内核的源码库拥有 206 个 .gitignore 文件。）
 
 ### 5.8 查看已暂存和未暂存的修改
 
@@ -863,27 +863,32 @@ b0ad11e - pull: allow "git pull origin $something:$current_branch" into an
 unborn branch
 ~~~
 
-**隐藏合并提交**
-
-按照用户代码仓库的工作流程，记录中可能有为数不少的合并提交，它们所包含的信息通常并不多。 为了避免显示的合并提交弄乱历史记录，可以为 log 加上 --no-merges 选项。
+*隐藏合并提交*
+*按照用户代码仓库的工作流程，记录中可能有为数不少的合并提交，它们所包含的信息通常并不多。为了避免显示的合并提交弄乱历史记录，可以为 log 加上 --no-merges 选项。*
 
 ### 5.15 撤消操作
 
-注意，有些撤消操作是不可逆的。 这是在使用 Git 的过程中，会因为操作失误而导致之前的工作丢失的少有的几个地方之一。
+注意，有些撤消操作是不可逆的。这是在使用 Git 的过程中，会因为操作失误而导致之前的工作丢失的少有的几个地方之一。
 
 运行带有 --amend 选项的提交命令来重新提交：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git commit --amend
 ~~~
 
-这个命令会将暂存区中的文件提交。 如果自上次提交以来用户还未做任何修改（例如，在上次提交后马上执行了此命令），那么快照会保持不变，而用户所修改的只是提交信息。
+这个命令会将暂存区中的文件提交。如果自上次提交以来用户还未做任何修改（例如，在上次提交后马上执行了此命令），那么快照会保持不变，而用户所修改的只是提交信息。
 
 例如，用户提交后发现忘记了暂存某些需要的修改，可以像下面这样操作：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git commit -m 'initial commit'
+
+MasterChief@DESKTOP MINGW64 ~
 $ git add forgotten_file
+
+MasterChief@DESKTOP MINGW64 ~
 $ git commit --amend
 ~~~
 
@@ -891,8 +896,15 @@ $ git commit --amend
 
 ### 5.16 取消暂存的文件
 
+如何操作暂存区和工作目录中已修改的文件。
+
+这些命令在修改文件状态的同时，也会提示如何撤消操作。例如，已经修改了两个文件并且想要将它们作为两次独立的修改提交，但是却意外地输入 git add * 暂存了它们两个。如何只取消暂存两个中的一个呢？ git status 命令提示：
+
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git add *
+
+MasterChief@DESKTOP MINGW64 ~
 $ git status
 On branch masterChanges to be committed:
   (use "git reset HEAD <file>..." to unstage)
@@ -900,12 +912,15 @@ On branch masterChanges to be committed:
     modified:   CONTRIBUTING.md
 ~~~
 
-在 “Changes to be committed” 文字正下方，提示使用 git reset HEAD `<`file`>`... 来取消暂存。 所以，我们可以这样来取消暂存 CONTRIBUTING.md 文件：
+在 “Changes to be committed” 文字正下方，提示使用 git reset HEAD < file >... 来取消暂存。所以，我们可以这样来取消暂存 CONTRIBUTING.md 文件：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git reset HEAD CONTRIBUTING.md
 Unstaged changes after reset:
 M   CONTRIBUTING.md
+
+MasterChief@DESKTOP MINGW64 ~
 $ git status
 On branch masterChanges to be committed:
   (use "git reset HEAD <file>..." to unstage)
@@ -921,24 +936,26 @@ Changes not staged for commit:
 如果用户并不想保留对 CONTRIBUTING.md 文件的修改，通过如下命令方便地撤消修改——将它还原成上次提交时的样子（或者刚克隆完的样子，或者刚把它放入工作目录时的样子）
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git checkout -- CONTRIBUTING.md
 ~~~
 
-请务必记得 git checkout -- `<`file`>` 是一个危险的命令。 用户对那个文件在本地的任何修改都会消失—— Git 会用最近提交的版本覆盖掉它。
+请务必记得 git checkout -- < file > 是一个危险的命令。用户对那个文件在本地的任何修改都会消失—— Git 会用最近提交的版本覆盖掉它。
 
 ## 6 远程仓库的使用
 
+远程仓库是指托管在因特网或其他网络中的用户项目的版本库。用户可以有几个远程仓库，通常有些仓库对只读，有些则可以读写。与他人协作涉及管理远程仓库以及根据需要推送或拉取数据。
 管理远程仓库包括了解如何添加远程仓库、移除无效的远程仓库、管理不同的远程分支并定义它们是否被跟踪等等。
 
-远程仓库可以在用户的本地主机上
-
-用户完全可以在一个“远程”仓库上工作，而实际上它在用户本地的主机上。 词语“远程”未必表示仓库在网络或互联网上的其它位置，而只是表示它在别处。 在这样的远程仓库上工作，仍然需要和其它远程仓库上一样的标准推送、拉取和抓取操作。
+*远程仓库可以在用户的本地主机上*
+*用户完全可以在一个“远程”仓库上工作，而实际上它在用户本地的主机上。词语“远程”未必表示仓库在网络或互联网上的其它位置，而只是表示它在别处。在这样的远程仓库上工作，仍然需要和其它远程仓库上一样的标准推送、拉取和抓取操作。*
 
 ### 6.1 Linux查看远程仓库
 
-如果想查看用户已经配置的远程仓库服务器，可以运行 git remote 命令。 它会列出用户指定的每一个远程服务器的简写。 如果用户已经克隆了自己的仓库，那么至少应该能看到 origin ——这是 Git 给用户克隆的仓库服务器的默认名字：
+如果用户想查看已经配置的远程仓库服务器，可以运行 git remote 命令。它会列出用户指定的每一个远程服务器的简写。如果用户已经克隆了自己的仓库，那么至少应该能看到 origin ——这是 Git 给用户克隆的仓库服务器的默认名字：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git clone https://github.com/schacon/ticgit
 Cloning into 'ticgit'...
 remote: Reusing existing pack: 1857, done.
@@ -946,7 +963,11 @@ remote: Total 1857 (delta 0), reused 0 (delta 0)
 Receiving objects: 100% (1857/1857), 374.35 KiB | 268.00 KiB/s, done.
 Resolving deltas: 100% (772/772), done.
 Checking connectivity... done.
+
+MasterChief@DESKTOP MINGW64 ~
 $ cd ticgit
+
+MasterChief@DESKTOP MINGW64 ~
 $ git remote
 origin
 ~~~
@@ -954,15 +975,19 @@ origin
 用户也可以指定选项 -v ，会显示需要读写远程仓库使用的 Git 保存的简写与其对应的 URL 。
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git remote -v
 origin  https://github.com/schacon/ticgit (fetch)
 origin  https://github.com/schacon/ticgit (push)
 ~~~
 
-如果用户的远程仓库不止一个，该命令会将它们全部列出。 例如，与几个协作者合作的，拥有多个远程仓库的仓库看起来像下面这样：
+如果用户的远程仓库不止一个，该命令会将它们全部列出。例如，与几个协作者合作的，拥有多个远程仓库的仓库看起来像下面这样：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ cd grit
+
+MasterChief@DESKTOP MINGW64 ~
 $ git remote -v
 bakkdoor  https://github.com/bakkdoor/grit (fetch)
 bakkdoor  https://github.com/bakkdoor/grit (push)
@@ -978,12 +1003,17 @@ origin    git@github.com:mojombo/grit.git (push)
 
 ### 6.2 添加远程仓库
 
-运行 git remote add `<`shortname`>` `<`url`>` 添加一个新的远程 Git 仓库，同时指定一个方便使用的简写：
+运行 git remote add < shortname > < url > 添加一个新的远程 Git 仓库，同时指定一个方便使用的简写：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git remote
 origin
+
+MasterChief@DESKTOP MINGW64 ~
 $ git remote add pb https://github.com/paulboone/ticgit
+
+MasterChief@DESKTOP MINGW64 ~
 $ git remote -v
 origin  https://github.com/schacon/ticgit (fetch)
 origin  https://github.com/schacon/ticgit (push)
@@ -991,9 +1021,10 @@ pb  https://github.com/paulboone/ticgit (fetch)
 pb  https://github.com/paulboone/ticgit (push)
 ~~~
 
-现在用户可以在命令行中使用字符串 pb 来代替整个 URL 。 例如，如果用户想拉取 Paul 的仓库中有但用户没有的信息，可以运行 git fetch pb ：
+现在用户可以在命令行中使用字符串 pb 来代替整个 URL 。例如，如果用户想拉取 Paul 的仓库中有但用户没有的信息，可以运行 git fetch pb ：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git fetch pb
 remote: Counting objects: 43, done.
 remote: Compressing objects: 100% (36/36), done.
@@ -1011,30 +1042,35 @@ From https://github.com/paulboone/ticgit
 从远程仓库中获得数据，可以执行：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git fetch <remote>
 ~~~
 
-这个命令会访问远程仓库，从中拉取所有用户还没有的数据。 执行完成后，用户将会拥有那个远程仓库中所有分支的引用，可以随时合并或查看。
-如果用户使用 clone 命令克隆了一个仓库，命令会自动将其添加为远程仓库并默认以 “origin” 为简写。 所以， git fetch origin 会抓取克隆（或上一次抓取）后新推送的所有工作。必须注意 git fetch 命令只会将数据下载到用户的本地仓库——它并不会自动合并或修改用户当前的工作。 当准备好时用户必须手动将其合并入用户的工作。
+这个命令会访问远程仓库，从中拉取所有用户还没有的数据。执行完成后，用户将会拥有那个远程仓库中所有分支的引用，可以随时合并或查看。
+
+如果用户使用 clone 命令克隆了一个仓库，命令会自动将其添加为远程仓库并默认以 “origin” 为简写。所以， git fetch origin 会抓取克隆（或上一次抓取）后新推送的所有工作。必须注意 git fetch 命令只会将数据下载到用户的本地仓库——它并不会自动合并或修改用户当前的工作。当准备好时用户必须手动将其合并入用户的工作。
 
 如果用户的当前分支设置了跟踪远程分支（阅读下一节和 Git 分支了解更多信息），那么可以用 git pull 命令来自动抓取后合并该远程分支到当前分支。
 
 ### 6.4 推送到远程仓库
 
-当用户想分享项目时，必须将其推送到上游。这个命令很简单： git push `<`remote`>` `<`branch`>`
+当用户想分享项目时，必须将其推送到上游。这个命令很简单： git push < remote > < branch > 。
+
 当用户想要将 master 分支推送到 origin 服务器时（再次说明，克隆时通常会自动帮用户设置好那两个名字），那么运行这个命令就可以将用户所做的备份到服务器：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git push origin master
 ~~~
 
-只有当用户有所克隆服务器的写入权限，并且之前没有人推送过时，这条命令才能生效。 当用户和其他人在同一时间克隆，他们先推送到上游然后用户再推送到上游，用户的推送就会毫无疑问地被拒绝。 用户必须先抓取他们的工作并将其合并进用户的工作后才能推送。
+只有当用户有所克隆服务器的写入权限，并且之前没有人推送过时，这条命令才能生效。当用户和其他人在同一时间克隆，他们先推送到上游然后用户再推送到上游，用户的推送就会毫无疑问地被拒绝。用户必须先抓取他们的工作并将其合并进用户的工作后才能推送。
 
 ### 6.5 查看某个远程仓库
 
-如果想要查看某一个远程仓库的更多信息，可以使用 git remote show `<`remote`>` 命令。如果想以一个特定的缩写名运行这个命令，例如 origin ，会得到像下面类似的信息：
+如果想要查看某一个远程仓库的更多信息，可以使用 git remote show < remote > 命令。如果想以一个特定的缩写名运行这个命令，例如 origin ，会得到像下面类似的信息：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git remote show origin
 * remote origin
   Fetch URL: https://github.com/schacon/ticgit
@@ -1049,21 +1085,51 @@ $ git remote show origin
     master pushes to master (up to date)
 ~~~
 
-它同样会列出远程仓库的 URL 与跟踪分支的信息。 这些信息非常有用，它告诉用户正处于 master 分支，并且如果运行 git pull ，就会抓取所有的远程引用，然后将远程 master 分支合并到本地 master 分支。它也会列出拉取到的所有远程引用。
+它同样会列出远程仓库的 URL 与跟踪分支的信息。这些信息非常有用，它告诉用户正处于 master 分支，并且如果运行 git pull ，就会抓取所有的远程引用，然后将远程 master 分支合并到本地 master 分支。它也会列出拉取到的所有远程引用。
+
 如果用户是 Git 的重度使用者，那么还可以通过 git remote show 看到更多的信息。
 
 ~~~bash
-$ git remote show
+MasterChief@DESKTOP MINGW64 ~
+$ git remote show origin
+* remote origin
+  URL: https://github.com/my-org/complex-project
+  Fetch URL: https://github.com/my-org/complex-project
+  Push  URL: https://github.com/my-org/complex-project
+  HEAD branch: master
+  Remote branches:
+    master                           tracked
+    dev-branch                       tracked
+    markdown-strip                   tracked
+    issue-43                         new (next fetch will store in
+remotes/origin)
+    issue-45                         new (next fetch will store in
+remotes/origin)
+    refs/remotes/origin/issue-11     stale (use 'git remote prune' to
+remove)
+  Local branches configured for 'git pull':
+    dev-branch merges with remote dev-branch
+    master     merges with remote master
+  Local refs configured for 'git push':
+    dev-branch                     pushes to dev-branch
+(up to date)
+    markdown-strip                 pushes to markdown-strip
+(up to date)
+    master                         pushes to master
+(up to date)
 ~~~
 
-这个命令列出了当用户在特定的分支上执行 git push 会自动地推送到哪一个远程分支。 它也同样地列出了哪些远程分支不在用户的本地，哪些远程分支已经从服务器上移除了，还有当用户执行 git pull 时哪些本地分支可以与它跟踪的远程分支自动合并。
+这个命令列出了当用户在特定的分支上执行 git push 会自动地推送到哪一个远程分支。它也同样地列出了哪些远程分支不在用户的本地，哪些远程分支已经从服务器上移除了，还有当用户执行 git pull 时哪些本地分支可以与它跟踪的远程分支自动合并。
 
 ### 6.6 远程仓库的重命名与移除
 
 用户可以运行 git remote rename 来修改一个远程仓库的简写名。例如，想要将 pb 重命名为 paul ，可以用 git remote rename 这样做：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git remote rename pb paul
+
+MasterChief@DESKTOP MINGW64 ~
 $ git remote
 origin
 paul
@@ -1074,7 +1140,10 @@ paul
 如果因为一些原因想要移除一个远程仓库——用户已经从服务器上搬走了或不再想使用某一个特定的镜像了，又或者某一个贡献者不再贡献了——可以使用 git remote remove 或 git remote rm ：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git remote remove paul
+
+MasterChief@DESKTOP MINGW64 ~
 $ git remote
 origin
 ~~~
@@ -1090,34 +1159,51 @@ Git 可以给仓库历史中的某一个提交打上标签，以示重要。比�
 在 Git 中列出已有的标签非常简单，只需要输入 git tag （可带上可选的 -l 选项 --list ）：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git tag
 v1.0
 v2.0
 ~~~
 
-用户也可以按照特定的模式查找标签。例如，Git 自身的源代码仓库包含标签的数量超过500个。如果只对1.8.5
-系列感兴趣，可以运行：
+这个命令以字母顺序列出标签，但是它们显示的顺序并不重要。
+
+用户也可以按照特定的模式查找标签。例如，Git 自身的源代码仓库包含标签的数量超过500个。如果只对 1.8.5 系列感兴趣，可以运行：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git tag -l "v1.8.5*"
+v1.8.5
+v1.8.5-rc0
+v1.8.5-rc1
+v1.8.5-rc2
+v1.8.5-rc3
+v1.8.5.1
+v1.8.5.2
+v1.8.5.3
+v1.8.5.4
+v1.8.5.5
 ~~~
 
-按照通配符列出标签需要 -l 或 --list 选项如果用户只想要完整的标签列表，那么运行 git tag 就会默认假定用户想要一个列表，它会直接给用户列出来，此时的 -l 或 --list 是可选的。 然而，如果用户提供了一个匹配标签名的通配模式，那么 -l 或 --list 就是强制使用的。
+*按照通配符列出标签需要 -l 或 --list 选项*
+*如果用户只想要完整的标签列表，那么运行 git tag 就会默认假定用户想要一个列表，它会直接给用户列出来，此时的 -l 或 --list 是可选的。 然而，如果用户提供了一个匹配标签名的通配模式，那么 -l 或 --list 就是强制使用的。*
 
 #### 6.7.2 创建标签
 
-Git 支持两种标签：轻量标签（lightweight）与附注标签（annotated）。
+Git 支持两种标签：轻量标签（ lightweight ）与附注标签（ annotated ）。
 
 轻量标签很像一个不会改变的分支——它只是某个特定提交的引用。
 
-附注标签是存储在 Git 数据库中的一个完整对象， 它们是可以被校验的，其中包含打标签者的名字、电子邮件地址、日期时间， 此外还有一个标签信息，并且可以使用 GNU Privacy Guard （GPG）签名并验证。通常会建议创建附注标签，这样用户可以拥有以上所有信息。
+附注标签是存储在 Git 数据库中的一个完整对象，它们是可以被校验的，其中包含打标签者的名字、电子邮件地址、日期时间，此外还有一个标签信息，并且可以使用 GNU Privacy Guard （GPG）签名并验证。通常会建议创建附注标签，这样用户可以拥有以上所有信息。
 
 #### 6.7.3 附注标签
 
 在 Git 中创建附注标签十分简单。最简单的方式是当用户在运行 tag 命令时指定 -a 选项：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git tag -a v1.4 -m "my version 1.4"
+
+MasterChief@DESKTOP MINGW64 ~
 $ git tag
 v0.1
 v1.3
@@ -1127,6 +1213,7 @@ v1.4
 -m 选项指定了一条将会存储在标签中的信息。如果没有为附注标签指定一条信息，Git 会启动编辑器要求用户输入信息。通过使用 git show 命令可以看到标签信息和与之对应的提交信息：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git show v1.4
 tag v1.4
 Tagger: Ben Straub <ben@straub.cc>
@@ -1142,10 +1229,13 @@ Date:   Mon Mar 17 21:52:11 2008 -0700
 
 #### 6.7.4 轻量标签
 
-轻量标签本质上是将提交校验和存储到一个文件中——没有保存任何其他信息。 创建轻量标签，不需要使用 -a 、-s 或 -m 选项，只需要提供标签名字：
+轻量标签本质上是将提交校验和存储到一个文件中——没有保存任何其他信息。创建轻量标签，不需要使用 -a 、-s 或 -m 选项，只需要提供标签名字：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git tag v1.4-lw
+
+MasterChief@DESKTOP MINGW64 ~
 $ git tag
 v0.1
 v1.3
@@ -1154,9 +1244,10 @@ v1.4-lw
 v1.5
 ~~~
 
-这时，如果在标签上运行 git show ，用户不会看到额外的标签信息。 命令只会显示出提交信息：
+这时，如果在标签上运行 git show ，用户不会看到额外的标签信息。命令只会显示出提交信息：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git show v1.4-lw
 commit ca82a6dff817ec66f44342007202690a93763949
 Author: Scott Chacon <schacon@gee-mail.com>
@@ -1169,6 +1260,7 @@ Date:   Mon Mar 17 21:52:11 2008 -0700
 用户也可以对过去的提交打标签。 假设提交历史是这样的：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git log --pretty=oneline
 15027957951b64cf874c3557a0f3547bd83b3ff6 Merge branch 'experiment'
 a6b4c97498bd301d84096da251c98a07c7723e65 beginning write support
@@ -1182,15 +1274,17 @@ a6b4c97498bd301d84096da251c98a07c7723e65 beginning write support
 8a5cbc430f1a9c3d00faaeffd07798508422908a updated readme
 ~~~
 
-假设在 v1.2 时用户忘记给项目打标签，也就是在 “updated rakefile” 提交。 用户可以在之后补上标签。 要在那个提交上打标签，用户需要在命令的末尾指定提交的校验和（或部分校验和）：
+假设在 v1.2 时用户忘记给项目打标签，也就是在 “updated rakefile” 提交。用户可以在之后补上标签。要在那个提交上打标签，用户需要在命令的末尾指定提交的校验和（或部分校验和）：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git tag -a v1.2 9fceb02
 ~~~
 
 可以看到用户已经在那次提交上打上标签了：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git tag
 v0.1
 v1.2
@@ -1198,6 +1292,8 @@ v1.3
 v1.4
 v1.4-lw
 v1.5
+
+MasterChief@DESKTOP MINGW64 ~
 $ git show v1.2
 tag v1.2
 Tagger: Scott Chacon <schacon@gee-mail.com>
@@ -1211,9 +1307,10 @@ Date:   Sun Apr 27 20:43:35 2008 -0700
 
 #### 6.7.6 共享标签
 
-默认情况下，git push 命令并不会传送标签到远程仓库服务器上。在创建完标签后用户必须显式地推送标签到共享服务器上。 这个过程就像共享远程分支一样——用户可以运行 git push origin `<`tagname`>`。
+默认情况下， git push 命令并不会传送标签到远程仓库服务器上。在创建完标签后用户必须显式地推送标签到共享服务器上。这个过程就像共享远程分支一样——用户可以运行 git push origin < tagname >。
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git push origin v1.5
 Counting objects: 14, done.
 Delta compression using up to 8 threads.
@@ -1227,6 +1324,7 @@ To git@github.com:schacon/simplegit.git
 如果想要一次性推送很多标签，也可以使用带有 --tags 选项的 git push 命令。这将会把所有不在远程仓库服务器上的标签全部传送到那里。
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git push origin --tags
 Counting objects: 1, done.
 Writing objects: 100% (1/1), 160 bytes | 0 bytes/s, done.
@@ -1235,26 +1333,26 @@ Total 1 (delta 0), reused 0 (delta 0)To git@github.com:schacon/simplegit.git
  * [new tag]         v1.4-lw -> v1.4-lw
 ~~~
 
-git push 推送两种标签使用 git push `<`remote`>` --tags 推送标签并不会区分轻量标签和附注标签， 没有简单的选项能够让用户只选择推送一种标签。
+*git push 推送两种标签*
+*使用 git push < remote > --tags 推送标签并不会区分轻量标签和附注标签，没有简单的选项能够让用户只选择推送一种标签。*
 
 #### 6.7.7 删除标签
 
-要删除掉用户本地仓库上的标签，可以使用命令 git tag -d `<`tagname`>` 。
+要删除掉用户本地仓库上的标签，可以使用命令 git tag -d < tagname > 。
 例如，可以使用以下命令删除一个轻量标签：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git tag -d v1.4-lw
 Deleted tag 'v1.4-lw' (was e7d5add)
 ~~~
 
-注意上述命令并不会从任何远程仓库中移除这个标签，用户必须用 git push `<`remote`>`:refs/tags/`<`tagname`>` 来更新用户的远程仓库：
-第一种变体是
+注意上述命令并不会从任何远程仓库中移除这个标签，用户必须用 git push < remote >:refs/tags/< tagname > 来更新用户的远程仓库：
+
+第一种变体是 git push < remote >:refs/tags/< tagname > ：
 
 ~~~bash
-$ git push <remote> :refs/tags/<tagname>：
-~~~
-
-~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git push origin :refs/tags/v1.4-lw
 To /git@github.com:schacon/simplegit.git
  - [deleted]         v1.4-lw
@@ -1263,6 +1361,7 @@ To /git@github.com:schacon/simplegit.git
 第二种更直观的删除远程标签的方式是：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git push origin --delete <tagname>
 ~~~
 
