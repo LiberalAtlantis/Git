@@ -184,7 +184,45 @@ $ git config --global user.email johndoe@example.com
 
 如果使用了 --global 选项，那么该命令只需要运行一次，之后无论在该系统上做任何事情，Git 都会使用那些信息。当想针对特定项目使用不同的用户名称与邮件地址时，可以在那个项目目录下运行没有 --global 选项的命令来配置。
 
-### 4.2 文本编辑器
+### 4.2 配置远程仓库
+
+Git 服务器都会选择使用 SSH 公钥来进行授权。系统中的每个用户都必须提供一个公钥用于授权，没有的话就要生成一个。生成公钥的过程在所有操作系统上都差不多。 首先先确认一下是否已经有一个公钥了。SSH 公钥默认储存在账户的主目录下的 ~/.ssh 目录。进去看看：
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~
+$ cd ~/.ssh/
+
+MasterChief@DESKTOP MINGW64 ~/.ssh
+$ ls
+id_rsa  id_rsa.pub  known_hosts
+~~~
+
+有 .pub 后缀的文件就是公钥，另一个文件则是密钥。假如没有这些文件，或者没有 .ssh 目录，可以用 ssh-keygen 来创建。
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~/.ssh
+$ ssh-keygen
+GGenerating public/private rsa key pair.
+Enter file in which to save the key (/c/Users/MasterChief/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /Users/MasterChief/.ssh/id_rsa.
+Your public key has been saved in /Users/MasterChief/.ssh/id_rsa.public.
+The key fingerprint is:
+......
+~~~
+
+或者生成带有指定注释的KEY：
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~/.ssh
+$ ssh-keygen -t rsa -C "youremail@mail.com"
+......
+~~~
+
+在 Git 远程服务器上增加该密钥，即可连接到远程服务器。
+
+### 4.3 文本编辑器
 
 用户信息设置完毕，可以配置默认文本编辑器，当 Git 需要输入信息时会调用它。 如果未配置，Git 会使用操作系统默认的文本编辑器。如果想使用不同的文本编辑器，例如 Emacs ，可以输入如下命令：
 
@@ -202,7 +240,7 @@ MasterChief@DESKTOP MINGW64 ~
 $ git config --global core.editor "'C:/ProgramFiles/Notepad++/notepad++.exe' -multiInst -notabbar -nosession -noPlugin"
 ~~~
 
-### 4.3 检查配置信息
+### 4.4 检查配置信息
 
 使用 git config --list 命令来列出所有 Git 当时能找到的配置。
 
@@ -236,7 +274,7 @@ $ git config --show-origin rerere.autoUpdate
 file:/home/johndoe/.gitconfig false
 ~~~
 
-### 4.4 获取帮助
+### 4.5 获取帮助
 
 若使用 Git 时需要获取帮助，有三种等价的方法可以找到 Git 命令的综合手册（manpage）：
 
