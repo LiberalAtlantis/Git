@@ -1408,6 +1408,7 @@ $ git push origin --delete <tagname>
 如果用户想查看某个标签所指向的文件版本，可以使用 git checkout 命令， 虽然这会使用户的仓库处于“分离头指针（detached HEAD）”的状态——这个状态有些不好的副作用。
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git checkout 2.0.0
 Note: checking out '2.0.0'.
 You are in 'detached HEAD' state. You can look around, make experimentalchanges and commit them, and you can discard any commits you make in thisstate without impacting any branches by performing another checkout.
@@ -1422,20 +1423,28 @@ HEAD is now at df3f601... add atlas.json and cover image
 在“分离头指针”状态下，如果用户做了某些更改然后提交它们，标签不会发生变化，但用户的新提交将不属于任何分支，并且将无法访问，除非通过确切的提交哈希才能访问。 因此，如果用户需要进行更改，比如用户要修复旧版本中的错误，那么通常需要创建一个新分支：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git checkout -b version2 v2.0.0
 Switched to a new branch 'version2'
 ~~~
 
 如果在这之后又进行了一次提交，version2 分支就会因为这个改动向前移动，此时它就会和v2.0.0标签稍微有些不同，这时就要当心了。
 
-### 6.8 Git别名
+### 6.8 Git 别名
 
 如果不想每次都输入完整的 Git 命令，可以通过 gitconfig 文件来轻松地为每一个命令设置一个别名。这里有一些例子用户可以试试：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git config --global alias.co checkout
+
+MasterChief@DESKTOP MINGW64 ~
 $ git config --global alias.br branch
+
+MasterChief@DESKTOP MINGW64 ~
 $ git config --global alias.ci commit
+
+MasterChief@DESKTOP MINGW64 ~
 $ git config --global alias.st status
 ~~~
 
@@ -1443,25 +1452,31 @@ $ git config --global alias.st status
 为了解决取消暂存文件的易用性问题，可以向 Git 中添加用户自己的取消暂存别名：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git config --global alias.unstage 'reset HEAD --'
 ~~~
 
 这会使下面的两个命令等价：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git unstage fileA
+
+MasterChief@DESKTOP MINGW64 ~
 $ git reset HEAD -- fileA
 ~~~
 
 这样看起来更清楚一些。 通常也会添加一个 last 命令，像这样：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git config --global alias.last 'log -1 HEAD'
 ~~~
 
 这样，可以轻松地看到最后一次提交：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git last
 commit 66938dae3329c7aebe598c2246a8e6af90d04646
 Author: Josh Goebel <dreamer3@example.com>
@@ -1470,9 +1485,10 @@ Date:   Tue Aug 26 19:48:51 2008 +0800
     Signed-off-by: Scott Chacon <schacon@example.com>
 ~~~
 
-可以看出，Git 只是简单地将别名替换为对应的命令。 然而，用户可能想要执行外部命令，而不是一个 Git 子命令。 如果是那样的话，可以在命令前面加入 ! 符号。 如果用户自己要写一些与 Git 仓库协作的工具的话，那会很有用。 我们现在演示将 git visual定义为 gitk的别名：
+可以看出，Git 只是简单地将别名替换为对应的命令。 然而，用户可能想要执行外部命令，而不是一个 Git 子命令。 如果是那样的话，可以在命令前面加入 ! 符号。 如果用户自己要写一些与 Git 仓库协作的工具的话，那会很有用。 我们现在演示将 git visual 定义为 gitk 的别名：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git config --global alias.visual '!gitk'
 ~~~
 
@@ -1480,29 +1496,31 @@ $ git config --global alias.visual '!gitk'
 
 ### 7.1 分支简介
 
-在进行提交操作时，Git 会保存一个提交对象（commit object）。 该提交对象会包含一个指向暂存内容快照的指针。 但不仅仅是这样，该提交对象还包含了作者的姓名和邮箱、提交时输入的信息以及指向它的父对象的指针。 首次提交产生的提交对象没有父对象，普通提交操作产生的提交对象有一个父对象，而由多个分支合并产生的提交对象有多个父对象.
+在进行提交操作时， Git 会保存一个提交对象（ commit object ）。该提交对象会包含一个指向暂存内容快照的指针。但不仅仅是这样，该提交对象还包含了作者的姓名和邮箱、提交时输入的信息以及指向它的父对象的指针。首次提交产生的提交对象没有父对象，普通提交操作产生的提交对象有一个父对象，而由多个分支合并产生的提交对象有多个父对象。
 
-当使用 git commit 进行提交操作时，Git 会先计算每一个子目录（本例中只有项目根目录）的校验和，然后在 Git 仓库中这些校验和保存为树对象。 随后， Git 便会创建一个提交对象，它除了包含上面提到的那些信息外，还包含指向这个树对象（项目根目录）的指针。 如此一来， Git 就可以在需要的时候重现此次保存的快照。
+当使用 git commit 进行提交操作时， Git 会先计算每一个子目录（本例中只有项目根目录）的校验和，然后在 Git 仓库中这些校验和保存为树对象。随后， Git 便会创建一个提交对象，它除了包含上面提到的那些信息外，还包含指向这个树对象（项目根目录）的指针。如此一来， Git 就可以在需要的时候重现此次保存的快照。
 
 现在， Git 仓库中有五个对象：三个 blob 对象（保存着文件快照）、一个树对象（记录着目录结构和 blob 对象索引）以及一个提交对象（包含着指向前述树对象的指针和所有提交信息）。
 
-Git 的分支，其实本质上仅仅是指向提交对象的可变指针。 Git 的默认分支名字是 master 。 在多次提交操作之后，用户其实已经有一个指向最后那个提交对象的 master 分支。 master分支会在每次提交时自动向前移动。
+Git 的分支，其实本质上仅仅是指向提交对象的可变指针。 Git 的默认分支名字是 master 。在多次提交操作之后，用户其实已经有一个指向最后那个提交对象的 master 分支。 master 分支会在每次提交时自动向前移动。
 
-Git 的 master 分支并不是一个特殊分支。它就跟其它分支完全没有区别。 之所以几乎每一个仓库都有 master 分支，是因为 git init 命令默认创建它，并且大多数人都懒得去改动它。
+Git 的 master 分支并不是一个特殊分支。它就跟其它分支完全没有区别。之所以几乎每一个仓库都有 master 分支，是因为 git init 命令默认创建它，并且大多数人都懒得去改动它。
 
 ### 7.2 分支创建
 
 比如，创建一个 testing 分支， 用户需要使用 git branch 命令：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git branch testing
 ~~~
 
 Git 有一个名为 HEAD 的特殊指针，指示当前在哪一个分支上。 git branch 命令仅仅创建一个新分支，并不会自动切换到新分支中去。
 
-可以简单地使用 git log 命令查看各个分支当前所指的对象。 提供这一功能的参数是 --decorate 。
+可以简单地使用 git log 命令查看各个分支当前所指的对象。提供这一功能的参数是 --decorate 。
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git log --oneline --decorate
 f30ab (HEAD -> master, testing) add feature #32 - ability to add newformats to the central interface
 34ac2 Fixed bug #1328 - stack overflow under certain conditions
@@ -1514,6 +1532,7 @@ f30ab (HEAD -> master, testing) add feature #32 - ability to add newformats to t
 要切换到一个已存在的分支，用户需要使用 git checkout 命令。我们现在切换到新创建的 testing 分支去：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git checkout testing
 ~~~
 
@@ -1522,14 +1541,16 @@ $ git checkout testing
 切换回 master 分支
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git checkout master
 ~~~
 
-在切换分支时，一定要注意用户工作目录里的文件会被改变。 如果是切换到一个较旧的分支，用户的工作目录会恢复到该分支最后一次提交时的样子。 如果 Git 不能干净利落地完成这个任务，它将禁止切换分支。
+在切换分支时，一定要注意用户工作目录里的文件会被改变。如果是切换到一个较旧的分支，用户的工作目录会恢复到该分支最后一次提交时的样子。如果 Git 不能干净利落地完成这个任务，它将禁止切换分支。
 
-可以简单地使用 git log 命令查看分叉历史。 运行 git log --oneline --decorate --graph--all ，它会输出用户的提交历史、各个分支的指向以及项目的分支分叉情况。
+可以简单地使用 git log 命令查看分叉历史。运行 git log --oneline --decorate --graph--all ，会输出用户的提交历史、各个分支的指向以及项目的分支分叉情况。
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git log --oneline --decorate --graph --all
 * c2b9e (HEAD, master) made other changes
 | * 87ab2 (testing) made a change
@@ -1543,11 +1564,12 @@ $ git log --oneline --decorate --graph --all
 
 #### 7.4.1 新建分支
 
-假设用户正在用户的项目上工作，并且在 master 分支上已经有了一些提交。
+假设用户正在项目上工作，并且在 master 分支上已经有了一些提交。
 
-现在，用户已经决定要解决用户的公司使用的问题追踪系统中的 #53 问题。 想要新建一个分支并同时切换到那个分支上，用户可以运行一个带有 -b 参数的 git checkout 命令：
+现在，用户已经决定要解决公司使用的问题追踪系统中的 #53 问题。想要新建一个分支并同时切换到那个分支上，用户可以运行一个带有 -b 参数的 git checkout 命令：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git checkout -b iss53
 Switched to a new branch "iss53"
 ~~~
@@ -1555,20 +1577,26 @@ Switched to a new branch "iss53"
 它是下面两条命令的简写：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git branch iss53
+
+MasterChief@DESKTOP MINGW64 ~
 $ git checkout iss53
 ~~~
 
-用户继续在 #53 问题上工作，并且做了一些提交。 在此过程中， iss53 分支在不断的向前推进，因为用户已经检出到该分支（也就是说，用户的 HEAD 指针指向了 iss53 分支）
+用户继续在 #53 问题上工作，并且做了一些提交。在此过程中， iss53 分支在不断的向前推进，因为用户已经检出到该分支（也就是说，用户的 HEAD 指针指向了 iss53 分支）
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ vim index.html
+
+MasterChief@DESKTOP MINGW64 ~
 $ git commit -a -m 'added a new footer [issue 53]'
 ~~~
 
-有了 Git 的帮助，用户不必把这个紧急问题和 iss53 的修改混在一起，用户也不需要花大力气来还原关于 53# 问题的修改，然后再添加关于这个紧急问题的修改，最后将这个修改提交到线上分支。 用户所要做的仅仅是切换回 master 分支。
+有了 Git 的帮助，用户不必把这个紧急问题和 iss53 的修改混在一起，用户也不需要花大力气来还原关于 53# 问题的修改，然后再添加关于这个紧急问题的修改，最后将这个修改提交到线上分支。用户所要做的仅仅是切换回 master 分支。
 
-但是，在用户这么做之前，要留意用户的工作目录和暂存区里那些还没有被提交的修改，它可能会和用户即将检出的分支产生冲突从而阻止 Git 切换到该分支。 最好的方法是，在用户切换分支之前，保持好一个干净的状态。 有一些方法可以绕过这个问题（即，暂存（stashing） 和 修补提交（commit amending）），我们会在 贮藏与清理中 看到关于这两个命令的介绍。 现在，我们假设用户已经把用户的修改全部提交了，这时用户可以切换回 master 分支了：
+但是，在用户这么做之前，要留意用户的工作目录和暂存区里那些还没有被提交的修改，它可能会和用户即将检出的分支产生冲突从而阻止 Git 切换到该分支。最好的方法是，在用户切换分支之前，保持好一个干净的状态。有一些方法可以绕过这个问题（即，暂存（ stashing ） 和 修补提交（ commit amending ）），我们会在 贮藏与清理中 看到关于这两个命令的介绍。 现在，我们假设用户已经把用户的修改全部提交了，这时用户可以切换回 master 分支了：
 
 ~~~bash
 $ git checkout master
@@ -1577,16 +1605,22 @@ Switched to branch 'master'
 
 这个时候，用户的工作目录和用户在开始 #53 问题之前一模一样。
 
-请牢记：当用户切换分支的时候，Git 会重置用户的工作目录，使其看起来像回到了用户在那个分支上最后一次提交的样子。
+请牢记：当用户切换分支的时候， Git 会重置用户的工作目录，使其看起来像回到了用户在那个分支上最后一次提交的样子。
 
 Git 会自动添加、删除、修改文件以确保此时用户的工作目录和这个分支最后一次提交时的样子一模一样。
 
-接下来，用户要修复这个紧急问题。 我们来建立一个 hotfix分支，在该分支上工作直到问题解决：
+接下来，用户要修复这个紧急问题。我们来建立一个 hotfix 分支，在该分支上工作直到问题解决：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git checkout -b hotfix
 Switched to a new branch 'hotfix'
-$ vim index.html$ git commit -a -m 'fixed the broken email address'
+
+MasterChief@DESKTOP MINGW64 ~
+$ vim index.html
+
+MasterChief@DESKTOP MINGW64 ~
+$ git commit -a -m 'fixed the broken email address'
 [hotfix 1fb7853] fixed the broken email address
  1 file changed, 2 insertions(+)
 ~~~
@@ -1594,66 +1628,84 @@ $ vim index.html$ git commit -a -m 'fixed the broken email address'
 用户可以运行用户的测试，确保用户的修改是正确的，然后将 hotfix 分支合并回用户的 master 分支来部署到线上。用户可以使用 git merge 命令来达到上述目的：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git checkout master
+
+MasterChief@DESKTOP MINGW64 ~
 $ git merge hotfix
-Updating f42c576..3a0874cFast-forward index.html | 2 ++
+Updating f42c576..3a0874c
+Fast-forward
+ index.html | 2 ++
  1 file changed, 2 insertions(+)
 ~~~
 
-在合并的时候，用户应该注意到了“快进（fast-forward）”这个词。 由于用户想要合并的分支 hotfix 所指向的提交 C4 是用户所在的提交 C2 的直接后继，因此 Git 会直接将指针向前移动。换句话说，当用户试图合并两个分支时，如果顺着一个分支走下去能够到达另一个分支，那么 Git 在合并两者的时候，只会简单的将指针向前推进（指针右移），因为这种情况下的合并操作没有需要解决的分歧——这就叫做 “快进（fast-forward）”。
-关于这个紧急问题的解决方案发布之后，用户准备回到被打断之前时的工作中。 然而，用户应该先删除 hotfix 分支，因为用户已经不再需要它了 —— master 分支已经指向了同一个位置。 用户可以使用带 -d 选项的 git branch 命令来删除分支：
+在合并的时候，用户应该注意到了“快进（ fast-forward ）”这个词。由于用户想要合并的分支 hotfix 所指向的提交 C4 是用户所在的提交 C2 的直接后继，因此 Git 会直接将指针向前移动。换句话说，当用户试图合并两个分支时，如果顺着一个分支走下去能够到达另一个分支，那么 Git 在合并两者的时候，只会简单的将指针向前推进（指针右移），因为这种情况下的合并操作没有需要解决的分歧——这就叫做 “快进（ fast-forward ）”。
+
+关于这个紧急问题的解决方案发布之后，用户准备回到被打断之前时的工作中。然而，用户应该先删除 hotfix 分支，因为用户已经不再需要它了—— master 分支已经指向了同一个位置。用户可以使用带 -d 选项的 git branch 命令来删除分支：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git branch -d hotfix
 Deleted branch hotfix (3a0874c).
 ~~~
 
-现在用户可以切换回用户正在工作的分支继续用户的工作，也就是针对 #53 问题的那个分支（iss53 分支）。
+现在用户可以切换回用户正在工作的分支继续用户的工作，也就是针对 #53 问题的那个分支（ iss53 分支 ）。
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git checkout iss53
 Switched to branch "iss53"
+
+MasterChief@DESKTOP MINGW64 ~
 $ vim index.html
+
+MasterChief@DESKTOP MINGW64 ~
 $ git commit -a -m 'finished the new footer [issue 53]'
 [iss53 ad82d7a] finished the new footer [issue 53]
 1 file changed, 1 insertion(+)
 ~~~
 
-用户在 hotfix 分支上所做的工作并没有包含到 iss53 分支中。 如果用户需要拉取 hotfix 所做的修改，用户可以使用 git merge master 命令将 master 分支合并入 iss53 分支，或者用户也可以等到 iss53 分支完成其使命，再将其合并回 master分支。
+用户在 hotfix 分支上所做的工作并没有包含到 iss53 分支中。如果用户需要拉取 hotfix 所做的修改，用户可以使用 git merge master 命令将 master 分支合并入 iss53 分支，或者用户也可以等到 iss53 分支完成其使命，再将其合并回 master 分支。
 
 #### 7.4.2 分支的合并
 
-假设用户已经修正了 #53 问题，并且打算将用户的工作合并入 master 分支。 为此，用户需要合并 iss53 分支到 master 分支，这和之前用户合并 hotfix 分支所做的工作差不多。 用户只需要检出到用户想合并入的分支，然后运行 git merge 命令：
+假设用户已经修正了 #53 问题，并且打算将用户的工作合并入 master 分支。为此，用户需要合并 iss53 分支到 master 分支，这和之前用户合并 hotfix 分支所做的工作差不多。用户只需要检出到用户想合并入的分支，然后运行 git merge 命令：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git checkout master
 Switched to branch 'master'
+
+MasterChief@DESKTOP MINGW64 ~
 $ git merge iss53
 Merge made by the 'recursive' strategy.
 index.html |    1 +
 1 file changed, 1 insertion(+)
 ~~~
 
-修改合并之后，就不再需要 iss53 分支了。 现在用户可以在任务追踪系统中关闭此项任务，并删除这个分支。
+修改合并之后，就不再需要 iss53 分支了。现在用户可以在任务追踪系统中关闭此项任务，并删除这个分支。
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git branch -d iss53
 ~~~
 
 #### 7.4.3 遇到冲突时的分支合并
 
-如果用户在两个不同的分支中，对同一个文件的同一个部分进行了不同的修改， Git 就没法干净的合并它们。 如果用户对 #53 问题的修改和有关 hotfix 分支的修改都涉及到同一个文件的同一处，在合并它们的时候就会产生合并冲突：
+如果用户在两个不同的分支中，对同一个文件的同一个部分进行了不同的修改， Git 就没法干净的合并它们。如果用户对 #53 问题的修改和有关 hotfix 分支的修改都涉及到同一个文件的同一处，在合并它们的时候就会产生合并冲突：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git merge iss53
 Auto-merging index.html
 CONFLICT (content): Merge conflict in index.html
 Automatic merge failed; fix conflicts and then commit the result.
 ~~~
 
-此时 Git 做了合并，但是没有自动地创建一个新的合并提交。 Git 会暂停下来，等待用户去解决合并产生的冲突。 用户可以在合并冲突后的任意时刻使用 git status 命令来查看那些因包含合并冲突而处于未合并（unmerged）状态的文件：
+此时 Git 做了合并，但是没有自动地创建一个新的合并提交。 Git 会暂停下来，等待用户去解决合并产生的冲突。用户可以在合并冲突后的任意时刻使用 git status 命令来查看那些因包含合并冲突而处于未合并（ unmerged ）状态的文件：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git status
 On branch master
 You have unmerged paths.
@@ -1664,7 +1716,7 @@ Unmerged paths:
 no changes added to commit (use "git add" and/or "git commit -a")
 ~~~
 
-任何因包含合并冲突而有待解决的文件，都会以未合并状态标识出来。 Git 会在有冲突的文件中加入标准的冲突解决标记，这样用户可以打开这些包含冲突的文件然后手动解决冲突。 出现冲突的文件会包含一些特殊区段，看起来像下面这个样子：
+任何因包含合并冲突而有待解决的文件，都会以未合并状态标识出来。 Git 会在有冲突的文件中加入标准的冲突解决标记，这样用户可以打开这些包含冲突的文件然后手动解决冲突。出现冲突的文件会包含一些特殊区段，看起来像下面这个样子：
 
 ~~~bash
 <<<<<<< HEAD:index.html
@@ -1677,7 +1729,8 @@ no changes added to commit (use "git add" and/or "git commit -a")
 ~~~
 
 这表示 HEAD 所指示的版本（也就是用户的 master 分支所在的位置，因为用户在运行 merge 命令的时候已经检出到了这个分支）在这个区段的上半部分（=======的上半部分），而 iss53 分支所指示的版本在 ======= 的下半部分。
-为了解决冲突，用户必须选择使用由 =======分割的两部分中的一个，或者用户也可以自行合并这些内容。 例如，用户可以通过把这段内容换成下面的样子来解决冲突：
+
+为了解决冲突，用户必须选择使用由 ======= 分割的两部分中的一个，或者用户也可以自行合并这些内容。 例如，用户可以通过把这段内容换成下面的样子来解决冲突：
 
 ~~~bash
 <div id="footer">
@@ -1685,11 +1738,12 @@ please contact us at email.support@github.com
 </div>
 ~~~
 
-上述的冲突解决方案仅保留了其中一个分支的修改，并且 <<<<<<< , ======= , 和 >>>>>>> 这些行被完全删除了。 在用户解决了所有文件里的冲突之后，对每个文件使用 git add 命令来将其标记为冲突已解决。 一旦暂存这些原本有冲突的文件，Git 就会将它们标记为冲突已解决。
+上述的冲突解决方案仅保留了其中一个分支的修改，并且 <<<<<<< , ======= , 和 >>>>>>> 这些行被完全删除了。在用户解决了所有文件里的冲突之后，对每个文件使用 git add 命令来将其标记为冲突已解决。一旦暂存这些原本有冲突的文件， Git 就会将它们标记为冲突已解决。
 
 如果用户想使用图形化工具来解决冲突，用户可以运行 git mergetool ，该命令会为用户启动一个合适的可视化合并工具，并带领用户一步一步解决这些冲突：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git mergetool
 This message is displayed because 'merge.tool' is not configured.
 See 'git mergetool --tool-help' or 'git help config' for more details.
@@ -1704,11 +1758,12 @@ Normal merge conflict for 'index.html':
 Hit return to start merge resolution tool (opendiff):
 ~~~
 
-如果用户想使用除默认工具（在这里 Git 使用 opendiff 做为默认的合并工具，因为作者在 Mac 上运行该程序）外的其他合并工具，用户可以在 “下列工具中（one of the following tools）” 这句后面看到所有支持的合并工具。 然后输入用户喜欢的工具名字就可以了。
+如果用户想使用除默认工具（在这里 Git 使用 opendiff 做为默认的合并工具，因为作者在 Mac 上运行该程序）外的其他合并工具，用户可以在 “下列工具中（one of the following tools）” 这句后面看到所有支持的合并工具。然后输入用户喜欢的工具名字就可以了。
 
-等用户退出合并工具之后，Git 会询问刚才的合并是否成功。 如果用户回答是，Git 会暂存那些文件以表明冲突已解决： 用户可以再次运行 git status 来确认所有的合并冲突都已被解决：
+等用户退出合并工具之后， Git 会询问刚才的合并是否成功。如果用户回答是， Git 会暂存那些文件以表明冲突已解决：用户可以再次运行 git status 来确认所有的合并冲突都已被解决：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git status
 On branch master
 All conflicts fixed but you are still merging.
@@ -1717,7 +1772,7 @@ Changes to be committed:
     modified:   index.html79
 ~~~
 
-如果用户对结果感到满意，并且确定之前有冲突的的文件都已经暂存了，这时用户可以输入 git commit 来完成合并提交。 默认情况下提交信息看起来像下面这个样子：
+如果用户对结果感到满意，并且确定之前有冲突的的文件都已经暂存了，这时用户可以输入 git commit 来完成合并提交。默认情况下提交信息看起来像下面这个样子：
 
 ~~~bash
 Merge branch 'iss53'
@@ -1741,41 +1796,46 @@ Conflicts:
 git branch 命令不只是可以创建与删除分支。如果不加任何参数运行它，会得到当前所有分支的一个列表：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git branch
   iss53
 * master
   testing
 ~~~
 
-注意 master 分支前的 * 字符：它代表现在检出的那一个分支（也就是说，当前 HEAD 指针所指向的分支）。这意味着如果在这时候提交，master分支将会随着新的工作向前移动。 如果需要查看每一个分支的最后一次提交，可以运行 git branch -v 命令：
+注意 master 分支前的 * 字符：它代表现在检出的那一个分支（也就是说，当前 HEAD 指针所指向的分支）。这意味着如果在这时候提交， master 分支将会随着新的工作向前移动。如果需要查看每一个分支的最后一次提交，可以运行 git branch -v 命令：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git branch -v
   iss53   93b412c fix javascript issue
 * master  7a98805 Merge branch 'iss53'
   testing 782fd34 add scott to the author list in the readmes
 ~~~
 
---merged 与 --no-merged 这两个有用的选项可以过滤这个列表中已经合并或尚未合并到当前分支的分支。 如果要查看哪些分支已经合并到当前分支，可以运行 git branch --merged ：
+--merged 与 --no-merged 这两个有用的选项可以过滤这个列表中已经合并或尚未合并到当前分支的分支。如果要查看哪些分支已经合并到当前分支，可以运行 git branch --merged ：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git branch --merged
   iss53
 * master
 ~~~
 
-因为之前已经合并了 iss53 分支，所以现在看到它在列表中。 在这个列表中分支名字前没有 * 号的分支通常可以使用 git branch -d 删除掉；用户已经将它们的工作整合到了另一个分支，所以并不会失去任何东西。
+因为之前已经合并了 iss53 分支，所以现在看到它在列表中。在这个列表中分支名字前没有 * 号的分支通常可以使用 git branch -d 删除掉；用户已经将它们的工作整合到了另一个分支，所以并不会失去任何东西。
 
 查看所有包含未合并工作的分支，可以运行 git branch --no-merged ：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git branch --no-merged
   testing
 ~~~
 
-这里显示了其他分支。 因为它包含了还未合并的工作，尝试使用 git branch -d 命令删除它时会失败：
+这里显示了其他分支。因为它包含了还未合并的工作，尝试使用 git branch -d 命令删除它时会失败：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git branch -d testing
 error: The branch 'testing' is not fully merged.
 If you are sure you want to delete it, run 'git branch -D testing'.
@@ -1783,10 +1843,13 @@ If you are sure you want to delete it, run 'git branch -D testing'.
 
 如果真的想要删除分支并丢掉那些工作，如同帮助信息里所指出的，可以使用 -D 选项强制删除它。
 
-选项 --merged 和 --no-merged 会在没有给定提交或分支名作为参数时，分别列出已合并或未合并到当前分支的分支。可以通过附加的参数来查看其它分支的合并状态而不必检出它们。 例如，尚未合并到 master 分支的有哪些：
+选项 --merged 和 --no-merged 会在没有给定提交或分支名作为参数时，分别列出已合并或未合并到当前分支的分支。可以通过附加的参数来查看其它分支的合并状态而不必检出它们。例如，尚未合并到 master 分支的有哪些：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git checkout testing
+
+MasterChief@DESKTOP MINGW64 ~
 $ git branch --no-merged master
   topicA
   featureB81
@@ -1798,7 +1861,7 @@ $ git branch --no-merged master
 
 在整个项目开发周期的不同阶段，可以同时拥有多个开放的分支；可以定期地把某些主题分支合并入其他分支中。
 
-许多使用 Git 的开发者都喜欢使用这种方式来工作，比如只在 master 分支上保留完全稳定的代码——有可能仅仅是已经发布或即将发布的代码。 他们还有一些名为 develop 或者 next 的平行分支，被用来做后续开发或者测试稳定性——这些分支不必保持绝对稳定，但是一旦达到稳定状态，它们就可以被合并入 master 分支了。 这样，在确保这些已完成的主题分支（短期分支，比如之前的 iss53 分支）能够通过所有测试，并且不会引入更多 bug 之后，就可以合并入主干分支中，等待下一次的发布。
+许多使用 Git 的开发者都喜欢使用这种方式来工作，比如只在 master 分支上保留完全稳定的代码——有可能仅仅是已经发布或即将发布的代码。他们还有一些名为 develop 或者 next 的平行分支，被用来做后续开发或者测试稳定性——这些分支不必保持绝对稳定，但是一旦达到稳定状态，它们就可以被合并入 master 分支了。这样，在确保这些已完成的主题分支（短期分支，比如之前的 iss53 分支）能够通过所有测试，并且不会引入更多 bug 之后，就可以合并入主干分支中，等待下一次的发布。
 
 稳定分支的指针总是在提交历史中落后一大截，而前沿分支的指针往往比较靠前。
 
@@ -1808,32 +1871,34 @@ $ git branch --no-merged master
 
 主题分支是一种短期分支，它被用来实现单一特性或其相关工作。
 
-请牢记，当用户做这么多操作的时候，这些分支全部都存于本地。 当用户新建和合并分支的时候，所有这一切都只发生在用户本地的 Git 版本库中 —— 没有与服务器发生交互。
+请牢记，当用户做这么多操作的时候，这些分支全部都存于本地。当用户新建和合并分支的时候，所有这一切都只发生在用户本地的 Git 版本库中——没有与服务器发生交互。
 
 ### 7.7 远程分支
 
-远程引用是对远程仓库的引用（指针），包括分支、标签等等。 用户可以通过 git ls-remote `<`remote`>` 来显式地获得远程引用的完整列表， 或者通过 git remote show `<`remote`>` 获得远程分支的更多信息。 然而，一个更常见的做法是利用远程跟踪分支。
+远程引用是对远程仓库的引用（指针），包括分支、标签等等。用户可以通过 git ls-remote < remote > 来显式地获得远程引用的完整列表， 或者通过 git remote show < remote > 获得远程分支的更多信息。然而，一个更常见的做法是利用远程跟踪分支。
 
-远程跟踪分支是远程分支状态的引用。 它们是用户无法移动的本地引用。 一旦用户进行了网络通信， Git 就会为用户移动它们以精确反映远程仓库的状态。 请将它们看做书签，这样可以提醒用户该分支在远程仓库中的位置就是用户最后一次连接到它们的位置。
+远程跟踪分支是远程分支状态的引用。它们是用户无法移动的本地引用。一旦用户进行了网络通信， Git 就会为用户移动它们以精确反映远程仓库的状态。请将它们看做书签，这样可以提醒用户该分支在远程仓库中的位置就是用户最后一次连接到它们的位置。
 
-它们以 `<`remote`>`/`<`branch`>`的形式命名。 例如，如果用户想要看用户最后一次与远程仓库 origin 通信时 master 分支的状态，用户可以查看 origin/master 分支。 用户与同事合作解决一个问题并且他们推送了一个 iss53 分支，用户可能有自己的本地 iss53 分支， 然而在服务器上的分支会以 origin/iss53 来表示。 假设用户的网络里有一个在 git.ourcompany.com 的 Git 服务器。 如果用户从这里克隆，Git 的 clone 命令会为用户自动将其命名为 origin ，拉取它的所有数据，创建一个指向它的 master 分支的指针，并且在本地将其命名为 origin/master 。 Git 也会给用户一个与 origin 的 master 分支在指向同一个地方的本地 master 分支，这样用户就有工作的基础。
+它们以 < remote >/< branch > 的形式命名。例如，如果用户想要看用户最后一次与远程仓库 origin 通信时 master 分支的状态，用户可以查看 origin/master 分支。用户与同事合作解决一个问题并且他们推送了一个 iss53 分支，用户可能有自己的本地 iss53 分支，然而在服务器上的分支会以 origin/iss53 来表示。假设用户的网络里有一个在 git.ourcompany.com 的 Git 服务器。如果用户从这里克隆， Git 的 clone 命令会为用户自动将其命名为 origin ，拉取它的所有数据，创建一个指向它的 master 分支的指针，并且在本地将其命名为 origin/master 。 Git 也会给用户一个与 origin 的 master 分支在指向同一个地方的本地 master 分支，这样用户就有工作的基础。
 
-“origin” 并无特殊含义远程仓库名字 “origin” 与分支名字 “master” 一样，在 Git 中并没有任何特别的含义一样。 同时 “master” 是当用户运行 git init 时默认的起始分支名字，原因仅仅是它的广泛使用， “origin” 是当用户运行 git clone 时默认的远程仓库名字。 如果用户运行 git clone-o booyah ，那么用户默认的远程分支名字将会是 booyah/master。
+*“origin” 并无特殊含义*
+*远程仓库名字 “origin” 与分支名字 “master” 一样，在 Git 中并没有任何特别的含义一样。同时 “master” 是当用户运行 git init 时默认的起始分支名字，原因仅仅是它的广泛使用， “origin” 是当用户运行 git clone 时默认的远程仓库名字。如果用户运行 git clone -o booyah ，那么用户默认的远程分支名字将会是 booyah/master。*
 
-如果用户在本地的 master 分支做了一些工作，在同一段时间内有其他人推送提交到 git.ourcompany.com 并且更新了它的 master 分支，这就是说用户们的提交历史已走向不同的方向。 即便这样，只要用户保持不与 origin 服务器连接（并拉取数据），用户的 origin/master 指针就不会移动。
+如果用户在本地的 master 分支做了一些工作，在同一段时间内有其他人推送提交到 git.ourcompany.com 并且更新了它的 master 分支，这就是说用户们的提交历史已走向不同的方向。即便这样，只要用户保持不与 origin 服务器连接（并拉取数据），用户的 origin/master 指针就不会移动。
 
-如果要与给定的远程仓库同步数据，运行 git fetch `<`remote`>` 命令（在本例中为 git fetch origin ）。这个命令查找 “origin” 是哪一个服务器（在本例中，它是 git.ourcompany.com ），从中抓取本地没有的数据，并且更新本地数据库，移动 origin/master 指针到更新之后的位置。
+如果要与给定的远程仓库同步数据，运行 git fetch < remote > 命令（在本例中为 git fetch origin ）。这个命令查找 “origin” 是哪一个服务器（在本例中，它是 git.ourcompany.com ），从中抓取本地没有的数据，并且更新本地数据库，移动 origin/master 指针到更新之后的位置。
 
-为了演示有多个远程仓库与远程分支的情况，我们假定用户有另一个内部 Git 服务器，仅服务于用户的某个敏捷开发团队。 这个服务器位于 git.team1.ourcompany.com 。 用户可以运行 git remote add 命令添加一个新的远程仓库引用到当前的项目。 将这个远程仓库命名为 teamone ，将其作为完整 URL 的缩写。
-现在，可以运行 git fetch teamone 来抓取远程仓库 teamone 有而本地没有的数据。 因为那台服务器上现有的数据是 origin 服务器上的一个子集， 所以 Git 并不会抓取数据而是会设置远程跟踪分支 teamone/master 指向 teamone 的 master 分支。
+为了演示有多个远程仓库与远程分支的情况，我们假定用户有另一个内部 Git 服务器，仅服务于用户的某个敏捷开发团队。这个服务器位于 git.team1.ourcompany.com 。用户可以运行 git remote add 命令添加一个新的远程仓库引用到当前的项目。将这个远程仓库命名为 teamone ，将其作为完整 URL 的缩写。
+现在，可以运行 git fetch teamone 来抓取远程仓库 teamone 有而本地没有的数据。因为那台服务器上现有的数据是 origin 服务器上的一个子集，所以 Git 并不会抓取数据而是会设置远程跟踪分支 teamone/master 指向 teamone 的 master 分支。
 
 #### 7.7.1 推送
 
-当用户想要公开分享一个分支时，需要将其推送到有写入权限的远程仓库上。 本地的分支并不会自动与远程仓库同步——用户必须显式地推送想要分享的分支。 这样，用户就可以把不愿意分享的内容放到私人分支上，而将需要和别人协作的内容推送到公开分支。
+当用户想要公开分享一个分支时，需要将其推送到有写入权限的远程仓库上。本地的分支并不会自动与远程仓库同步——用户必须显式地推送想要分享的分支。这样，用户就可以把不愿意分享的内容放到私人分支上，而将需要和别人协作的内容推送到公开分支。
 
-如果希望和别人一起在名为 serverfix 的分支上工作，用户可以像推送第一个分支那样推送它。 运行 git push `<`remote`>` `<`branch`>` :
+如果希望和别人一起在名为 serverfix 的分支上工作，用户可以像推送第一个分支那样推送它。运行 git push < remote > < branch > :
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git push origin serverfix
 Counting objects: 24, done.
 Delta compression using up to 8 threads.
@@ -1844,13 +1909,14 @@ To https://github.com/schacon/simplegit
  * [new branch]      serverfix -> serverfix
 ~~~
 
-Git 自动将 serverfix 分支名字展开为 refs/heads/serverfix:refs/heads/serverfix ，那意味着，“推送本地的 serverfix 分支来更新远程仓库上的 serverfix 分支”。 用户也可以运行 git push origin serverfix:serverfix ，它会做同样的事——也就是说“推送本地的 serverfix 分支，将其作为远程仓库的 serverfix 分支” 可以通过这种格式来推送本地分支到一个命名不相同的远程分支。 如果并不想让远程仓库上的分支叫做 serverfix ，可以运行 git pushorigin serverfix:awesomebranch 来将本地的 serverfix 分支推送到远程仓库上的 awesomebranch 分支。
+Git 自动将 serverfix 分支名字展开为 refs/heads/serverfix:refs/heads/serverfix ，那意味着，“推送本地的 serverfix 分支来更新远程仓库上的 serverfix 分支”。用户也可以运行 git push origin serverfix:serverfix ，它会做同样的事——也就是说“推送本地的 serverfix 分支，将其作为远程仓库的 serverfix 分支” 可以通过这种格式来推送本地分支到一个命名不相同的远程分支。如果并不想让远程仓库上的分支叫做 serverfix ，可以运行 git pushorigin serverfix:awesomebranch 来将本地的 serverfix 分支推送到远程仓库上的 awesomebranch 分支。
 
-如果用户正在使用 HTTPS URL 来推送， Git 服务器会询问用户名与密码。 默认情况下它会在终端中提示服务器是否允许用户进行推送。 如果不想在每一次推送时都输入用户名与密码，用户可以设置一个 “credential cache” 。 最简单的方式就是将其保存在内存中几分钟，可以简单地运行 git config --globalcredential.helper cache 来设置它。
+如果用户正在使用 HTTPS URL 来推送， Git 服务器会询问用户名与密码。默认情况下它会在终端中提示服务器是否允许用户进行推送。如果不想在每一次推送时都输入用户名与密码，用户可以设置一个 “credential cache” 。最简单的方式就是将其保存在内存中几分钟，可以简单地运行 git config --globalcredential.helper cache 来设置它。
 
 下一次其他协作者从服务器上抓取数据时，他们会在本地生成一个远程分支 origin/serverfix ，指向服务器的 serverfix 分支的引用：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git fetch origin
 remote: Counting objects: 7, done.
 remote: Compressing objects: 100% (2/2), done.
@@ -1860,9 +1926,10 @@ From https://github.com/schacon/simplegit
  * [new branch]      serverfix    -> origin/serverfix
 ~~~
 
-要特别注意的一点是当抓取到新的远程跟踪分支时，本地不会自动生成一份可编辑的副本（拷贝）。 换一句话说，这种情况下，不会有一个新的 serverfix 分支——只有一个不可以修改的 origin/serverfix 指针。 可以运行 git merge origin/serverfix 将这些工作合并到当前所在的分支。 如果想要在自己的 serverfix 分支上工作，可以将其建立在远程跟踪分支之上：
+要特别注意的一点是当抓取到新的远程跟踪分支时，本地不会自动生成一份可编辑的副本（拷贝）。换一句话说，这种情况下，不会有一个新的 serverfix 分支——只有一个不可以修改的 origin/serverfix 指针。可以运行 git merge origin/serverfix 将这些工作合并到当前所在的分支。如果想要在自己的 serverfix 分支上工作，可以将其建立在远程跟踪分支之上：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git checkout -b serverfix origin/serverfix
 Branch serverfix set up to track remote branch serverfix from origin.
 Switched to a new branch 'serverfix'
@@ -1872,11 +1939,12 @@ Switched to a new branch 'serverfix'
 
 #### 7.7.2 跟踪分支
 
-从一个远程跟踪分支检出一个本地分支会自动创建所谓的“跟踪分支”（它跟踪的分支叫做“上游分支”）。 跟踪分支是与远程分支有直接关系的本地分支。 如果在一个跟踪分支上输入 git pull ， Git 能自动地识别去哪个服务器上抓取、合并到哪个分支。
+从一个远程跟踪分支检出一个本地分支会自动创建所谓的“跟踪分支”（它跟踪的分支叫做“上游分支”）。跟踪分支是与远程分支有直接关系的本地分支。如果在一个跟踪分支上输入 git pull ， Git 能自动地识别去哪个服务器上抓取、合并到哪个分支。
 
-当克隆一个仓库时，它通常会自动地创建一个跟踪 origin/master 的 master 分支。 如果用户愿意的话可以设置其他的跟踪分支，或是一个在其他远程仓库上的跟踪分支，又或者不跟踪 master 分支。 最简单的实例就是像之前看到的那样，运行 git checkout -b `<`branch`>` `<`remote`>`/`<`branch`>` 。 这是一个十分常用的操作所以 Git 提供了 --track 快捷方式：
+当克隆一个仓库时，它通常会自动地创建一个跟踪 origin/master 的 master 分支。如果用户愿意的话可以设置其他的跟踪分支，或是一个在其他远程仓库上的跟踪分支，又或者不跟踪 master 分支。最简单的实例就是像之前看到的那样，运行 git checkout -b < branch > < remote >/< branch > 。 这是一个十分常用的操作所以 Git 提供了 --track 快捷方式：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git checkout --track origin/serverfix
 Branch serverfix set up to track remote branch serverfix from origin.
 Switched to a new branch 'serverfix'
@@ -1885,6 +1953,7 @@ Switched to a new branch 'serverfix'
 如果用户尝试检出的分支 (a) 不存在且 (b) 刚好只有一个名字与之匹配的远程分支，那么 Git 就会为用户创建一个跟踪分支：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git checkout serverfix
 Branch serverfix set up to track remote branch serverfix from origin.
 Switched to a new branch 'serverfix'
@@ -1893,6 +1962,7 @@ Switched to a new branch 'serverfix'
 如果想要将本地分支与远程分支设置为不同的名字，用户可以轻松地使用上一个命令增加一个不同名字的本地分支：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git checkout -b sf origin/serverfix
 Branch sf set up to track remote branch serverfix from origin.
 Switched to a new branch 'sf'
@@ -1900,18 +1970,20 @@ Switched to a new branch 'sf'
 
 现在，本地分支 sf 会自动从 origin/serverfix 拉取。
 
-设置已有的本地分支跟踪一个刚刚拉取下来的远程分支，或者想要修改正在跟踪的上游分支，可以在任意时间使用 -u 或 --set-upstream-to 选项运行 git branch 来显式地设置。
+*设置已有的本地分支跟踪一个刚刚拉取下来的远程分支，或者想要修改正在跟踪的上游分支，可以在任意时间使用 -u 或 --set-upstream-to 选项运行 git branch 来显式地设置。*
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git branch -u origin/serverfix
 Branch serverfix set up to track remote branch serverfix from origin.
 ~~~
 
-当设置好跟踪分支后，可以通过简写 @{upstream} 或 @{u} 来引用它的上游分支。 所以在 master 分支时并且它正在跟踪 origin/master 时，如果愿意的话可以使用 git merge @{u} 来取代 git merge origin/master 。
+当设置好跟踪分支后，可以通过简写 @{upstream} 或 @{u} 来引用它的上游分支。所以在 master 分支时并且它正在跟踪 origin/master 时，如果愿意的话可以使用 git merge @{u} 来取代 git merge origin/master 。
 
-如果想要查看设置的所有跟踪分支，可以使用 git branch的 -vv选项。 这会将所有的本地分支列出来并且包含更多的信息，如每一个分支正在跟踪哪个远程分支与本地分支是否是领先、落后或是都有。
+如果想要查看设置的所有跟踪分支，可以使用 git branch的 -vv 选项。 这会将所有的本地分支列出来并且包含更多的信息，如每一个分支正在跟踪哪个远程分支与本地分支是否是领先、落后或是都有。
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git branch -vv
   iss53     7e424c3 [origin/iss53: ahead 2] forgot the brackets
   master    1ae2a45 [origin/master] deploying index fix
@@ -1919,17 +1991,19 @@ $ git branch -vv
   testing   5ea463a trying something new
 ~~~
 
-可以看到 iss53 分支正在跟踪 origin/iss53 并且 “ahead” 是 2，意味着本地有两个提交还没有推送到服务器上。 也能看到 master 分支正在跟踪 origin/master 分支并且是最新的。 接下来可以看到 serverfix 分支正在跟踪 teamone 服务器上的 server-fix-good 分支并且领先 3 落后 1 ， 意味着服务器上有一次提交还没有合并入同时本地有三次提交还没有推送。 最后看到 testing 分支并没有跟踪任何远程分支。
+可以看到 iss53 分支正在跟踪 origin/iss53 并且 “ahead” 是 2 ，意味着本地有两个提交还没有推送到服务器上。也能看到 master 分支正在跟踪 origin/master 分支并且是最新的。接下来可以看到 serverfix 分支正在跟踪 teamone 服务器上的 server-fix-good 分支并且领先 3 落后 1 ，意味着服务器上有一次提交还没有合并入同时本地有三次提交还没有推送。最后看到 testing 分支并没有跟踪任何远程分支。
 
-需要重点注意的一点是这些数字的值来自于用户从每个服务器上最后一次抓取的数据。 这个命令并没有连接服务器，它只会告诉用户关于本地缓存的服务器数据。 如果想要统计最新的领先与落后数字，需要在运行此命令前抓取所有的远程仓库。 可以像这样做：
+需要重点注意的一点是这些数字的值来自于用户从每个服务器上最后一次抓取的数据。这个命令并没有连接服务器，它只会告诉用户关于本地缓存的服务器数据。如果想要统计最新的领先与落后数字，需要在运行此命令前抓取所有的远程仓库。可以像这样做：
 
 ~~~bash
+MasterChief@DESKTOP MINGW64 ~
 $ git fetch --all; git branch -vv
 ~~~
 
 #### 7.7.3 拉取
 
-当 git fetch 命令从服务器上抓取本地没有的数据时，它并不会修改工作目录中的内容。 它只会获取数据然后让用户自己合并。 git pull 在大多数情况下的含义是一个 git fetch 紧接着一个git merge 命令。 如果有一个设置好的跟踪分支，不管是显式地设置还是通过 clone 或 checkout 命令为用户创建的，git pull 都会查找当前分支所跟踪的服务器与分支，从服务器上抓取数据然后尝试合并入那个远程分支。
+当 git fetch 命令从服务器上抓取本地没有的数据时，它并不会修改工作目录中的内容。它只会获取数据然后让用户自己合并。 git pull 在大多数情况下的含义是一个 git fetch 紧接着一个git merge 命令。如果有一个设置好的跟踪分支，不管是显式地设置还是通过 clone 或 checkout 命令为用户创建的，git pull 都会查找当前分支所跟踪的服务器与分支，从服务器上抓取数据然后尝试合并入那个远程分支。
+
 由于 git pull 的魔法经常令人困惑所以通常单独显式地使用 fetch 与 merge 命令会更好一些。
 
 #### 7.7.4 删除远程分支
