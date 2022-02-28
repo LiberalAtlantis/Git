@@ -2302,9 +2302,252 @@ done.
 ~~~bash
 MasterChief@DESKTOP MINGW64 ~
 $ cp -Rf my_project/.git my_project.git
-~~
+~~~
 
 虽然在配置文件中有若干不同，但是对于你的目的来说，这两种方式都是一样的。它只取出 Git 仓库自身，不要工作目录，然后特别为它单独创建一个目录。
+
+#### 8.2.1 把裸仓库放到服务器上
+
+既然你有了裸仓库的副本，剩下要做的就是把裸仓库放到服务器上并设置你的协议。假设一个域名为 git.example.com 的服务器已经架设好，并可以通过 SSH 连接，你想把所有的 Git 仓库放在 /srv/git 目录下。假设服务器上存在 /srv/git/ 目录，你可以通过以下命令复制你的裸仓库来创建一个新仓库：
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~
+$ scp -r my_project.git user@git.example.com:/srv/git
+~~~
+
+此时，其他可通过 SSH 读取此服务器上 /srv/git 目录的用户，可运行以下命令来克隆你的仓库。
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~
+$ git clone user@git.example.com:/srv/git/my_project.git
+~~~
+
+如果一个用户，通过使用 SSH 连接到一个服务器，并且其对 /srv/git/my_project.git 目录拥有可写权限，那么他将自动拥有推送权限。
+
+如果到该项目目录中运行 git init 命令，并加上 --shared 选项，那么 Git 会自动修改该仓库目录的组权限为可写。注意，运行此命令的工程中不会摧毁任何提交、引用等内容。
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~
+$ ssh user@git.example.com
+
+MasterChief@DESKTOP MINGW64 ~
+$ cd /srv/git/my_project.git
+
+MasterChief@DESKTOP MINGW64 ~
+$ git init --bare --shared
+~~~
+
+由此可见，根据现有的 Git 仓库创建一个裸仓库，然后把它放上你和协作者都有 SSH 访问权的服务器是多么容易。现在你们已经准备好在同一项目上展开合作了。
+
+值得注意的是，这的确是架设一个几个人拥有连接权的 Git 服务的全部 —— 只要在服务器上加入可以用 SSH 登录的帐号，然后把裸仓库放在大家都有读写权限的地方。你已经准备好了一切，无需更多。
+
+下面的几节中，会介绍如何扩展到更复杂的设定。这些内容包含如何避免为每一个用户建立一个账户，给仓库添加公共读取权限，架设网页界面等等。然而，请记住这一点，如果只是和几个人在一个私有项目上合作的话，仅仅是一个 SSH 服务器和裸仓库就足够了。
+
+#### 8.2.2 小型安装
+
+如果设备较少或者你只想在小型开发团队里尝试 Git ，那么一切都很简单。架设 Git 服务最复杂的地方在于用户管理。如果需要仓库对特定的用户可读，而给另一部分用户读写权限，那么访问和许可安排就会比较困难。
+
+##### 8.2.2.1 SSH 连接
+
+如果你有一台所有开发者都可以用 SSH 连接的服务器，架设你的第一个仓库就十分简单了，因为你几乎什么都不用做（正如我们上一节所说的）。如果你想在你的仓库上设置更复杂的访问控制权限，只要使用服务器操作系统的普通的文件系统权限就行了。
+
+如果需要团队里的每个人都对仓库有写权限，又不能给每个人在服务器上建立账户，那么提供 SSH 连接就是唯一的选择了。我们假设用来共享仓库的服务器已经安装了 SSH 服务，而且你通过它访问服务器。
+
+有几个方法可以使你给团队每个成员提供访问权。第一个就是给团队里的每个人创建账号，这种方法很直接但也很麻烦。或许你不会想要为每个人运行一次 adduser（或者 useradd）并且设置临时密码。
+
+第二个办法是在主机上建立一个 git 账户，让每个需要写权限的人发送一个 SSH 公钥，然后将其加入 git 账户的~/.ssh/authorized_keys 文件。这样一来，所有人都将通过 git 账户访问主机。这一点也不会影响提交的数据——访问主机用的身份不会影响提交对象的提交者信息。
+
+另一个办法是让 SSH 服务器通过某个 LDAP 服务，或者其他已经设定好的集中授权机制，来进行授权。只要每个用户可以获得主机的 shell 访问权限，任何 SSH 授权机制你都可视为是有效的。
+
+#### 8.2.3 生成 SSH 公钥
+
+许多 Git 服务器都使用 SSH 公钥进行认证。为了向 Git 服务器提供 SSH 公钥，如果某系统用户尚未拥有密钥，必须事先为其生成一份。这个过程在所有操作系统上都是相似的。首先，你需要确认自己是否已经拥有密钥。默认情况下，用户的 SSH 密钥存储在其 ~/.ssh 目录下。进入该目录并列出其中内容，你便可以快速确认自己是否已拥有密钥：
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~
+$ cd ~/.ssh
+$ ls
+authorized_keys2  id_dsa       known_hosts
+config            id_dsa.pub
+~~~
+
+寻找一对以 id_dsa 或 id_rsa 命名的文件，其中一个带有 .pub 扩展名。 .pub 文件是你的公钥，另一个则是与之对应的私钥。如果找不到这样的文件（或者根本没有 .ssh 目录），你可以通过运行 ssh-keygen 程序来创建它们。在 Linux/macOS 系统中， ssh-keygen 随 SSH 软件包提供；在 Windows 上，该程序包含于 MSysGit 软件包中。
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~
+$ ssh-keygen -o
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/schacon/.ssh/id_rsa):
+Created directory '/home/schacon/.ssh'.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/schacon/.ssh/id_rsa.
+Your public key has been saved in /home/schacon/.ssh/id_rsa.pub.
+The key fingerprint is:
+d0:82:24:8e:d7:f1:bb:9b:33:53:96:93:49:da:9b:e3 schacon@mylaptop.local
+~~~
+
+首先 ssh-keygen 会确认密钥的存储位置（默认是 .ssh/id_rsa），然后它会要求你输入两次密钥口令。如果你不想在使用密钥时输入口令，将其留空即可。然而，如果你使用了密码，那么请确保添加了 -o 选项，它会以比默认格式更能抗暴力破解的格式保存私钥。也可以用 ssh-agent 工具来避免每次都要输入密码。现在，进行了上述操作的用户需要将各自的公钥发送给任意一个 Git 服务器管理员（假设服务器正在使用基于公钥的 SSH 验证设置）。他们所要做的就是复制各自的 .pub 文件内容，并将其通过邮件发送。公钥看起来是这样的：
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~
+$ cat ~/.ssh/id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAklOUpkDHrfHY17SbrmTIpNLTGK9Tjom/BWDSU
+GPl+nafzlHDTYW7hdI4yZ5ew18JH4JW9jbhUFrviQzM7xlELEVf4h9lFX5QVkbPppSwg0cda3
+Pbv7kOdJ/MTyBlWXFCR+HAo3FXRitBqxiX1nKhXpHAZsMciLq8V6RjsNAQwdsdMFvSlVK/7XA
+t3FaoJoAsncM1Q9x5+3V0Ww68/eIFmb1zuUFljQJKprrX88XypNDvjYNby6vw/Pb0rwert/En
+mZ+AW4OZPnTPI89ZPmVMLuayrD2cE86Z/il8b+gw3r3+1nKatmIkjn2so1d01QraTlMqVSsbx
+NrRFi9wrf+M7Q== schacon@mylaptop.local
+~~~
+
+#### 8.2.4 配置服务器
+
+本例中，来看看如何配置服务器端的 SSH 访问。我们将使用 authorized_keys 方法来对用户进行认证。同时假设你使用的操作系统是标准的 Linux 发行版，比如 Ubuntu。首先，创建一个操作系统用户 git ，并为其建立一个 .ssh 目录。
+
+*以下操作可通过 ssh-copy-id 命令自动完成，这样就不必手动复制并安装公钥了。*
+
+首先，创建一个操作系统用户 git，并为其建立一个 .ssh 目录。
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~
+$ sudo adduser git
+
+MasterChief@DESKTOP MINGW64 ~
+$ su git
+
+MasterChief@DESKTOP MINGW64 ~
+$ cd
+
+MasterChief@DESKTOP MINGW64 ~
+$ mkdir .ssh && chmod 700 .ssh
+
+MasterChief@DESKTOP MINGW64 ~
+$ touch .ssh/authorized_keys && chmod 600 .ssh/authorized_keys
+~~~
+
+接着，我们需要为系统用户 git 的 authorized_keys 文件添加一些开发者 SSH 公钥。假设我们已经获得了若干受信任的公钥，并将它们保存在临时文件中。与前文类似，这些公钥看起来是这样的：
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~
+$ cat /tmp/id_rsa.john.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCB007n/ww+ouN4gSLKssMxXnBOvf9LGt4L
+ojG6rs6hPB09j9R/T17/x4lhJA0F3FR1rP6kYBRsWj2aThGw6HXLm9/5zytK6Ztg3RPKK+4k
+Yjh6541NYsnEAZuXz0jTTyAUfrtU3Z5E003C4oxOj6H0rfIF1kKI9MAQLMdpGW1GYEIgS9Ez
+Sdfd8AcCIicTDWbqLAcU4UpkaX8KyGlLwsNuuGztobF8m72ALC/nLF6JLtPofwFBlgc+myiv
+O7TCUSBdLQlgMVOFq1I2uPWQOkOWQAHukEOmfjy2jctxSDBQ220ymjaNsHT4kgtZg2AYYgPq
+dAv8JggJICUvax2T9va5 gsg-keypair
+~~~
+
+将这些公钥加入系统用户 git 的 .ssh 目录下 authorized_keys 文件的末尾：
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~
+$ cat /tmp/id_rsa.john.pub >> ~/.ssh/authorized_keys
+
+MasterChief@DESKTOP MINGW64 ~
+$ cat /tmp/id_rsa.josie.pub >> ~/.ssh/authorized_keys
+
+MasterChief@DESKTOP MINGW64 ~
+$ cat /tmp/id_rsa.jessica.pub >> ~/.ssh/authorized_keys
+~~~
+
+现在来为开发者新建一个空仓库。可以借助带 --bare 选项的 git init 命令来做到这一点，该命令在初始化仓库时不会创建工作目录：
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~
+$ cd /srv/git
+
+MasterChief@DESKTOP MINGW64 ~
+$ mkdir project.git
+
+MasterChief@DESKTOP MINGW64 ~
+$ cd project.git
+
+MasterChief@DESKTOP MINGW64 ~
+$ git init --bare
+Initialized empty Git repository in /srv/git/project.git/
+~~~
+
+接着， John 、 Josie 或者 Jessica 中的任意一人可以将他们项目的最初版本推送到这个仓库中，他只需将此仓库设置为项目的远程仓库并向其推送分支。请注意，每添加一个新项目，都需要有人登录服务器取得 shell，并创建一个裸仓库。我们假定这个设置了 git 用户和 Git 仓库的服务器使用 gitserver 作为主机名。同时，假设该服务器运行在内网，并且你已在 DNS 配置中将 gitserver 指向此服务器。那么我们可以运行如下命令（假定 myproject 是已有项目且其中已包含文件）：
+
+~~~bash
+# on John's computer
+MasterChief@DESKTOP MINGW64 ~
+$ cd myproject
+
+MasterChief@DESKTOP MINGW64 ~
+$ git init
+
+MasterChief@DESKTOP MINGW64 ~
+$ git add .
+
+MasterChief@DESKTOP MINGW64 ~
+$ git commit -m 'initial commit'
+
+MasterChief@DESKTOP MINGW64 ~
+$ git remote add origin git@gitserver:/srv/git/project.git
+
+MasterChief@DESKTOP MINGW64 ~
+$ git push origin master
+~~~
+
+此时，其他开发者可以克隆此仓库，并推回各自的改动，步骤很简单：
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~
+$ git clone git@gitserver:/srv/git/project.git
+
+MasterChief@DESKTOP MINGW64 ~
+$ cd project
+
+MasterChief@DESKTOP MINGW64 ~
+$ vim README
+
+MasterChief@DESKTOP MINGW64 ~
+$ git commit -am 'fix for the README file'
+
+MasterChief@DESKTOP MINGW64 ~
+$ git push origin master
+~~~
+
+通过这种方法，你可以快速搭建一个具有读写权限、面向多个开发者的 Git 服务器。
+需要注意的是，目前所有（获得授权的）开发者用户都能以系统用户 git 的身份登录服务器从而获得一个普通shell。 如果你想对此加以限制，则需要修改 /etc/passwd 文件中（git 用户所对应）的 shell 值。
+借助一个名为 git-shell 的受限 shell 工具，你可以方便地将用户 git 的活动限制在与 Git 相关的范围内。 该工具随 Git 软件包一同提供。如果将 git-shell 设置为用户 git 的登录 shell（login shell），那么该用户便不能获得此服务器的普通 shell 访问权限。若要使用 git-shell，需要用它替换掉 bash 或 csh，使其成为该用户的登录 shell。为进行上述操作，首先你必须确保 git-shell 的完整路径名已存在于 /etc/shells 文件中：
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~
+$ cat /etc/shells   # see if git-shell is already in there. If not...
+
+MasterChief@DESKTOP MINGW64 ~
+$ which git-shell   # make sure git-shell is installed on your system.
+
+MasterChief@DESKTOP MINGW64 ~
+$ sudo -e /etc/shells  # and add the path to git-shell from last command
+~~~
+
+现在你可以使用 chsh < username > -s < shell > 命令修改任一系统用户的 shell：
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~
+$ sudo chsh git -s $(which git-shell)
+~~~
+
+这样，用户 git 就只能利用 SSH 连接对 Git 仓库进行推送和拉取操作，而不能登录机器并取得普通 shell 。如果试图登录，你会发现尝试被拒绝，像这样：
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~
+$ ssh git@gitserver
+fatal: Interactive git shell is not enabled.
+hint: ~/git-shell-commands should exist and have read and execute access.
+Connection to gitserver closed.
+~~~
+
+此时，用户仍可通过 SSH 端口转发来访问任何可达的 git 服务器。 如果你想要避免它，可编辑
+authorized_keys 文件并在所有想要限制的公钥之前添加以下选项：
+
+~~~bash
+no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty
+~~~
 
 | 左对齐 | 右对齐 | 居中对齐 |
 | :-----| ----: | :----: |
