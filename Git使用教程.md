@@ -2511,8 +2511,10 @@ $ git push origin master
 ~~~
 
 通过这种方法，你可以快速搭建一个具有读写权限、面向多个开发者的 Git 服务器。
-需要注意的是，目前所有（获得授权的）开发者用户都能以系统用户 git 的身份登录服务器从而获得一个普通shell。 如果你想对此加以限制，则需要修改 /etc/passwd 文件中（git 用户所对应）的 shell 值。
-借助一个名为 git-shell 的受限 shell 工具，你可以方便地将用户 git 的活动限制在与 Git 相关的范围内。 该工具随 Git 软件包一同提供。如果将 git-shell 设置为用户 git 的登录 shell（login shell），那么该用户便不能获得此服务器的普通 shell 访问权限。若要使用 git-shell，需要用它替换掉 bash 或 csh，使其成为该用户的登录 shell。为进行上述操作，首先你必须确保 git-shell 的完整路径名已存在于 /etc/shells 文件中：
+
+需要注意的是，目前所有（获得授权的）开发者用户都能以系统用户 git 的身份登录服务器从而获得一个普通 shell 。 如果你想对此加以限制，则需要修改 /etc/passwd 文件中（ git 用户所对应）的 shell 值。
+
+借助一个名为 git-shell 的受限 shell 工具，你可以方便地将用户 git 的活动限制在与 Git 相关的范围内。该工具随 Git 软件包一同提供。如果将 git-shell 设置为用户 git 的登录 shell（ login shell ），那么该用户便不能获得此服务器的普通 shell 访问权限。若要使用 git-shell ，需要用它替换掉 bash 或 csh ，使其成为该用户的登录 shell 。为进行上述操作，首先你必须确保 git-shell 的完整路径名已存在于 /etc/shells 文件中：
 
 ~~~bash
 MasterChief@DESKTOP MINGW64 ~
@@ -2525,7 +2527,7 @@ MasterChief@DESKTOP MINGW64 ~
 $ sudo -e /etc/shells  # and add the path to git-shell from last command
 ~~~
 
-现在你可以使用 chsh < username > -s < shell > 命令修改任一系统用户的 shell：
+现在你可以使用 chsh < username > -s < shell > 命令修改任一系统用户的 shell ：
 
 ~~~bash
 MasterChief@DESKTOP MINGW64 ~
@@ -2548,6 +2550,145 @@ authorized_keys 文件并在所有想要限制的公钥之前添加以下选项�
 ~~~bash
 no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty
 ~~~
+
+其结果如下：
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~
+$ cat ~/.ssh/authorized_keys
+no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-rsa
+AAAAB3NzaC1yc2EAAAADAQABAAABAQCB007n/ww+ouN4gSLKssMxXnBOvf9LGt4LojG6rs6h
+PB09j9R/T17/x4lhJA0F3FR1rP6kYBRsWj2aThGw6HXLm9/5zytK6Ztg3RPKK+4kYjh6541N
+YsnEAZuXz0jTTyAUfrtU3Z5E003C4oxOj6H0rfIF1kKI9MAQLMdpGW1GYEIgS9EzSdfd8AcC
+IicTDWbqLAcU4UpkaX8KyGlLwsNuuGztobF8m72ALC/nLF6JLtPofwFBlgc+myivO7TCUSBd
+LQlgMVOFq1I2uPWQOkOWQAHukEOmfjy2jctxSDBQ220ymjaNsHT4kgtZg2AYYgPqdAv8JggJ
+ICUvax2T9va5 gsg-keypair
+no-port-forwarding,no-X11-forwarding,no-agent-forwarding,no-pty ssh-rsa
+AAAAB3NzaC1yc2EAAAADAQABAAABAQDEwENNMomTboYI+LJieaAY16qiXiH3wuvENhBG...
+~~~
+
+现在，网络相关的 Git 命令依然能够正常工作，但是开发者用户已经无法得到一个普通 shell 了。正如输出信息所提示的，你也可以在 git 用户的主目录下建立一个目录，来对 git-shell 命令进行一定程度的自定义。比如，你可以限制掉某些本应被服务器接受的 Git 命令，或者对刚才的 SSH 拒绝登录信息进行自定义，这样，当有开发者用户以类似方式尝试登录时，便会看到你的信息。 要了解更多有关自定义 shell 的信息，请运行 git help shell 。
+
+#### 8.2.5 Git 守护进程
+
+接下来将通过 “Git” 协议建立一个基于守护进程的仓库。对于快速且无需授权的 Git 数据访问，这是一个理想之选。请注意，因为其不包含授权服务，任何通过该协议管理的内容将在其网络上公开。
+
+如果运行在防火墙之外的服务器上，它应该只对那些公开的只读项目服务。如果运行在防火墙之内的服务器上，它可用于支撑大量参与人员或自动系统（用于持续集成或编译的主机）只读访问的项目，这样可以省去逐一配置 SSH 公钥的麻烦。
+
+无论何时，该 Git 协议都是相对容易设定的。通常，你只需要以守护进程的形式运行该命令：
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~
+$ git daemon --reuseaddr --base-path=/srv/git/ /srv/git/
+~~~
+
+--reuseaddr 选项允许服务器在无需等待旧连接超时的情况下重启，而 --base-path 选项允许用户在未完全指定路径的条件下克隆项目，结尾的路径将告诉 Git 守护进程从何处寻找仓库来导出。如果有防火墙正在运行，你需要开放端口 9418 的通信权限。
+
+你可以通过许多方式将该进程以守护进程的方式运行，这主要取决于你所使用的操作系统。
+
+由于在现代的 Linux 发行版中， systemd 是最常见的初始化系统，因此你可以用它来达到此目的。 只要在 /etc/systemd/system/git-daemon.service 中放一个文件即可，其内容如下：
+
+~~~bash
+[Unit]
+Description=Start Git Daemon
+[Service]
+ExecStart=/usr/bin/git daemon --reuseaddr --base-path=/srv/git/ /srv/git/
+Restart=always
+RestartSec=500ms
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=git-daemon
+User=git
+Group=git
+[Install]
+WantedBy=multi-user.target
+~~~
+
+你可能会注意这里以 git 启动的 Git 驻留程序同时使用了 Group 和 User 权限。按需修改它并确保提供的用户在此系统上。此外，请确保 Git 二进制文件位于 /usr/bin/git ，必要时可修改此路径。
+
+最后，你需要运行 systemctl enable git-daemon 以让它在系统启动时自动运行，这样也能让它通过 systemctl start git-daemon 启动，通过 systemctl stop git-daemon 停止。
+
+在其他系统中，你可以使用 sysvinit 系统中的 xinetd 脚本，或者另外的方式来实现——只要你能够将其命令守护进程化并实现监控。
+
+接下来，你需要告诉 Git 哪些仓库允许基于服务器的无授权访问。你可以在每个仓库下创建一个名为 git-daemon-export-ok 的文件来实现。
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~
+$ cd /path/to/project.git
+
+MasterChief@DESKTOP MINGW64 ~
+$ touch git-daemon-export-ok
+~~~
+
+该文件将允许 Git 提供无需授权的项目访问服务。
+
+#### 8.2.6 Smart HTTP
+
+我们一般通过 SSH 进行授权访问，通过 git:// 进行无授权访问，但是还有一种协议可以同时实现以上两种方式的访问。设置 Smart HTTP 一般只需要在服务器上启用一个 Git 自带的名为 git-http-backend 的 CGI 脚本。该 CGI 脚本将会读取由 git fetch 或 git push 命令向 HTTP URL 发送的请求路径和头部信息，来判断该客户端是否支持 HTTP 通信（不低于1.6.6版本的客户端支持此特性）。如果 CGI 发现该客户端支持智能（Smart）模式，它将会以智能模式与它进行通信，否则它将会回落到哑（Dumb）模式下（因此它可以对某些老的客户端实现向下兼容）。
+
+在完成以上简单的安装步骤后， 我们将用 Apache 来作为 CGI 服务器。 如果你没有安装 Apache ，你可以在 Linux 环境下执行如下或类似的命令来安装：
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~
+$ sudo apt-get install apache2 apache2-utils
+
+MasterChief@DESKTOP MINGW64 ~
+$ a2enmod cgi alias env
+~~~
+
+该操作将会启用 mod_cgi ， mod_alias 和 mod_env 等 Apache 模块，这些模块都是使该功能正常工作所必须的。
+
+你还需要将 /srv/git 的 Unix 用户组设置为 www-data ，这样 Web 服务器才能读写该仓库，因为 运行 CGI 脚本的 Apache 实例默认会以该用户的权限运行：
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~
+$ chgrp -R www-data /srv/git
+~~~
+
+接下来我们要向 Apache 配置文件添加一些内容，来让 git-http-backend 作为 Web 服务器对 /git 路径请求的处理器。
+
+~~~bash
+SetEnv GIT_PROJECT_ROOT /srv/git
+SetEnv GIT_HTTP_EXPORT_ALL
+ScriptAlias /git/ /usr/lib/git-core/git-http-backend/
+~~~
+
+如果留空 GIT_HTTP_EXPORT_ALL 这个环境变量， Git 将只对无授权客户端提供带 git-daemon-export-ok 文件的版本库，就像 Git 守护进程一样。
+
+最后，如果想让 Apache 允许 git-http-backend 请求并实现写入操作的授权验证，使用如下授权屏蔽配置即可：
+
+~~~bash
+<Files "git-http-backend">
+    AuthType Basic
+    AuthName "Git Access"
+    AuthUserFile /srv/git/.htpasswd
+    Require expr !(%{QUERY_STRING} -strmatch '*service=git-receive-pack*'
+|| %{REQUEST_URI} =~ m#/git-receive-pack$#)
+    Require valid-user
+</Files>
+~~~
+
+这需要你创建一个包含所有合法用户密码的 .htpasswd 文件。以下是一个添加 “schacon” 用户到此文件的例子：
+
+~~~bash
+MasterChief@DESKTOP MINGW64 ~
+$ htpasswd -c /srv/git/.htpasswd schacon
+~~~
+
+你可以通过许多方式添加 Apache 授权用户，选择使用其中一种方式即可。以上仅仅只是我们可以找到的最简单的一个例子。如果愿意的话，你也可以通过 SSL 运行它，以保证所有数据是在加密状态下进行传输的。
+
+我们不想深入去讲解 Apache 配置文件，因为你可能会使用不同的 Web 服务器，或者可能有不同的授权需求。
+
+它的主要原理是使用一个 Git 附带的，名为 git-http-backend 的 CGI 。它被引用来处理协商通过 HTTP 发送和接收的数据。它本身并不包含任何授权功能，但是授权功能可以在 Web 服务器层引用它时被轻松实现。你可以在任何所有可以处理 CGI 的 Web 服务器上办到这点，所以随便挑一个你最熟悉的 Web 服务器试手吧。
+
+*欲了解更多的有关配置 Apache 授权访问的信息，请通过以下链接浏览 Apache 文档：*
+*[https://httpd.apache.org/docs/current/howto/auth.html]*
+
+#### 8.2.7 GitWeb
+
+如果你对项目有读写权限或只读权限，你可能需要建立起一个基于网页的简易查看器。 Git 提供了一个叫做 GitWeb 的 CGI 脚本来做这项工作。
+
+
 
 | 左对齐 | 右对齐 | 居中对齐 |
 | :-----| ----: | :----: |
